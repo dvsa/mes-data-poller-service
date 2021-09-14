@@ -47,7 +47,7 @@
     "jasmine-spec-reporter": "^4.2.1",
     "mysql-import": "^1.0.13",
     "node-docker-monitor": "^1.0.11",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "npm-run-all": "^4.1.5",
     "nyc": "^14.1.0",
     "rimraf": "^2.6.2",
