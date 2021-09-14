@@ -13,6 +13,7 @@ JOIN EXAMINER_STATUS es on es.individual_id = e.individual_id
 WHERE ps.tc_closed_ind != 1
 AND IFNULL(ps.deployed_to_from_code, 0) != 1
 AND IFNULL(e.grade_code, 'ZZZ') != 'DELE'
+AND (ps.not_bookable_ind = 0 or ps.state_code = 2)
 AND (
     p.state_code NOT IN (2, 3)
     OR EXISTS
