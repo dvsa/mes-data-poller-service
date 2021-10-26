@@ -23,7 +23,7 @@ describe('transferTestCentreExaminers', () => {
       .and.callFake(moqReconciler.object);
   });
   describe('transferTestCentreExaminers', () => {
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     it('should retrieve all the active rows in the replica, all the staffNums in the cache and pass them to the reconciler', async () => {
       const activeTestCentres = [
         new TestCentreDetail('123', [{ staffNumber: '345', name: 'A' }], [1234]),
@@ -38,8 +38,11 @@ describe('transferTestCentreExaminers', () => {
       moqCachedTestCentreRepo.setup(x => x()).returns(() => Promise.resolve(cachedTestCentres));
 
       await transferTestCentreExaminers();
-      // tslint:disable-next-line:max-line-length
-      moqReconciler.verify(x => x(It.isValue(activeTestCentres), It.isValue(cachedTestCentres)), Times.once());
+      moqReconciler.verify(
+        x => x(
+          It.isValue(activeTestCentres),
+          It.isValue(cachedTestCentres),
+        ), Times.once());
     });
   });
 });

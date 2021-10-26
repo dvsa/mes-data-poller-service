@@ -46,6 +46,7 @@ describe('pollTestCentreExaminers handler', () => {
     expect(result).toBe(moqResponse.object);
   });
 
+  // eslint-disable-next-line max-len
   it('should create and return an internal server error response when the configBootstrap throws an error', async () => {
     moqConfigBootstrap.setup(x => x()).throws(new Error('AWS down'));
 

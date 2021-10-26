@@ -30,9 +30,7 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
     startDate = moment(startDate).startOf('day').toDate();
   }
 
-  let journalDaysPast: number;
-  journalDaysPast = 14;
-
+  const journalDaysPast: number = 14;
   let journalStartDate: Date;
 
   if (config().timeTravelDate != null) {

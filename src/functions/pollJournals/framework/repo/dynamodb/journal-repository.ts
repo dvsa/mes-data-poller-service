@@ -84,7 +84,7 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
     info(`END SAVE: ${new Date()}, ${totalUnprocessedWrites} WRITES FAILED`);
     customMetric('JournalsNotUpdated', 'Number of Journals not updated in Dynamo', totalUnprocessedWrites);
   } else {
-    info(`NO SAVE NEEDED`);
+    info('NO SAVE NEEDED');
   }
 };
 

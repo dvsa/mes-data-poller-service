@@ -37,19 +37,19 @@ describe('TestCentreMapper', () => {
   describe('mapExaminers', () => {
     it('should parse a string like value into a list of staffNumber & name objects', () => {
       const row = {
-        // tslint:disable-next-line:max-line-length
+        // eslint-disable-next-line max-len
         STAFF_NUMBERS: '{"staffNumber": "000008", "name": "Test Examiner Seven"}, {"staffNumber": "000007", "name": "Test Examiner Six"}, {"staffNumber": "000006", "name": "Test Examiner Five"}, {"staffNumber": "000018", "name": "Test Examiner Eighteen"},{"staffNumber": "000005", "name": "Test Examiner Four"},{"staffNumber": "000013", "name": "Test Examiner Eleven"},{"staffNumber": "000004", "name": "Test Examiner Three"},{"staffNumber": "000009", "name": "Test Examiner Eight"},{"staffNumber": "000003", "name": "Test Examiner Two"}',
       } as TestCentreRow;
       expect(mapExaminers(row)).toEqual([
-       { staffNumber: '000008', name: 'Test Examiner Seven' },
-       { staffNumber: '000007', name: 'Test Examiner Six' },
-       { staffNumber: '000006', name: 'Test Examiner Five' },
-       { staffNumber: '000018', name: 'Test Examiner Eighteen' },
-       { staffNumber: '000005', name: 'Test Examiner Four' },
-       { staffNumber: '000013', name: 'Test Examiner Eleven' },
-       { staffNumber: '000004', name: 'Test Examiner Three' },
-       { staffNumber: '000009', name: 'Test Examiner Eight' },
-       { staffNumber: '000003', name: 'Test Examiner Two' },
+        { staffNumber: '000008', name: 'Test Examiner Seven' },
+        { staffNumber: '000007', name: 'Test Examiner Six' },
+        { staffNumber: '000006', name: 'Test Examiner Five' },
+        { staffNumber: '000018', name: 'Test Examiner Eighteen' },
+        { staffNumber: '000005', name: 'Test Examiner Four' },
+        { staffNumber: '000013', name: 'Test Examiner Eleven' },
+        { staffNumber: '000004', name: 'Test Examiner Three' },
+        { staffNumber: '000009', name: 'Test Examiner Eight' },
+        { staffNumber: '000003', name: 'Test Examiner Two' },
       ]);
     });
   });

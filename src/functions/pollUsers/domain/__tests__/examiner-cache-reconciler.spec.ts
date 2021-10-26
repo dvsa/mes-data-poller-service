@@ -28,6 +28,7 @@ describe('examiner cache reconciler', () => {
       moqUncacheStaffNumbers.verify(x => x(It.isValue(cachedStaffNumbers)), Times.once());
     });
 
+    // eslint-disable-next-line max-len
     it('should cache active examiners not already in the cache and uncache those that are cached but not active', async () => {
       const activeStaffDetails = [new StaffDetail('1', ExaminerRole.DE)];
       const cachedStaffDetails = [

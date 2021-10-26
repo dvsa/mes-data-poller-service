@@ -4,6 +4,7 @@ import * as AWSMock from 'aws-sdk-mock';
 import { dummyConfig } from '../../../config/__mocks__/config';
 import { JournalRecord } from '../../../../domain/journal-record';
 import moment = require('moment');
+import { DynamoDB } from 'aws-sdk';
 
 describe('JournalRepository', () => {
   const startTime = moment('2019-01-01 10:30:00.000');
@@ -55,7 +56,7 @@ describe('JournalRepository', () => {
       spyOn(JournalRepository.journalHashesCache, 'get').and.returnValue(expected);
 
       const ddbSpy = jasmine.createSpy();
-      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy);
+      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy as unknown as DynamoDB.DocumentClient);
 
       const result = await JournalRepository.getStaffNumbersWithHashes(startTime.toDate());
 
@@ -74,7 +75,7 @@ describe('JournalRepository', () => {
 
     it('not save if no journals', async () => {
       const ddbSpy = jasmine.createSpy();
-      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy);
+      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy as unknown as DynamoDB.DocumentClient);
 
       await JournalRepository.saveJournals([], startTime.toDate());
 
@@ -166,9 +167,9 @@ describe('JournalRepository', () => {
     });
 
     it('abort if run out of time', async () => {
-      const { journals, hashes } = generateDummyJournals(10); // less than batch size
+      const { journals } = generateDummyJournals(10); // less than batch size
       const ddbSpy = jasmine.createSpy();
-      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy);
+      spyOn(JournalRepository, 'getDynamoClient').and.returnValue(ddbSpy as unknown as DynamoDB.DocumentClient);
       spyOn(JournalRepository, 'now').and.returnValue(outOfTime);
 
       await JournalRepository.saveJournals(journals, startTime.toDate());
@@ -179,7 +180,7 @@ describe('JournalRepository', () => {
   });
 });
 
-const generateDummyJournals = (count: number): { journals: JournalRecord[], hashes: Partial<JournalRecord>[] } => {
+const generateDummyJournals = (count: number): { journals: JournalRecord[]; hashes: Partial<JournalRecord>[] } => {
   const journals = [] as JournalRecord[];
   const hashes = [] as Partial<JournalRecord>[];
 

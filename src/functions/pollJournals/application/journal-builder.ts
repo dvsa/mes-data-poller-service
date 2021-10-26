@@ -69,10 +69,10 @@ export const buildJournals = (examiners: ExaminerRecord[], datasets: AllDatasets
   return filteredJournals;
 };
 
-const enrichJournalWithDataset = (individualId: string) => function <D>(
+const enrichJournalWithDataset = (individualId: string) => function <D> (
   journal: ExaminerWorkSchedule,
   dataset: {
-    [examinerId: string]: D[],
+    [examinerId: string]: D[];
   },
   datasetKey: keyof D,
   journalKey: keyof ExaminerWorkSchedule,

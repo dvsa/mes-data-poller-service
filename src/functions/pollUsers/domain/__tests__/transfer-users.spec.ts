@@ -23,9 +23,11 @@ describe('transferUsers module', () => {
     spyOn(examinerRepository, 'getActiveExaminers').and.callFake(moqExaminerRepo.object);
     spyOn(cachedExaminerRepository, 'getCachedExaminers').and.callFake(moqCachedExaminerRepo.object);
     spyOn(examinerCacheReconciler, 'reconcileActiveAndCachedExaminers').and.callFake(moqReconciler.object);
-    spyOn(universalPermissionsRepository, 'getUniversalTestPermissions').and.callFake(moqUniversalPermissionsRepository.object);
+    spyOn(universalPermissionsRepository, 'getUniversalTestPermissions')
+      .and.callFake(moqUniversalPermissionsRepository.object);
   });
   describe('transferUsers', () => {
+    // eslint-disable-next-line max-len
     it('should retrieve all the active examiners in the replica, all the IDs in the cache and pass them to the reconciler', async () => {
       const univeralPermissionPeriods: TestPermissionPeriod[] = [
         {
@@ -43,7 +45,9 @@ describe('transferUsers module', () => {
         new StaffDetail('2', ExaminerRole.LDTM, univeralPermissionPeriods),
         new StaffDetail('5', ExaminerRole.DE, univeralPermissionPeriods),
       ];
-      moqExaminerRepo.setup(x => x(It.isValue(univeralPermissionPeriods))).returns(() => Promise.resolve(activeStaffDetails));
+      moqExaminerRepo.setup(
+        x => x(It.isValue(univeralPermissionPeriods))
+      ).returns(() => Promise.resolve(activeStaffDetails));
       moqCachedExaminerRepo.setup(x => x()).returns(() => Promise.resolve(cachedStaffDetails));
       moqUniversalPermissionsRepository.setup(x => x()).returns(() => Promise.resolve(univeralPermissionPeriods));
 
