@@ -1,7 +1,7 @@
 USE tarsreplica;
 DELIMITER //
 //
-  
+
 /*
 * Determines the number of previous ADI test attempts.
 */
@@ -36,7 +36,7 @@ CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_vehicle_category va
         RETURN l_count;
     END
 //
-  
+
 /*
 * Determines the entitlement check indicator for this booking.
 */
@@ -48,7 +48,7 @@ CREATE FUNCTION getEntitlementCheckIndicator(p_application_id INT) RETURNS INT
         DECLARE l_count         INT;
         DECLARE TRUE_RESULT     INT DEFAULT 1;
         DECLARE FALSE_RESULT    INT DEFAULT 0;
- 
+
         DECLARE c1 CURSOR FOR
             SELECT COUNT(*)
             FROM APPLICATION
@@ -99,7 +99,7 @@ CREATE FUNCTION getEntitlementCheckIndicator(p_application_id INT) RETURNS INT
         IF l_count > 0 THEN
         RETURN TRUE_RESULT;
         END IF;
-         
+
 /*
 * 2. Did a booking supervisor override the entitlement check (event 1030) on or after booking made (event 1020)?
 */
@@ -112,7 +112,7 @@ CREATE FUNCTION getEntitlementCheckIndicator(p_application_id INT) RETURNS INT
         IF l_count > 0 THEN
         RETURN TRUE_RESULT;
         END IF;
-        
+
 /*
 * 3. Is an associated (by test category) theory pass unchecked?
 * (theory_pass_state_code: 1 = Checked, 2 = Not yet checked, 3 = Not found after check)
@@ -130,7 +130,7 @@ CREATE FUNCTION getEntitlementCheckIndicator(p_application_id INT) RETURNS INT
         END IF;
     END
 //
- 
+
 /*
 * Determines the next available working day (after today) for the journal.
 */
@@ -166,64 +166,60 @@ CREATE FUNCTION getJournalEndDate(pCountryId INT, pStartDate DATE) RETURNS DATE
 DROP FUNCTION IF EXISTS getBusLorryDVLAConfIndicator;
 //
 
-CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id in number, p_test_category_code in varchar2)
-    RETURN
-        NUMBER IS l_effective_date DATE := NULL;
-        l_count number := 0;
-
+CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category_code varchar(30)) RETURNS INT
     BEGIN
+        DECLARE l_effective_date DATE DEFAULT NULL;
+        DECLARE l_count INT DEFAULT 0;
+
         -- Only the following categories are supported
-        IF replace(p_test_category_code, 'M', '') NOT IN ('C','CE','C1','C1E','D','DE','D1','D1E') THEN
-        RETURN 0;
+        IF REPLACE(p_test_category_code, 'M', '') NOT IN ('C', 'CE', 'C1', 'C1E', 'D', 'DE', 'D1', 'D1E') THEN
+           RETURN 0;
         END IF;
 
         -- Get the effectivity parameter
-        SELECT TO_DATE(VALUE, 'DD/MM/YYYY')
-        INTO l_effective_date
+        SELECT STR_TO_DATE(VALUE, '%d/%m/%y') INTO l_effective_date
         FROM APP_SYSTEM_PARAMETER
         WHERE APP_SYS_PARAM_KEY = 'LORRY_BUS_MAN_ACTIVE_DATE'
-          AND SYSDATE
-              BETWEEN EFFECTIVE_FROM
-              AND NVL(EFFECTIVE_TO, SYSDATE + 1);
+          AND SYSDATE()
+            BETWEEN EFFECTIVE_FROM
+            AND IFNULL(EFFECTIVE_TO, DATE_ADD(SYSDATE(), INTERVAL 1 DAY));
 
         -- if the date is not in effective yet then we don't indicate a check is required
-        IF (l_effective_date IS NULL OR SYSDATE < l_effective_date) THEN
-        RETURN 0;
+        IF (l_effective_date IS NULL OR SYSDATE() < l_effective_date) THEN
+            RETURN 0;
         END IF;
 
-        -- Check the Licence data for the Driver to ensure they have the entitlements
-        SELECT COUNT(*)
-        INTO l_count
-        FROM driver_licence_category lic_cat
+         -- Check the Licence data for the Driver to ensure they have the entitlements
+        SELECT COUNT(*) INTO l_count
+        FROM licence_category lic_cat
                  JOIN INDIVIDUAL IND
-                     ON lic_cat.current_driver_number = ind.driver_number
-        WHERE (lic_cat.test_category_ref = REPLACE(p_test_category_code,'M','') AND lic_cat.entitlement_type_code = 'P')
-           OR (
-               (lic_cat.test_category_ref like 'C%' OR test_category_ref LIKE 'D%')
-                   AND lic_cat.entitlement_type_code = 'F'
-                   AND REPLACE(p_test_category_code,'M','')
-                   LIKE 'C%'
-               )
-           OR (
-               lic_cat.test_category_ref LIKE 'D%'
-                   AND entitlement_type_code = 'F'
-                   AND REPLACE(p_test_category_code,'M','')
-                   LIKE 'D%'
-               )
-           OR (
-               (lic_cat.test_category_ref like 'C%' OR test_category_ref LIKE 'D%')
-                   AND lic_cat.entitlement_type_code = 'P'
-                   AND lic_cat.entitlement_start_date >= l_effective_date
-                   AND REPLACE(p_test_category_code,'M','')
-                   LIKE 'C%'
-               )
-           OR (
-               (lic_cat.test_category_ref LIKE 'D%')
-                   AND lic_cat.entitlement_type_code = 'P'
-                   AND lic_cat.entitlement_start_date >= l_effective_date
-                   AND REPLACE(p_test_category_code,'M','')
-                   LIKE 'D%'
-               );
+                      ON lic_cat.current_driver_number = ind.driver_number
+        WHERE ind.individual_id = p_candidate_id
+          AND (
+                (lic_cat.test_category_ref = REPLACE(p_test_category_code, 'M', '') AND lic_cat.entitlement_type_code = 'P')
+                OR (
+                        (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'F'
+                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'C%'
+                    )
+                OR (
+                        (lic_cat.test_category_ref LIKE 'D%')
+                        AND entitlement_type_code = 'F'
+                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'D%'
+                    )
+                OR (
+                        (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'P'
+                        AND lic_cat.entitlement_start_date >= l_effective_date
+                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'C%'
+                    )
+                OR (
+                        (lic_cat.test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'P'
+                        AND lic_cat.entitlement_start_date >= l_effective_date
+                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'D%'
+                    )
+            );
 
         -- Check the count, of there are records found then the Examiner does not need to ask the candidate to produce the evidence.
         IF l_count > 0 THEN
