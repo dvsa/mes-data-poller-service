@@ -85,6 +85,7 @@ interface TestSlotRow {
   business_telephone: string | null;
   cancel_initiator: string | null;
   examiner_deployed_to_from_code: number | null;
+  cat_ent_check_ind: number | null;
 }
 
 /**
@@ -137,6 +138,7 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
     setBooleanIfPopulated(app, 'specialNeedsExtendedTest', row.special_needs_extended_test);
     setStringIfPopulated(app, 'specialNeedsCode', row.special_needs_code);
     setBooleanIfPopulated(app, 'entitlementCheck', row.ent_check_ind);
+    setBooleanIfPopulated(app, 'categoryEntitlementCheck', row.cat_ent_check_ind);
     setNumberIfTruthy(app, 'vehicleSeats', zeroIfNull(row.cab_seat_count) + zeroIfNull(row.passenger_seat_count));
     setNumberIfTruthy(app, 'vehicleHeight', row.height_metres);
     setNumberIfTruthy(app, 'vehicleWidth', row.width_metres);
