@@ -199,7 +199,7 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
 
          -- Check the Licence data for the Driver to ensure they have the entitlements
         SELECT COUNT(*) INTO l_count
-        FROM licence_category lic_cat
+        FROM driver_licence_category lic_cat
                  JOIN INDIVIDUAL IND
                       ON lic_cat.current_driver_number = ind.driver_number
         WHERE ind.individual_id = p_candidate_id
