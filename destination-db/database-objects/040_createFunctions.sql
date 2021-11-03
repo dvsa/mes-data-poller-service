@@ -166,23 +166,31 @@ CREATE FUNCTION getJournalEndDate(pCountryId INT, pStartDate DATE) RETURNS DATE
 DROP FUNCTION IF EXISTS getBusLorryDVLAConfIndicator;
 //
 
-CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category_code varchar(30)) RETURNS INT
+CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category_code VARCHAR(30)) RETURNS INT
     BEGIN
         DECLARE l_effective_date DATE DEFAULT NULL;
         DECLARE l_count INT DEFAULT 0;
+        DECLARE l_test_category_code VARCHAR(10) DEFAULT p_test_category_code;
 
-        -- Only the following categories are supported
-        IF REPLACE(p_test_category_code, 'M', '') NOT IN ('C', 'CE', 'C1', 'C1E', 'D', 'DE', 'D1', 'D1E') THEN
-           RETURN 0;
-        END IF;
+        DECLARE voc_mano_eff_date_curr CURSOR for
+            SELECT str_to_date(value, '%d/%m/%Y')
+            FROM app_system_parameter
+            WHERE app_sys_param_key = 'LORRY_BUS_MAN_ACTIVE_DATE'
+            AND SYSDATE() BETWEEN effective_from AND IFNULL(effective_to, DATE_ADD(SYSDATE(), INTERVAL 1 DAY)); 
+
+        -- The Test Category we want to use for checking (D90 Data has no M or + in its data
+        SET l_test_category_code = REPLACE(REPLACE(p_test_category_code, 'M', ''), '+', '');    
+
+        -- Only the following categories are supported for the check
+        IF l_test_category_code NOT IN ('C','CE','C1','C1E','D','DE','D1','D1E') THEN
+          RETURN 0;
+        END IF; 
 
         -- Get the effectivity parameter
-        SELECT STR_TO_DATE(VALUE, '%d/%m/%y') INTO l_effective_date
-        FROM APP_SYSTEM_PARAMETER
-        WHERE APP_SYS_PARAM_KEY = 'LORRY_BUS_MAN_ACTIVE_DATE'
-          AND SYSDATE()
-            BETWEEN EFFECTIVE_FROM
-            AND IFNULL(EFFECTIVE_TO, DATE_ADD(SYSDATE(), INTERVAL 1 DAY));
+        -- Open the cursor and load the latest updated record
+        OPEN voc_mano_eff_date_curr;
+        FETCH voc_mano_eff_date_curr INTO l_effective_date;
+        CLOSE voc_mano_eff_date_curr;
 
         -- if the date is not in effective yet then we don't indicate a check is required
         IF (l_effective_date IS NULL OR SYSDATE() < l_effective_date) THEN
@@ -191,35 +199,35 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
 
          -- Check the Licence data for the Driver to ensure they have the entitlements
         SELECT COUNT(*) INTO l_count
-        FROM licence_category lic_cat
+        FROM driver_licence_category lic_cat
                  JOIN INDIVIDUAL IND
                       ON lic_cat.current_driver_number = ind.driver_number
         WHERE ind.individual_id = p_candidate_id
-          AND (
-                (lic_cat.test_category_ref = REPLACE(p_test_category_code, 'M', '') AND lic_cat.entitlement_type_code = 'P')
+            AND (
+                (lic_cat.test_category_ref = l_test_category_code AND lic_cat.entitlement_type_code = 'P')
                 OR (
                         (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
                         AND lic_cat.entitlement_type_code = 'F'
-                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'C%'
-                    )
+                        AND l_test_category_code LIKE 'C%'
+                   )
                 OR (
-                        (lic_cat.test_category_ref LIKE 'D%')
+                        lic_cat.test_category_ref LIKE 'D%'
                         AND entitlement_type_code = 'F'
-                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'D%'
-                    )
+                        AND l_test_category_code LIKE 'D%'
+                   )
                 OR (
                         (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
-                        AND lic_cat.entitlement_type_code = 'P'
+                        AND lic_cat.entitlement_type_code = 'P' 
                         AND lic_cat.entitlement_start_date >= l_effective_date
-                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'C%'
-                    )
+                        AND l_test_category_code LIKE 'C%'
+                   )
                 OR (
                         (lic_cat.test_category_ref LIKE 'D%')
-                        AND lic_cat.entitlement_type_code = 'P'
+                        AND lic_cat.entitlement_type_code = 'P' 
                         AND lic_cat.entitlement_start_date >= l_effective_date
-                        AND REPLACE(p_test_category_code, 'M', '') LIKE 'D%'
-                    )
-            );
+                        AND l_test_category_code LIKE 'D%'
+                   )
+             );
 
         -- Check the count, of there are records found then the Examiner does not need to ask the candidate to produce the evidence.
         IF l_count > 0 THEN
