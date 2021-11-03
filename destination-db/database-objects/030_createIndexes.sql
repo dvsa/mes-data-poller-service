@@ -55,3 +55,4 @@ CALL CreateIndex ('tarsreplica','TEST_HISTORY','IX_TH_INDID','individual_id');
 CALL CreateIndex ('tarsreplica','APPLICATION_HISTORY','IX_AH_APP_ID','app_id');
 CALL CreateIndex ('tarsreplica','APPLICATION_RSIS_INFO','IX_RSIS_BOOKID','booking_id');
 CALL CreateIndex ('tarsreplica','ETHNIC_ORIGIN','IX_ETHNORGN_COV','driver_number,loaded_date');
+CALL CreateIndex ('tarsreplica','DRIVER_LICENCE_CATEGORY','IX_DRIV_LIC_CAT','current_driver_number,test_category_ref');

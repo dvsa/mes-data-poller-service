@@ -68,6 +68,7 @@ describe('TestSlot Row Mapper', () => {
     business_telephone: '6677',
     cancel_initiator: 'DSA,Act of nature',
     examiner_deployed_to_from_code: null,
+    cat_ent_check_ind: null,
   };
 
   it('should map a fully populated TestSlotRow to an ExaminerTestSlot', () => {
@@ -95,6 +96,7 @@ describe('TestSlot Row Mapper', () => {
               vehicleLength: 12,
               testCategory: 'vehcat',
               vehicleGearbox: 'Manual',
+              categoryEntitlementCheck: false,
             },
             business: {
               businessAddress: {
@@ -243,6 +245,7 @@ describe('TestSlot Row Mapper', () => {
       business_telephone: null,
       cancel_initiator: null,
       examiner_deployed_to_from_code: null,
+      cat_ent_check_ind: null,
     });
     expect(result).toEqual(
       {
@@ -331,6 +334,7 @@ describe('TestSlot Row Mapper', () => {
       business_telephone: '  ',
       cancel_initiator: '',
       examiner_deployed_to_from_code: null,
+      cat_ent_check_ind: null,
     });
     expect(result).toEqual(
       {
@@ -356,6 +360,7 @@ describe('TestSlot Row Mapper', () => {
               specialNeedsExtendedTest: true,
               progressiveAccess: false,
               entitlementCheck: false,
+              categoryEntitlementCheck: false,
             },
             candidate: {
               candidateId: 5555,
@@ -443,6 +448,7 @@ describe('TestSlot Row Mapper', () => {
       business_telephone: null,
       cancel_initiator: null,
       examiner_deployed_to_from_code: null,
+      cat_ent_check_ind: 1,
     });
     expect(result).toEqual(
       {
@@ -468,6 +474,7 @@ describe('TestSlot Row Mapper', () => {
               extendedTest: false,
               progressiveAccess: false,
               entitlementCheck: false,
+              categoryEntitlementCheck: true,
             },
             candidate: {
               candidateId: 5555,
