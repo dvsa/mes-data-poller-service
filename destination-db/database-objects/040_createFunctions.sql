@@ -174,7 +174,7 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
 
         DECLARE voc_mano_eff_date_curr CURSOR for
             SELECT str_to_date(value, '%d/%m/%Y')
-            FROM app_system_parameter
+            FROM APP_SYSTEM_PARAMETER
             WHERE app_sys_param_key = 'LORRY_BUS_MAN_ACTIVE_DATE'
             AND SYSDATE() BETWEEN effective_from AND IFNULL(effective_to, DATE_ADD(SYSDATE(), INTERVAL 1 DAY)); 
 
@@ -199,8 +199,8 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
 
          -- Check the Licence data for the Driver to ensure they have the entitlements
         SELECT COUNT(*) INTO l_count
-        FROM driver_licence_category lic_cat
-                 JOIN INDIVIDUAL IND
+        FROM DRIVER_LICENCE_CATEGORY lic_cat
+        JOIN INDIVIDUAL ind
                       ON lic_cat.current_driver_number = ind.driver_number
         WHERE ind.individual_id = p_candidate_id
             AND (
