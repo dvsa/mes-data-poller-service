@@ -171,39 +171,79 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
         DECLARE l_effective_date DATE DEFAULT NULL;
         DECLARE l_count INT DEFAULT 0;
         DECLARE l_test_category_code VARCHAR(10) DEFAULT p_test_category_code;
+        DECLARE l_driver_number VARCHAR(4000) DEFAULT NULL;
+        DECLARE gb_driver_number_curr_p_individual_id INT;
+        DECLARE h_no_rows_left INT DEFAULT 0;
+        DECLARE v_no_rows_left INT DEFAULT 0;
 
         DECLARE voc_mano_eff_date_curr CURSOR for
             SELECT str_to_date(value, '%d/%m/%Y')
             FROM APP_SYSTEM_PARAMETER
             WHERE app_sys_param_key = 'LORRY_BUS_MAN_ACTIVE_DATE'
-            AND SYSDATE() BETWEEN effective_from AND IFNULL(effective_to, DATE_ADD(SYSDATE(), INTERVAL 1 DAY)); 
+              AND SYSDATE() BETWEEN effective_from AND IFNULL(effective_to, DATE_ADD(SYSDATE(), INTERVAL 1 DAY));
+
+        -- Assumed Driver Number must be 16 digits (CLH is always 16 digits)
+        DECLARE gb_driver_number_curr CURSOR for
+            SELECT DISTINCT(TRIM(driver_number))
+            FROM INDIVIDUAL
+            WHERE CHAR_LENGTH(TRIM(driver_number)) = 16
+              AND individual_id = gb_driver_number_curr_p_individual_id;
 
         -- The Test Category we want to use for checking (D90 Data has no M or + in its data
-        SET l_test_category_code = REPLACE(REPLACE(p_test_category_code, 'M', ''), '+', '');    
+        SET l_test_category_code = REPLACE(REPLACE(p_test_category_code, 'M', ''), '+', '');
 
         -- Only the following categories are supported for the check
-        IF l_test_category_code NOT IN ('C','CE','C1','C1E','D','DE','D1','D1E') THEN
-          RETURN 0;
-        END IF; 
+        IF l_test_category_code NOT IN ('C', 'CE', 'C1', 'C1E', 'D', 'DE', 'D1', 'D1E') THEN
+            RETURN 0;
+        END IF;
 
         -- Get the effectivity parameter
         -- Open the cursor and load the latest updated record
         OPEN voc_mano_eff_date_curr;
-        FETCH voc_mano_eff_date_curr INTO l_effective_date;
+            BEGIN
+                DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_no_rows_left = 1;
+                FETCH voc_mano_eff_date_curr INTO l_effective_date;
+            END;
         CLOSE voc_mano_eff_date_curr;
+
+        IF (v_no_rows_left = 1) THEN
+            RETURN 0;
+        END IF;
 
         -- if the date is not in effective yet then we don't indicate a check is required
         IF (l_effective_date IS NULL OR SYSDATE() < l_effective_date) THEN
             RETURN 0;
         END IF;
 
+        -- Get the Driver Number when GB or CLH length
+        -- Trust TARS has the data correct and only allows GB, NI or CLH to be booked.
+        -- Open the cursor and load the driver number
+        SET gb_driver_number_curr_p_individual_id = p_candidate_id;
+
+        OPEN gb_driver_number_curr;
+            BEGIN
+                DECLARE CONTINUE HANDLER FOR NOT FOUND SET h_no_rows_left = 1;
+                FETCH gb_driver_number_curr INTO l_driver_number;
+            END;
+        CLOSE gb_driver_number_curr;
+
+        IF (h_no_rows_left = 1) THEN
+            RETURN 0;
+        END IF;
+
+        -- If the GB or CLH driver number cannot be found then we dont want a marker.
+        IF l_driver_number IS NULL THEN
+            RETURN 0;
+        -- CLH driver numbers always require a marker.
+        ELSEIF UPPER(l_driver_number) LIKE '%CLH' THEN
+            RETURN 1;
+        END IF;
+
          -- Check the Licence data for the Driver to ensure they have the entitlements
         SELECT COUNT(*) INTO l_count
         FROM DRIVER_LICENCE_CATEGORY lic_cat
-        JOIN INDIVIDUAL ind
-                      ON lic_cat.current_driver_number = ind.driver_number
-        WHERE ind.individual_id = p_candidate_id
-            AND (
+        WHERE lic_cat.current_driver_number = l_driver_number
+          AND (
                 (lic_cat.test_category_ref = l_test_category_code AND lic_cat.entitlement_type_code = 'P')
                 OR (
                         (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
