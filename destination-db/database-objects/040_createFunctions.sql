@@ -245,7 +245,7 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
         WHERE lic_cat.current_driver_number = l_driver_number
             AND (
                       (lic_cat.test_category_ref = l_test_category_code AND lic_cat.entitlement_type_code = 'P')
-                      OR (lic_cat.test_category_ref IN ( 'C', 'C1E', 'CE' ) AND l_test_category_code IN 'C1')
+                      OR (lic_cat.test_category_ref IN ( 'C', 'C1E', 'CE' ) AND l_test_category_code IN ( 'C1' ))
                       OR (lic_cat.test_category_ref IN ( 'CE' ) AND l_test_category_code IN ( 'C1E', 'C' ))
                       OR (lic_cat.test_category_ref IN ( 'D', 'D1E', 'DE' ) AND l_test_category_code IN ( 'D1' ))
                       OR (lic_cat.test_category_ref IN ( 'DE' ) AND l_test_category_code IN ( 'D1E', 'D' ))
