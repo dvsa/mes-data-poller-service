@@ -243,18 +243,31 @@ CREATE FUNCTION getBusLorryDVLAConfIndicator(p_candidate_id INT, p_test_category
         SELECT COUNT(*) INTO l_count
         FROM DRIVER_LICENCE_CATEGORY lic_cat
         WHERE lic_cat.current_driver_number = l_driver_number
-          AND ((lic_cat.entitlement_type_code = 'P')
-                   AND ((lic_cat.test_category_ref = l_test_category_code)
-                OR (lic_cat.test_category_ref IN ('C', 'C1E', 'CE') AND l_test_category_code IN ('C1'))
-                OR (lic_cat.test_category_ref IN ('CE') AND l_test_category_code IN ('C1E', 'C'))
-                OR (lic_cat.test_category_ref IN ('D', 'D1E', 'DE') AND l_test_category_code IN ('D1'))
-                OR (lic_cat.test_category_ref IN ('DE') AND l_test_category_code IN ('D1E', 'D')))
-            OR ((lic_cat.entitlement_type_code = 'F')
-                AND ((lic_cat.test_category_ref LIKE 'C%' AND l_test_category_code LIKE 'C%')
-                    OR (lic_cat.test_category_ref LIKE 'D%' AND (l_test_category_code LIKE 'C%' OR l_test_category_code LIKE 'D%'))))
-            OR (lic_cat.entitlement_type_code = 'P' AND lic_cat.entitlement_start_date >= l_effective_date)
-                   AND ((lic_cat.test_category_ref like 'C%' AND l_test_category_code LIKE 'C%') OR lic_cat.test_category_ref LIKE 'D%')
-            );
+          AND (
+                (lic_cat.test_category_ref = l_test_category_code AND lic_cat.entitlement_type_code = 'P')
+                OR (
+                        (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'F'
+                        AND l_test_category_code LIKE 'C%'
+                   )
+                OR (
+                        lic_cat.test_category_ref LIKE 'D%'
+                        AND entitlement_type_code = 'F'
+                        AND l_test_category_code LIKE 'D%'
+                   )
+                OR (
+                        (lic_cat.test_category_ref LIKE 'C%' OR test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'P' 
+                        AND lic_cat.entitlement_start_date >= l_effective_date
+                        AND l_test_category_code LIKE 'C%'
+                   )
+                OR (
+                        (lic_cat.test_category_ref LIKE 'D%')
+                        AND lic_cat.entitlement_type_code = 'P' 
+                        AND lic_cat.entitlement_start_date >= l_effective_date
+                        AND l_test_category_code LIKE 'D%'
+                   )
+             );
 
         -- Check the count, of there are records found then the Examiner does not need to ask the candidate to produce the evidence.
         IF l_count > 0 THEN
