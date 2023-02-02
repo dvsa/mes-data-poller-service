@@ -114,6 +114,7 @@ const getQuery = (ids: number[]) => {
          i.date_of_birth as candidate_date_of_birth, i.gender_code as candidate_gender_code,
          eo.ethnicity_code as candidate_ethnicity_code,
          ccd.contact_details_id as candidate_cd_id, ccd.prim_tel_voicemail_ind, ccd.primary_tel_number,
+         intd.integrity_ind as integrity_ind,
          ccd.sec_tel_voicemail_ind, ccd.secondary_tel_number, ccd.mobile_voicemail_ind, ccd.mobile_tel_number,
          ccd.email_address as cand_email, cand_addr.address_id as candidate_addr_id, cand_addr.address_line_1,
          cand_addr.address_line_2, cand_addr.address_line_3, cand_addr.address_line_4, cand_addr.address_line_5,
@@ -141,6 +142,7 @@ const getQuery = (ids: number[]) => {
          left join INDIVIDUAL  i on a.individual_id = i.individual_id
          left join REF_DATA_ITEM_MASTER  title_ref on i.title_code = title_ref.item_id
          left join CONTACT_DETAILS ccd on a.individual_id = ccd.individual_id
+         left join INTEGRITY_DETAILS intd on a.individual_id = intd.individual_id
          left join ADDRESS cand_addr on cand_addr.address_type_code = 1263 and a.individual_id = cand_addr.individual_id
          left join REGISTER cand_adi on a.individual_id = cand_adi.individual_id
          left join CUSTOMER_ORDER co on a.order_id = co.order_id and co.booker_type_code in ('B','T')

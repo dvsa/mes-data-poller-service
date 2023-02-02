@@ -334,7 +334,7 @@ export enum GenderCode {
  * @param candidate The candidate object to assign into
  * @param candidateGenderCode The candidate's gender code queried from the DB
  */
-const setGenderIfPopulated = (candidate: Candidate, candidateGenderCode: string | null) => {
+export const setGenderIfPopulated = (candidate: Candidate, candidateGenderCode: string | null) => {
   if (candidateGenderCode === GenderCode.Male) {
     candidate.gender = 'M';
   }

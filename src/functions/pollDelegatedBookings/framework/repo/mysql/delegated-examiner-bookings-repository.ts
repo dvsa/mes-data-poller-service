@@ -12,6 +12,7 @@ export interface DelegatedTestSlotRow {
   start_time: Date;
   vehicle_type_code: string | null; // nullable
   vehicle_slot_type_code: number | null; // nullable
+  candidate_gender_code: string | null; // nullable
   booking_id: number | null;
   driver_number: string | null;
   individual_id: number;
@@ -64,6 +65,7 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
      , cd.date_of_birth
      , vst.vehicle_type_code
      , vst.vst_code vehicle_slot_type_code
+     , cd.gender_code as candidate_gender_code
   FROM tarsreplica.EXAMINER ex
   JOIN tarsreplica.PROGRAMME_SLOT ps
     ON ps.individual_id = ex.individual_id
