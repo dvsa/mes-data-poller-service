@@ -92,7 +92,8 @@ const getQuery = (ids: number[]) => {
      booking_details.business_post_code as business_post_code,
      booking_details.business_telephone as business_telephone,
      booking_details.cancel_initiator,
-     getBusLorryDVLAConfIndicator(booking_details.candidate_id, booking_details.vehicle_category) as cat_ent_check_ind
+     getBusLorryDVLAConfIndicator(booking_details.candidate_id, booking_details.vehicle_category) as cat_ent_check_ind,
+     booking_details.integrity_ind
  from
   WORK_SCHEDULE_SLOTS w
     join TEST_CENTRE tc on w.tc_id = tc.tc_id
