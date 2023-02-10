@@ -4,7 +4,7 @@ import { formatApplicationReference } from '@dvsa/mes-microservice-common/domain
 import { DelegatedTestSlotRow } from './delegated-examiner-bookings-repository';
 import { DelegatedExaminerTestSlot } from '../../../../pollJournals/domain/examiner-test-slot';
 import {
-  setCapitalisedStringIfPopulated,
+  setCapitalisedStringIfPopulated, setGenderIfPopulated,
   setNumberIfNotNull,
   setNumberIfTruthy,
   setStringIfPopulated,
@@ -40,6 +40,7 @@ const mapDelegatedExaminerBooking = (row: DelegatedTestSlotRow): DelegatedExamin
   candidateDetails.candidateName = {};
   setCapitalisedStringIfPopulated(candidateDetails.candidateName, 'firstName', row.first_forename);
   setCapitalisedStringIfPopulated(candidateDetails.candidateName, 'lastName', row.family_name);
+  setGenderIfPopulated(candidateDetails, row.candidate_gender_code);
 
   return {
     examinerId: row.staff_number,

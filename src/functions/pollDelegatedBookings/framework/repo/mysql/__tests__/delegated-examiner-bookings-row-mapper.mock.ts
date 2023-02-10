@@ -20,6 +20,7 @@ export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
     tc_cost_centre_code: 'cost code',
     date_of_birth: new Date('1990-12-15'),
     staff_number: '1234567',
+    candidate_gender_code: 'M',
   },
   {
     app_id: 41234568,
@@ -40,6 +41,7 @@ export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
     tc_cost_centre_code: 'cost code',
     date_of_birth: new Date('1906-02-05'),
     staff_number: '4583912',
+    candidate_gender_code: 'F',
   },
   {
     app_id: 41234569,
@@ -60,6 +62,7 @@ export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
     tc_cost_centre_code: 'cost code',
     date_of_birth: new Date('1988-05-25'),
     staff_number: '2468053',
+    candidate_gender_code: 'F',
   },
   {
     app_id: 41234561,
@@ -80,5 +83,6 @@ export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
     tc_cost_centre_code: 'cost code',
     date_of_birth: new Date('1992-01-20'),
     staff_number: '9865321',
+    candidate_gender_code: 'M',
   },
 ];
