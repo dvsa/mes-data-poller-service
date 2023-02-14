@@ -100,7 +100,7 @@ describe('TestSlot Row Mapper', () => {
               vehicleGearbox: 'Manual',
               categoryEntitlementCheck: false,
               fitMarker: true,
-              fitCaseNumber: 'CASE NUM'
+              fitCaseNumber: 'CASE NUM',
             },
             business: {
               businessAddress: {
