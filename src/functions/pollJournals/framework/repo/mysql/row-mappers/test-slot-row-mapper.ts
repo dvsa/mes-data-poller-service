@@ -86,6 +86,8 @@ interface TestSlotRow {
   cancel_initiator: string | null;
   examiner_deployed_to_from_code: number | null;
   cat_ent_check_ind: number | null;
+  integrity_ind: number | null;
+  integrity_case_number: string | null;
 }
 
 /**
@@ -130,6 +132,7 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
     setNumberIfTruthy(app, 'applicationId', row.app_id);
     setNumberIfTruthy(app, 'bookingSequence', row.booking_seq);
     setNumberIfNotNull(app, 'checkDigit', row.check_digit);
+    setBooleanIfPopulated(app, 'fitMarker', row.integrity_ind);
     setBooleanIfPopulated(app, 'welshTest', row.welsh_test_ind);
     setBooleanIfPopulated(app, 'extendedTest', row.ext_req_ind);
     setStringIfPopulated(app, 'meetingPlace', row.meeting_place);
@@ -144,6 +147,7 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
     setNumberIfTruthy(app, 'vehicleWidth', row.width_metres);
     setNumberIfTruthy(app, 'vehicleLength', row.length_metres);
     setStringIfPopulated(app, 'testCategory', row.vehicle_category);
+    setStringIfPopulated(app, 'fitCaseNumber', row.integrity_case_number);
 
     if (row.gearbox_type) {
       switch (row.gearbox_type) {

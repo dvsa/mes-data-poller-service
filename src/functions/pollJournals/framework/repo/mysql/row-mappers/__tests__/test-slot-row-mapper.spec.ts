@@ -69,6 +69,8 @@ describe('TestSlot Row Mapper', () => {
     cancel_initiator: 'DSA,Act of nature',
     examiner_deployed_to_from_code: null,
     cat_ent_check_ind: null,
+    integrity_ind: 1,
+    integrity_case_number: 'CASE NUM',
   };
 
   it('should map a fully populated TestSlotRow to an ExaminerTestSlot', () => {
@@ -97,6 +99,8 @@ describe('TestSlot Row Mapper', () => {
               testCategory: 'vehcat',
               vehicleGearbox: 'Manual',
               categoryEntitlementCheck: false,
+              fitMarker: true,
+              fitCaseNumber: 'CASE NUM'
             },
             business: {
               businessAddress: {
@@ -246,6 +250,8 @@ describe('TestSlot Row Mapper', () => {
       cancel_initiator: null,
       examiner_deployed_to_from_code: null,
       cat_ent_check_ind: null,
+      integrity_ind: null,
+      integrity_case_number: null,
     });
     expect(result).toEqual(
       {
@@ -335,6 +341,8 @@ describe('TestSlot Row Mapper', () => {
       cancel_initiator: '',
       examiner_deployed_to_from_code: null,
       cat_ent_check_ind: null,
+      integrity_ind: 0,
+      integrity_case_number: ' ',
     });
     expect(result).toEqual(
       {
@@ -361,6 +369,7 @@ describe('TestSlot Row Mapper', () => {
               progressiveAccess: false,
               entitlementCheck: false,
               categoryEntitlementCheck: false,
+              fitMarker: false,
             },
             candidate: {
               candidateId: 5555,
@@ -449,6 +458,8 @@ describe('TestSlot Row Mapper', () => {
       cancel_initiator: null,
       examiner_deployed_to_from_code: null,
       cat_ent_check_ind: 1,
+      integrity_ind: 0,
+      integrity_case_number: null,
     });
     expect(result).toEqual(
       {
@@ -475,6 +486,7 @@ describe('TestSlot Row Mapper', () => {
               progressiveAccess: false,
               entitlementCheck: false,
               categoryEntitlementCheck: true,
+              fitMarker: false,
             },
             candidate: {
               candidateId: 5555,
