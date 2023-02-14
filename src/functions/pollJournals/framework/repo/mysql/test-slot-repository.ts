@@ -93,7 +93,8 @@ const getQuery = (ids: number[]) => {
      booking_details.business_telephone as business_telephone,
      booking_details.cancel_initiator,
      getBusLorryDVLAConfIndicator(booking_details.candidate_id, booking_details.vehicle_category) as cat_ent_check_ind,
-     booking_details.integrity_ind
+     booking_details.integrity_ind,
+     booking_details.integrity_case_number
  from
   WORK_SCHEDULE_SLOTS w
     join TEST_CENTRE tc on w.tc_id = tc.tc_id
@@ -116,6 +117,7 @@ const getQuery = (ids: number[]) => {
          eo.ethnicity_code as candidate_ethnicity_code,
          ccd.contact_details_id as candidate_cd_id, ccd.prim_tel_voicemail_ind, ccd.primary_tel_number,
          intd.integrity_ind as integrity_ind,
+         intd.integrity_case_number as integrity_case_number,
          ccd.sec_tel_voicemail_ind, ccd.secondary_tel_number, ccd.mobile_voicemail_ind, ccd.mobile_tel_number,
          ccd.email_address as cand_email, cand_addr.address_id as candidate_addr_id, cand_addr.address_line_1,
          cand_addr.address_line_2, cand_addr.address_line_3, cand_addr.address_line_4, cand_addr.address_line_5,
