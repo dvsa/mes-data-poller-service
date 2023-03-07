@@ -11,6 +11,7 @@ import { info, customDurationMetric } from '@dvsa/mes-microservice-common/applic
  * @param examinerIds The examiner ids to use
  * @param journalStartDate The start date of the time window
  * @param endDate The end date of the time window
+ * @param testSlotRun Passed as index from loop for logging context
  * @returns The detailed test slots
  */
 export const getTestSlots = async (
@@ -18,17 +19,18 @@ export const getTestSlots = async (
   examinerIds: number[],
   journalStartDate: Date,
   endDate: Date,
+  testSlotRun?: number,
 ): Promise<ExaminerTestSlot[]> => {
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(journalStartDate).format(sqlYearFormat);
   const windowEnd = moment(endDate).format(sqlYearFormat);
 
-  info(`running test slots query from ${windowStart} to ${windowEnd}...`);
+  info(`Start run ${testSlotRun} - running test slots query from ${windowStart} to ${windowEnd}...`);
   const start = new Date();
   const res = await query(connectionPool, getQuery(examinerIds), [windowStart, windowEnd, windowStart]);
   const results = res.map(mapRow);
   const end = new Date();
-  info(`${results.length} test slots loaded and mapped`);
+  info(`Finished run ${testSlotRun} - ${results.length} test slots loaded and mapped`);
   customDurationMetric('TestSlotsQuery', 'Time taken querying detailed test slots, in seconds', start, end);
   return results;
 };
@@ -140,6 +142,8 @@ const getQuery = (ids: number[]) => {
        from BOOKING  b
          join APPLICATION a on a.app_id = b.app_id
          join APPLICATION_RSIS_INFO ari on b.booking_id = ari.booking_id
+         left join CONTACT_DETAILS ccd on a.individual_id = ccd.individual_id
+         left join INTEGRITY_DETAILS intd on a.individual_id = intd.individual_id
          left join VEHICLE v on a.vehicle_id = v.vehicle_id
          left join TEST_SERVICE ts on a.test_service_id = ts.test_service_id
          left join INDIVIDUAL  i on a.individual_id = i.individual_id
