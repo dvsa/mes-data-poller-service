@@ -122,7 +122,9 @@ const getQuery = (ids: number[]) => {
          ccd.email_address as cand_email, cand_addr.address_id as candidate_addr_id, cand_addr.address_line_1,
          cand_addr.address_line_2, cand_addr.address_line_3, cand_addr.address_line_4, cand_addr.address_line_5,
          cand_addr.post_code, ts.vst_code as vehicle_slot_type_code,
-         case when ts.test_category_ref like 'ADI%' then cand_adi.prn else null end as candidate_prn,
+         case when ts.test_category_ref like 'ADI%' or ts.test_category_ref = 'SC' then cand_adi.prn
+          else null
+          end as candidate_prn,
          org_reg.business_id as business_id,
          org.organisation_name as business_name,
          org.organisation_id as organisation_id,
