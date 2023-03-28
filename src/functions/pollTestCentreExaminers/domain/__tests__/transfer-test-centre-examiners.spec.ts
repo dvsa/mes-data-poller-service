@@ -24,7 +24,8 @@ describe('transferTestCentreExaminers', () => {
   });
   describe('transferTestCentreExaminers', () => {
     // tslint:disable-next-line:max-line-length
-    it('should retrieve all the active rows in the replica, all the staffNums in the cache and pass them to the reconciler', async () => {
+    it('should retrieve all the active rows in the replica, ' +
+        'all the staffNums in the cache and pass them to the reconciler', async () => {
       const activeTestCentres = [
         new TestCentreDetail('123', [{ staffNumber: '345', name: 'A' }], [1234]),
         new TestCentreDetail('456', [{ staffNumber: '432', name: 'B' }], [2341]),
@@ -39,7 +40,10 @@ describe('transferTestCentreExaminers', () => {
 
       await transferTestCentreExaminers();
       // tslint:disable-next-line:max-line-length
-      moqReconciler.verify(x => x(It.isValue(activeTestCentres), It.isValue(cachedTestCentres)), Times.once());
+      moqReconciler.verify(x => x(
+        It.isValue(activeTestCentres),
+        It.isValue(cachedTestCentres)
+      ), Times.once());
     });
   });
 });

@@ -7,7 +7,6 @@ import { StaffDetail, TestPermissionPeriod } from '../../../../common/applicatio
 import * as universalPermissionsRepository from '../../framework/repo/mysql/universal-permissions-repository';
 import { ExaminerRole } from '../constants/examiner-roles';
 
-/* tslint:disable:max-line-length */
 describe('transferUsers module', () => {
   const moqExaminerRepo = Mock.ofInstance(examinerRepository.getActiveExaminers);
   const moqCachedExaminerRepo = Mock.ofInstance(cachedExaminerRepository.getCachedExaminers);
@@ -23,10 +22,12 @@ describe('transferUsers module', () => {
     spyOn(examinerRepository, 'getActiveExaminers').and.callFake(moqExaminerRepo.object);
     spyOn(cachedExaminerRepository, 'getCachedExaminers').and.callFake(moqCachedExaminerRepo.object);
     spyOn(examinerCacheReconciler, 'reconcileActiveAndCachedExaminers').and.callFake(moqReconciler.object);
-    spyOn(universalPermissionsRepository, 'getUniversalTestPermissions').and.callFake(moqUniversalPermissionsRepository.object);
+    spyOn(universalPermissionsRepository, 'getUniversalTestPermissions')
+      .and.callFake(moqUniversalPermissionsRepository.object);
   });
   describe('transferUsers', () => {
-    it('should retrieve all the active examiners in the replica, all the IDs in the cache and pass them to the reconciler', async () => {
+    it('should retrieve all the active examiners in the replica, ' +
+            'all the IDs in the cache and pass them to the reconciler', async () => {
       const univeralPermissionPeriods: TestPermissionPeriod[] = [
         {
           testCategory: 'B',
@@ -43,14 +44,20 @@ describe('transferUsers module', () => {
         new StaffDetail('2', ExaminerRole.LDTM, univeralPermissionPeriods),
         new StaffDetail('5', ExaminerRole.DE, univeralPermissionPeriods),
       ];
-      moqExaminerRepo.setup(x => x(It.isValue(univeralPermissionPeriods))).returns(() => Promise.resolve(activeStaffDetails));
+      moqExaminerRepo.setup(x => x(It.isValue(univeralPermissionPeriods)))
+        .returns(() => Promise.resolve(activeStaffDetails));
       moqCachedExaminerRepo.setup(x => x()).returns(() => Promise.resolve(cachedStaffDetails));
-      moqUniversalPermissionsRepository.setup(x => x()).returns(() => Promise.resolve(univeralPermissionPeriods));
+      moqUniversalPermissionsRepository.setup(x => x())
+        .returns(() => Promise.resolve(univeralPermissionPeriods));
 
       await transferUsers();
 
       moqUniversalPermissionsRepository.verify(x => x(), Times.once());
-      moqReconciler.verify(x => x(It.isValue(activeStaffDetails), It.isValue(cachedStaffDetails)), Times.once());
+      moqReconciler.verify(x => x(
+        It.isValue(activeStaffDetails),
+        It.isValue(cachedStaffDetails)),
+                           Times.once()
+      );
     });
   });
 });

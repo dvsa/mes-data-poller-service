@@ -13,7 +13,7 @@ import { customDurationMetric, info } from '@dvsa/mes-microservice-common/applic
  * @returns The deployments
  */
 export const getDeployments = async (connectionPool: mysql.Pool, startDate: Date, durationMonths: number):
-  Promise<ExaminerDeployment[]> => {
+Promise<ExaminerDeployment[]> => {
   const windowStart = moment(startDate);
   const windowEnd = windowStart.clone().add({ months: durationMonths }).subtract({ days: 1 });
   const sqlDateFormat = 'YYYY-MM-DD';

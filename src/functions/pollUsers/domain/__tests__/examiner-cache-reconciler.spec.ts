@@ -1,4 +1,3 @@
-/* tslint:disable:max-line-length */
 import { reconcileActiveAndCachedExaminers } from '../examiner-cache-reconciler';
 import { Mock, It, Times } from 'typemoq';
 import * as cachedExaminerRepository from '../../framework/repo/dynamodb/cached-examiner-repository';
@@ -19,7 +18,10 @@ describe('examiner cache reconciler', () => {
 
   describe('reconcileActiveAndCachedExaminers', () => {
     it('should issue writes to the cache for active examiners not already cached', async () => {
-      const activeStaffDetails = [new StaffDetail('1', ExaminerRole.DE), new StaffDetail('2', ExaminerRole.LDTM)];
+      const activeStaffDetails = [
+        new StaffDetail('1', ExaminerRole.DE),
+        new StaffDetail('2', ExaminerRole.LDTM),
+      ];
       const cachedStaffDetails: StaffDetail[] = [];
       const cachedStaffNumbers: string[] = [];
       await reconcileActiveAndCachedExaminers(activeStaffDetails, cachedStaffDetails);
@@ -28,7 +30,8 @@ describe('examiner cache reconciler', () => {
       moqUncacheStaffNumbers.verify(x => x(It.isValue(cachedStaffNumbers)), Times.once());
     });
 
-    it('should cache active examiners not already in the cache and uncache those that are cached but not active', async () => {
+    it('should cache active examiners not already in the cache and ' +
+            'uncache those that are cached but not active', async () => {
       const activeStaffDetails = [new StaffDetail('1', ExaminerRole.DE)];
       const cachedStaffDetails = [
         new StaffDetail('1', ExaminerRole.DE),
@@ -40,8 +43,12 @@ describe('examiner cache reconciler', () => {
       moqUncacheStaffNumbers.verify(x => x(It.isValue(['2', '3'])), Times.once());
     });
 
-    it('should omit journals whose staff numbers occur more than once in the active dataset', async () => {
-      const activeStaffDetails = [new StaffDetail('1', ExaminerRole.DE), new StaffDetail('1', ExaminerRole.LDTM)];
+    it('should omit journals whose staff numbers occur more ' +
+            'than once in the active dataset', async () => {
+      const activeStaffDetails = [
+        new StaffDetail('1', ExaminerRole.DE),
+        new StaffDetail('1', ExaminerRole.LDTM),
+      ];
       const cachedStaffDetails: StaffDetail[] = [];
       const cachedStaffNumbers: string[] = [];
       await reconcileActiveAndCachedExaminers(activeStaffDetails, cachedStaffDetails);

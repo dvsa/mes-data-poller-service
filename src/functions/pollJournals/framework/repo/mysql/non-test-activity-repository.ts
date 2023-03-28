@@ -13,7 +13,7 @@ import { info, customDurationMetric } from '@dvsa/mes-microservice-common/applic
  * @returns The Non-test activities
  */
 export const getNonTestActivities = async (connectionPool: mysql.Pool, startDate: Date, endDate: Date)
-  : Promise<ExaminerNonTestActivity[]> => {
+: Promise<ExaminerNonTestActivity[]> => {
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);
   const windowEnd = moment(endDate).format(sqlYearFormat);

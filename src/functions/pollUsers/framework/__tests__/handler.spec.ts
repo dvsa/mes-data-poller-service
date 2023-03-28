@@ -1,7 +1,7 @@
-/* tslint:disable:max-line-length */
 import { handler } from '../handler';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { Mock, Times, It } from 'typemoq';
+
 const lambdaTestUtils = require('aws-lambda-test-utils');
 import * as config from '../config';
 import * as transferUsers from '../../domain/transfer-users';
@@ -46,7 +46,8 @@ describe('pollUsers handler', () => {
     expect(result).toBe(moqResponse.object);
   });
 
-  it('should create and return an internal server error response when the configBootstrap throws an error', async () => {
+  it('should create and return an internal server error response ' +
+        'when the configBootstrap throws an error', async () => {
     moqConfigBootstrap.setup(x => x()).throws(new Error('AWS down'));
 
     const result = await handler(dummyEvent, dummyContext);
@@ -55,7 +56,8 @@ describe('pollUsers handler', () => {
     moqCreateResponse.verify(x => x(It.isValue({}), It.isValue(HttpStatus.INTERNAL_SERVER_ERROR)), Times.once());
   });
 
-  it('should create and return an internal server error response when the user transfer throws an error', async () => {
+  it('should create and return an internal server error response ' +
+        'when the user transfer throws an error', async () => {
     moqTransferUsers.setup(x => x()).throws(new Error('MySQL down'));
 
     const result = await handler(dummyEvent, dummyContext);

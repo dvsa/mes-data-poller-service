@@ -3,7 +3,7 @@ import { getStaffNumbersWithHashes } from '../framework/repo/dynamodb/journal-re
 import { get } from 'lodash';
 
 export const filterChangedJournals = async (allJournals: JournalRecord[], startTime: Date):
-    Promise<JournalRecord[]> => {
+Promise<JournalRecord[]> => {
   const staffNumbersAndHashes = await getStaffNumbersWithHashes(startTime);
   const staffNumberHashMappings = createStaffNumberHashLookup(staffNumbersAndHashes);
 

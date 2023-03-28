@@ -24,7 +24,8 @@ describe('transferDelegatedBookings module', () => {
   });
   describe('transferDelegatedBookings', () => {
     // tslint:disable-next-line:max-line-length
-    it('should retrieve all the active examiners in the replica, all the IDs in the cache and pass them to the reconciler', async () => {
+    it('should retrieve all the active examiners in the replica,' +
+        'all the IDs in the cache and pass them to the reconciler', async () => {
       const buffer = Buffer.from('');
       const activeBookings = [
         new DelegatedBookingDetail(12345678910, '987654', buffer),
@@ -40,7 +41,11 @@ describe('transferDelegatedBookings module', () => {
 
       await transferDelegatedBookings();
       // tslint:disable-next-line:max-line-length
-      moqReconciler.verify(x => x(It.isValue(activeBookings), It.isValue(cachedBookingsDetails), It.isAny()), Times.once());
+      moqReconciler.verify(x => x(
+        It.isValue(activeBookings),
+        It.isValue(cachedBookingsDetails),
+        It.isAny()), Times.once()
+      );
     });
   });
 });
