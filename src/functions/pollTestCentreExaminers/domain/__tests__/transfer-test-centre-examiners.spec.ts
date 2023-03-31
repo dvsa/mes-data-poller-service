@@ -23,7 +23,6 @@ describe('transferTestCentreExaminers', () => {
       .and.callFake(moqReconciler.object);
   });
   describe('transferTestCentreExaminers', () => {
-    // tslint:disable-next-line:max-line-length
     it('should retrieve all the active rows in the replica, ' +
         'all the staffNums in the cache and pass them to the reconciler', async () => {
       const activeTestCentres = [
@@ -39,7 +38,6 @@ describe('transferTestCentreExaminers', () => {
       moqCachedTestCentreRepo.setup(x => x()).returns(() => Promise.resolve(cachedTestCentres));
 
       await transferTestCentreExaminers();
-      // tslint:disable-next-line:max-line-length
       moqReconciler.verify(x => x(
         It.isValue(activeTestCentres),
         It.isValue(cachedTestCentres)

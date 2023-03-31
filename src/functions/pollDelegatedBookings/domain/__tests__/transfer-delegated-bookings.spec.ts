@@ -23,7 +23,6 @@ describe('transferDelegatedBookings module', () => {
       .and.callFake(moqReconciler.object);
   });
   describe('transferDelegatedBookings', () => {
-    // tslint:disable-next-line:max-line-length
     it('should retrieve all the active examiners in the replica,' +
         'all the IDs in the cache and pass them to the reconciler', async () => {
       const buffer = Buffer.from('');
@@ -40,7 +39,6 @@ describe('transferDelegatedBookings module', () => {
       moqCachedDelBookingRepo.setup(x => x()).returns(() => Promise.resolve(cachedBookingsDetails));
 
       await transferDelegatedBookings();
-      // tslint:disable-next-line:max-line-length
       moqReconciler.verify(x => x(
         It.isValue(activeBookings),
         It.isValue(cachedBookingsDetails),
