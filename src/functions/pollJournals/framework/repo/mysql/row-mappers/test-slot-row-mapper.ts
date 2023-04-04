@@ -151,20 +151,20 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
 
     if (row.gearbox_type) {
       switch (row.gearbox_type) {
-        case 1:
-          app.vehicleGearbox = 'Manual';
-          break;
+      case 1:
+        app.vehicleGearbox = 'Manual';
+        break;
 
-        case 2:
-          app.vehicleGearbox = 'Automatic';
-          break;
+      case 2:
+        app.vehicleGearbox = 'Automatic';
+        break;
 
-        case 3:
-          app.vehicleGearbox = 'Semi-Automatic';
-          break;
+      case 3:
+        app.vehicleGearbox = 'Semi-Automatic';
+        break;
 
-        default:
-          error(`Invalid Gearbox Code ${row.gearbox_type} for app id ${row.app_id}`);
+      default:
+        error(`Invalid Gearbox Code ${row.gearbox_type} for app id ${row.app_id}`);
       }
     }
 

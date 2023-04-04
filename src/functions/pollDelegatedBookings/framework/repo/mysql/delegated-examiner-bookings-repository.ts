@@ -46,8 +46,8 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
   });
 
   const queryResult: DelegatedTestSlotRow[] = await query(
-      connection,
-      `SELECT ps.slot_id
+    connection,
+    `SELECT ps.slot_id
      , ps.start_time
      , bk.app_id
      , bk.booking_id

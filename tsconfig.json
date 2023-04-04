@@ -6,6 +6,7 @@
     "target": "es5",
     "outDir": "./build",
     "allowJs": false,
+    "skipLibCheck": true,
     "types" : [
       "node",
       "jasmine"

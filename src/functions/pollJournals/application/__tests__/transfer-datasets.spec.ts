@@ -125,7 +125,7 @@ describe('transferDatasets', () => {
 
   it('should use the journal end date if one is available',  async () => {
     spyOn(journalEndDateRepo, 'getJournalEndDate').and.callFake(() => mockJournalEndDate);
-    spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => mockNextWorkingDay);
+    spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => Promise.resolve(mockNextWorkingDay));
     await transferDatasets(dummyStartTime);
 
     moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), mockJournalEndDate), Times.once());
@@ -134,9 +134,9 @@ describe('transferDatasets', () => {
     moqGetDeployments.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
   });
 
-  it('should use the next working day if journal end date is NOT available', async() => {
+  it('should use the next working day if journal end date is NOT available', async () => {
     spyOn(journalEndDateRepo, 'getJournalEndDate').and.callFake(() => null);
-    spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => mockNextWorkingDay);
+    spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => Promise.resolve(mockNextWorkingDay));
     await transferDatasets(dummyStartTime);
 
     moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), mockNextWorkingDay), Times.once());

@@ -12,7 +12,7 @@ import { customMetric, warn, info } from '@dvsa/mes-microservice-common/applicat
 * Amount of time (in milliseconds), to throttle Journal writes over.
 * Slowing down the writes means using less DynamoDB write capcity units (WCU's) per second,
 * reducing the amount of capacity that needs to be provisioned. If we exceed the capacity (plus burst capacity)
-* then some of the writes will be refused by Dynamo (tracked as unprocessed items).
+* then some writes will be refused by Dynamo (tracked as unprocessed items).
 *
 * Upon testing in "perf", which has 50 WCUs provisioned, 2083 journals (roughly 4500 WCUs) can be successfully written
 * over 4 seconds if there are no other writes for the previous 5 minutes. Doing it quicker than that (i.e. without any
@@ -23,7 +23,7 @@ const totalSaveDuration = 4 * 1000;
 /*
  * Number of seconds between poller invocations.
  */
-export const pollerFrequency = 180;
+export const pollerFrequency = 210;
 
 export const journalHashesCache = new JournalHashesCache(pollerFrequency);
 let dynamoDocumentClient: DynamoDB.DocumentClient;
@@ -35,7 +35,7 @@ let dynamoDocumentClient: DynamoDB.DocumentClient;
  *
  * Only exported to support integration testing.
  */
-export const getDynamoClient = () => {
+export const getDynamoClient = (): DynamoDB.DocumentClient => {
   if (!dynamoDocumentClient) {
     if (config().isOffline) {
       const localRegion = 'localhost';
@@ -84,7 +84,7 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
     info(`END SAVE: ${new Date()}, ${totalUnprocessedWrites} WRITES FAILED`);
     customMetric('JournalsNotUpdated', 'Number of Journals not updated in Dynamo', totalUnprocessedWrites);
   } else {
-    info(`NO SAVE NEEDED`);
+    info('NO SAVE NEEDED');
   }
 };
 
