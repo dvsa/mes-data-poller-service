@@ -150,8 +150,6 @@ const getQuery = (ids: number[]) => {
          left join TEST_SERVICE ts on a.test_service_id = ts.test_service_id
          left join INDIVIDUAL  i on a.individual_id = i.individual_id
          left join REF_DATA_ITEM_MASTER  title_ref on i.title_code = title_ref.item_id
-         left join CONTACT_DETAILS ccd on a.individual_id = ccd.individual_id
-         left join INTEGRITY_DETAILS intd on a.individual_id = intd.individual_id
          left join ADDRESS cand_addr on cand_addr.address_type_code = 1263 and a.individual_id = cand_addr.individual_id
          left join REGISTER cand_adi on a.individual_id = cand_adi.individual_id
          left join CUSTOMER_ORDER co on a.order_id = co.order_id and co.booker_type_code in ('B','T')
