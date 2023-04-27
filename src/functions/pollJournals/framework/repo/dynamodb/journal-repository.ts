@@ -23,7 +23,8 @@ const totalSaveDuration = 4 * 1000;
 /*
  * Number of seconds between poller invocations.
  */
-export const pollerFrequency = 210;
+export const pollerFrequency = Number(process.env.POLLER_FREQUENCY) || 900;
+info(`Poller frequency: ${pollerFrequency}`);
 
 export const journalHashesCache = new JournalHashesCache(pollerFrequency);
 let dynamoDocumentClient: DynamoDB.DocumentClient;

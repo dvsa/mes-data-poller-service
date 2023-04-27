@@ -1,4 +1,6 @@
 import * as moment from 'moment';
+import { chunk } from 'lodash';
+import { ExaminerTestSlot } from '../domain/examiner-test-slot';
 import { getTestSlots } from '../framework/repo/mysql/test-slot-repository';
 import { getPersonalCommitments } from '../framework/repo/mysql/personal-commitment-repository';
 import { getNonTestActivities } from '../framework/repo/mysql/non-test-activity-repository';
@@ -57,22 +59,38 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
     ` to ${formatDate(journalEndDate)}...`);
 
   const [
-    testSlots,
     personalCommitments,
     nonTestActivities,
     advanceTestSlots,
     deployments,
   ] = await Promise.all([
-    getTestSlots(connectionPool, examinerIds, journalStartDate, journalEndDate),
     getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
   ]);
 
+  const examinerIdGroupCount = Math.floor(examiners.length / 5);
+  info(`Examiners will be separated into chunks of ${examinerIdGroupCount}`);
+
+  const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
+
+  const testSlots = (
+    await Promise.all(
+      examinerChunks.map(
+        (examinerChunk, index) =>
+          getTestSlots(connectionPool, examinerChunk, journalStartDate, journalEndDate, index),
+      ),
+    )
+  ).reduce((acc: ExaminerTestSlot[], curr: ExaminerTestSlot[]) => acc?.concat(curr));
+
   const journalQueryPhaseEnd = new Date();
-  customDurationMetric('JournalQueryPhase', 'Time taken running all TARSREPL queries, in seconds',
-                       journalQueryPhaseStart, journalQueryPhaseEnd);
+  customDurationMetric(
+    'JournalQueryPhase',
+    'Time taken running all TARSREPL queries, in seconds',
+    journalQueryPhaseStart,
+    journalQueryPhaseEnd,
+  );
 
   const datasets: AllDatasets = {
     testSlots,
@@ -84,6 +102,7 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   connectionPool.end();
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
+  console.log(datasets);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
   info(`FINISHED TRANFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 
