@@ -76,20 +76,20 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
 
   const testSlots = (
-      await Promise.all(
-          examinerChunks.map(
-              (examinerChunk, index) =>
-                  getTestSlots(connectionPool, examinerChunk, journalStartDate, journalEndDate, index),
-          ),
-      )
-  ).reduce((acc: ExaminerTestSlot[], curr: ExaminerTestSlot[]) => acc.concat(curr));
+    await Promise.all(
+      examinerChunks.map(
+        (examinerChunk, index) =>
+          getTestSlots(connectionPool, examinerChunk, journalStartDate, journalEndDate, index),
+      ),
+    )
+  ).reduce((acc: ExaminerTestSlot[], curr: ExaminerTestSlot[]) => acc?.concat(curr));
 
   const journalQueryPhaseEnd = new Date();
   customDurationMetric(
-      'JournalQueryPhase',
-      'Time taken running all TARSREPL queries, in seconds',
-      journalQueryPhaseStart,
-      journalQueryPhaseEnd,
+    'JournalQueryPhase',
+    'Time taken running all TARSREPL queries, in seconds',
+    journalQueryPhaseStart,
+    journalQueryPhaseEnd,
   );
 
   const datasets: AllDatasets = {
@@ -102,6 +102,7 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   connectionPool.end();
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
+  console.log(datasets);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
   info(`FINISHED TRANFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 

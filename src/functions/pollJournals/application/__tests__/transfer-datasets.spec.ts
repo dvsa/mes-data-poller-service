@@ -14,6 +14,11 @@ import { Mock, Times, It } from 'typemoq';
 import * as mysql from 'mysql2';
 import { dummyConfig } from '../../framework/config/__mocks__/config';
 import * as journalChangeFilter from '../journal-change-filter';
+import {ExaminerTestSlot} from '../../domain/examiner-test-slot';
+import {AllDatasets} from '../../domain/all-datasets';
+import {JournalRecord} from '../../domain/journal-record';
+import {ExaminerPersonalCommitment} from '../../domain/examiner-personal-commitment';
+import {ExaminerRecord} from '../../domain/examiner-record';
 
 const dummyNonTestActivityDataset = [{ examinerId: 3, nonTestActivity: {} }];
 const dummyAdvanceTestSlotDataset = [{ examinerId: 4, advanceTestSlot: {} }];
@@ -42,12 +47,29 @@ describe('transferDatasets', () => {
     { individual_id: 3, staff_number: '97' },
     { individual_id: 4, staff_number: '96' },
     { individual_id: 5, staff_number: '95' },
-  ];
+  ] as ExaminerRecord[];
   const dummyNextWorkingDay = new Date();
-  const dummyTestSlotDataset = [{ examinerId: 1, testSlot: {} }];
-  const dummyPersonalCommitmentDataset = [{ examinerId: 2, personalCommitment: {} }];
-  const dummyTransformedJournals = [{ examinerId: 1 }, { examinerId: 2 }];
-  const dummyFilteredJournals = [{ examinerId: 1 }];
+  const dummyTestSlotDataset = [
+    { examinerId: 1, testSlot: {} },
+  ] as ExaminerTestSlot[];
+  const dummyTestSlotsDataset = [
+    { examinerId: 1, testSlot: {} },
+    { examinerId: 1, testSlot: {} },
+    { examinerId: 1, testSlot: {} },
+    { examinerId: 1, testSlot: {} },
+    { examinerId: 1, testSlot: {} },
+  ] as ExaminerTestSlot[];
+  const dummyPersonalCommitmentDataset = [
+    { examinerId: 2, personalCommitment: {} },
+  ] as ExaminerPersonalCommitment[];
+  const dummyTransformedJournals = [
+    { staffNumber: '1' },
+    { staffNumber: '2' },
+    { staffNumber: '3' },
+    { staffNumber: '4' },
+    { staffNumber: '5' },
+  ] as JournalRecord[];
+  const dummyFilteredJournals = [{ staffNumber: '1' }] as JournalRecord[];
   const dummyStartTime = new Date();
   const mockJournalEndDate: Date = new Date('2020-01-01');
   const mockNextWorkingDay: Date = new Date('2021-01-01');
@@ -84,7 +106,7 @@ describe('transferDatasets', () => {
     moqGetExaminers.setup(x => x(It.isAny(), It.isAny())).returns(() => Promise.resolve(dummyExaminers));
     moqGetNextWorkingDay.setup(x => x(It.isAny(), It.isAny()))
       .returns(() => Promise.resolve(dummyNextWorkingDay));
-    moqGetTestSlots.setup(x => x(It.isAny(), It.isAny(), It.isAny(), It.isAny()))
+    moqGetTestSlots.setup(x => x(It.isAny(), It.isAny(), It.isAny(), It.isAny(), It.isAnyNumber()))
       .returns(() => Promise.resolve(dummyTestSlotDataset));
     moqGetPersonalCommitments.setup(x => x(It.isAny(), It.isAny(), It.isAny()))
       .returns(() => Promise.resolve(dummyPersonalCommitmentDataset));
@@ -94,8 +116,10 @@ describe('transferDatasets', () => {
       .returns(() => Promise.resolve(dummyAdvanceTestSlotDataset));
     moqGetDeployments.setup(x => x(It.isAny(), It.isAny(), It.isAny()))
       .returns(() => Promise.resolve(dummyDeploymentDataset));
-    moqFilterChangedJournals.setup(x => x(It.isAny(), It.isAny())).returns(() => <any>dummyFilteredJournals);
-    moqBuildJournals.setup(x => x(It.isAny(), It.isAny())).returns(() => <any>dummyTransformedJournals);
+    moqFilterChangedJournals.setup(x => x(It.isAny(), It.isAny()))
+      .returns(() => Promise.resolve(dummyFilteredJournals));
+    moqBuildJournals.setup(x => x(It.isAny(), It.isAny()))
+      .returns(() => dummyTransformedJournals);
   });
 
   it('should retrieve all the datasets and transform into a journal and save', async () => {
@@ -104,23 +128,25 @@ describe('transferDatasets', () => {
 
     await transferDatasets(dummyStartTime);
 
-    moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), It.isAny()), Times.once());
+    moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), It.isAny(), It.isAnyNumber()), Times.exactly(5));
     moqGetPersonalCommitments.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
     moqGetNonTestActivities.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
     moqGetAdvanceTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), It.isAny()), Times.once());
     moqGetDeployments.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
 
-    const expectedDatasets = {
-      testSlots: dummyTestSlotDataset,
+    const expectedDatasets: AllDatasets = {
+      testSlots: dummyTestSlotsDataset,
       personalCommitments: dummyPersonalCommitmentDataset,
       nonTestActivities: dummyNonTestActivityDataset,
       advanceTestSlots: dummyAdvanceTestSlotDataset,
       deployments: dummyDeploymentDataset,
     };
-    moqBuildJournals.verify(x => x(It.isValue(dummyExaminers), It.isValue(expectedDatasets)), Times.once());
+    moqBuildJournals.verify(
+      x => x(It.isValue(dummyExaminers), It.isValue(expectedDatasets)), Times.once()
+    );
     moqFilterChangedJournals.verify(
-      x => x(It.isValue(<any>dummyTransformedJournals), It.isValue(dummyStartTime)), Times.once());
-    moqSaveJournals.verify(x => x(It.isValue(<any>dummyFilteredJournals), It.isValue(dummyStartTime)), Times.once());
+      x => x(It.isValue(dummyTransformedJournals), It.isValue(dummyStartTime)), Times.once());
+    moqSaveJournals.verify(x => x(It.isValue(dummyFilteredJournals), It.isValue(dummyStartTime)), Times.once());
   });
 
   it('should use the journal end date if one is available',  async () => {
@@ -128,7 +154,8 @@ describe('transferDatasets', () => {
     spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => Promise.resolve(mockNextWorkingDay));
     await transferDatasets(dummyStartTime);
 
-    moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), mockJournalEndDate), Times.once());
+    moqGetTestSlots.verify(
+      x => x(It.isAny(), It.isAny(), It.isAny(), mockJournalEndDate, It.isAnyNumber()), Times.exactly(5));
     moqGetNonTestActivities.verify(x => x(It.isAny(), It.isAny(), mockJournalEndDate), Times.once());
     moqGetAdvanceTestSlots.verify(x => x(It.isAny(), It.isAny(), mockJournalEndDate, It.isAny()), Times.once());
     moqGetDeployments.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
@@ -139,7 +166,8 @@ describe('transferDatasets', () => {
     spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => Promise.resolve(mockNextWorkingDay));
     await transferDatasets(dummyStartTime);
 
-    moqGetTestSlots.verify(x => x(It.isAny(), It.isAny(), It.isAny(), mockNextWorkingDay), Times.once());
+    moqGetTestSlots.verify(
+      x => x(It.isAny(), It.isAny(), It.isAny(), mockNextWorkingDay, It.isAnyNumber()), Times.exactly(5));
     moqGetNonTestActivities.verify(x => x(It.isAny(), It.isAny(), mockNextWorkingDay), Times.once());
     moqGetAdvanceTestSlots.verify(x => x(It.isAny(), It.isAny(), mockNextWorkingDay, It.isAny()), Times.once());
     moqGetDeployments.verify(x => x(It.isAny(), It.isAny(), It.isAny()), Times.once());
