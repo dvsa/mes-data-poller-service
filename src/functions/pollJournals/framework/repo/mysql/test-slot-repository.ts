@@ -145,7 +145,11 @@ const getQuery = (ids: number[]) => {
          join APPLICATION a on a.app_id = b.app_id
          join APPLICATION_RSIS_INFO ari on b.booking_id = ari.booking_id
          left join CONTACT_DETAILS ccd on a.individual_id = ccd.individual_id
-         left join INTEGRITY_DETAILS intd on a.individual_id = intd.individual_id
+         left join (
+                SELECT individual_id, integrity_case_number, integrity_ind, MAX(entry_date_time) AS max_entry_date_time
+                FROM INTEGRITY_DETAILS
+                GROUP BY individual_id
+                ) AS intd on a.individual_id = intd.individual_id
          left join VEHICLE v on a.vehicle_id = v.vehicle_id
          left join TEST_SERVICE ts on a.test_service_id = ts.test_service_id
          left join INDIVIDUAL  i on a.individual_id = i.individual_id
