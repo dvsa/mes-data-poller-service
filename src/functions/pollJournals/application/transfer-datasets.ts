@@ -72,7 +72,7 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
     getDeployments(connectionPool, startDate, 6), // 6 months range
   ]);
 
-  const examinerIdGroupCount = Math.floor(examiners.length / 5);
+  const examinerIdGroupCount = Math.ceil(examiners.length / 5);
   info(`Examiners will be separated into chunks of ${examinerIdGroupCount}`);
 
   const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
