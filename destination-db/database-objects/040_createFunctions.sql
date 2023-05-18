@@ -22,7 +22,8 @@ CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_vehicle_category va
         SELECT MAX(date_of_test) INTO l_part1_date
         FROM TEST_HISTORY
         WHERE individual_id = p_candidate_id
-            AND exam_type_code = 2097;
+            AND result_code = 2037 -- Pass Test Result
+            AND exam_type_code = 2097;  --  ADI1 Test
 
         SELECT COUNT(*) INTO l_count
         FROM TEST_HISTORY t, REF_DATA_ITEM_MASTER category_ref, REF_DATA_ITEM_MASTER result_ref
@@ -31,8 +32,8 @@ CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_vehicle_category va
             AND category_ref.category_id = 29
             AND category_ref.item_desc2 = p_vehicle_category
             AND t.result_code = result_ref.item_id
-            AND result_ref.item_desc2 IN ('F','U')    -- Failed or Unknown Test Result
-            AND t.date_of_test > l_part1_date;
+            AND result_ref.item_desc2 IN ('F','U', 'F1', 'FA1', 'F2', 'FA2', 'F3', 'FA3', 'DAN')    -- Failed or Unknown Test Result
+            AND (p_vehicle_category = 'SC' OR t.date_of_test > l_part1_date);
         RETURN l_count;
     END
 //
