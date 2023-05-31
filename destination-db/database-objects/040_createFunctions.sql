@@ -2,39 +2,156 @@ USE tarsreplica;
 DELIMITER //
 //
 
-/*
-* Determines the number of previous ADI test attempts.
-*/
 DROP FUNCTION IF EXISTS getPreviousADIAttempts
 //
 
-CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_vehicle_category varchar(30) ) returns INT
-    BEGIN
-        DECLARE l_part1_date  DATE;
-        DECLARE l_count       INT;
 /*
-* This logic is taken from the Journal reports - to calculate the number of ADI part 2 or 3 attempts since
-* the examiner's latest ADI part 1 (theory) attempt
-*
-* In practice the eligability logic is more restrictive than this but TARS should have applied that when the
-* test is booked, and we don't want top replicate all that logic here...
+* Determines the test attempt number for a Given Instructor.
+* p_candidate_id        the Candidate Individual Id.
+* p_test_category_code  the Test Category Code for the Test Category being booked.
 */
-        SELECT MAX(date_of_test) INTO l_part1_date
-        FROM TEST_HISTORY
-        WHERE individual_id = p_candidate_id
-            AND exam_type_code = 2097;
+CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_test_category_code VARCHAR(30)) RETURNS INT
+BEGIN
+    -- Standards Check Test Category Check.
+    IF 'SC' = p_test_category_code THEN
+        RETURN getSCTestAttemptNumber(p_candidate_id);
+    ELSE
+        RETURN getADITestAttemptNumber(p_candidate_id, p_test_category_code);
+    END IF;
+END;
 
-        SELECT COUNT(*) INTO l_count
-        FROM TEST_HISTORY t, REF_DATA_ITEM_MASTER category_ref, REF_DATA_ITEM_MASTER result_ref
-        WHERE t.individual_id = p_candidate_id
-            AND t.exam_type_code = category_ref.item_id
-            AND category_ref.category_id = 29
-            AND category_ref.item_desc2 = p_vehicle_category
-            AND t.result_code = result_ref.item_id
-            AND result_ref.item_desc2 IN ('F','U')    -- Failed or Unknown Test Result
-            AND t.date_of_test > l_part1_date;
-        RETURN l_count;
-    END
+DROP FUNCTION IF EXISTS getADITestAttemptNumber
+//
+
+/*
+* Determines the ADI test attempt number of the instructor.
+* p_candidate_id         the Candidate Individual Id.
+* p_test_category_code   the Test Category Code for the Test Category being booked.
+*/
+CREATE FUNCTION getADITestAttemptNumber(p_candidate_id INT, p_test_category_code VARCHAR(30)) RETURNS INT
+BEGIN
+    DECLARE l_count INT;
+
+    -- Test has to be after the latest Part 1 pass which is after the approval date
+    --    or approval date of the register in the absence of the Part 1.
+    -- Looking for records that are
+    --  - for the test being taken.
+    --  - of failed or Unknown result
+    --  - related to the ADI Register as the instructor may have results on other registers
+    SELECT COUNT(*) INTO l_count
+    FROM TEST_HISTORY th
+             JOIN REGISTER reg ON reg.register_id = th.register_id AND reg.individual_id = th.individual_id
+    WHERE th.date_of_test >= (
+        SELECT MAX(NVL(t.date_of_test, r.date_last_approved)) date_of_test
+        FROM REGISTER r
+                 LEFT JOIN TEST_HISTORY t ON r.individual_id = t.individual_id
+            AND t.register_id = r.register_id
+            AND t.date_of_test >= r.date_last_approved
+            AND t.exam_type_code = 2097 -- ADI Part 1
+            AND t.result_code = 2037 -- Success Result
+            AND r.register_code = 195
+        WHERE r.individual_id = th.individual_id
+    )
+      AND th.exam_type_code = (
+        SELECT cat_ref.item_id
+        FROM REF_DATA_ITEM_MASTER cat_ref
+        WHERE cat_ref.category_id = 29
+          AND cat_ref.item_desc2 = p_test_category_code
+    )
+      AND th.result_code IN (2036, 5020) -- Failed or Unknown
+      AND th.individual_id = p_candidate_id
+      AND reg.register_code = 195; -- ADI Register
+
+    RETURN l_count;
+END;
+
+DROP FUNCTION IF EXISTS getSCTestAttemptNumber
+//
+
+/*
+* Determines the Standards Check test attempt number of the instructor.
+* Please see TestResultsConstants class in TARS for available Result Ids.
+* p_candidate_id         the Candidate Individual Id.
+*/
+CREATE FUNCTION getSCTestAttemptNumber(p_candidate_id INT)
+    RETURNS INT
+BEGIN
+    DECLARE l_count INT;
+
+    -- Test has to be after the latest Standards check pass which is after the approval date
+    --    or the approval date of the register in the absence of the Pass result.
+    -- Looking for records that are
+    --  - for the test being taken.
+    --  - of failed or Unknown result
+    --  - related to the ADI Register as the examiner may have results on other registers
+    -- Checking for Results that are recorded either in the TARS bookings or via IRDT.
+    --    Status codes of 2036 to 5020 are for Results from tests that are booked through TARS
+    --    Status codes of 767 to 776 and 10132 to 10181 are for Results from tests that are recorded through IRDT (Check_Test).
+    SELECT COUNT(*) INTO l_count
+    FROM V_STANDARDS_CHECKS th
+             JOIN REGISTER r ON r.register_id = th.register_id
+    WHERE th.individual_id = p_candidate_id
+      AND r.register_code = 195 -- ADI Register
+      AND th.date_time_test >= (
+        SELECT NVL(MAX(t.date_time_test), r.date_last_approved) date_of_test
+        FROM V_STANDARDS_CHECKS t
+        WHERE r.individual_id = t.individual_id AND t.register_id = r.register_id
+          AND t.date_time_test >= r.date_last_approved
+          AND result IN (
+                         2037, -- Pass
+                         767,  -- 6
+                         768,  -- 5
+                         769,  -- 4
+                         10132,-- A 51/51
+                         10133,-- A 50/51
+                         10134,-- A 49/51
+                         10135,-- A 48/51
+                         10136,-- A 47/51
+                         10137,-- A 46/51
+                         10138,-- A 45/51
+                         10139,-- A 44/51
+                         10140,-- A 43/51
+                         10150,-- B 42/51
+                         10151,-- B 41/51
+                         10152,-- B 40/51
+                         10153,-- B 39/51
+                         10154,-- B 38/51
+                         10155,-- B 37/51
+                         10170,-- B 36/51
+                         10171,-- B 35/51
+                         10172,-- B 34/51
+                         10173,-- B 33/51
+                         10174,-- B 32/51
+                         10175  -- B 31/51
+            )
+    )
+      AND result IN (
+                     2036, -- Failed
+                     2300, -- Failed 1
+                     2301, -- Failed 2
+                     2302, -- Failed 3
+                     2303, -- Failed Automatic 1
+                     2304, -- Failed Automatic 2
+                     2305, -- Failed Automatic 3
+                     5020, -- Unknown
+                     770,  -- 3/3
+                     771,  -- 3/2
+                     772,  -- 3/1
+                     773,  -- 2/3
+                     774,  -- 2/2
+                     775,  -- 2/1
+                     776,  -- 1
+                     10176,-- Fail 1
+                     10177,-- Fail 2
+                     10178,-- Fail 3
+                     10179,-- Fail Automatic 1
+                     10180,-- Fail Automatic 2
+                     10181,-- Fail Automatic 3
+                     9850  -- No Result
+        );
+
+    RETURN l_count;
+END;
 //
 
 /*
