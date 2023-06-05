@@ -102,7 +102,6 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   connectionPool.end();
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
-  console.log(datasets);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
   info(`FINISHED TRANFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 
