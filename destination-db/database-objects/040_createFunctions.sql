@@ -93,7 +93,7 @@ BEGIN
     WHERE th.individual_id = p_candidate_id
       AND r.register_code = 195 -- ADI Register
       AND th.date_time_test >= (
-        SELECT COALESCE(MAX(t.date_of_test), r.date_last_approved) AS date_of_test
+        SELECT COALESCE(MAX(t.date_time_test), r.date_last_approved) AS date_of_test
         FROM V_STANDARDS_CHECKS t
         WHERE r.individual_id = t.individual_id AND t.register_id = r.register_id
           AND t.date_time_test >= r.date_last_approved
