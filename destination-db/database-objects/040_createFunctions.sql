@@ -19,6 +19,7 @@ BEGIN
         RETURN getADITestAttemptNumber(p_candidate_id, p_test_category_code);
     END IF;
 END;
+//
 
 DROP FUNCTION IF EXISTS getADITestAttemptNumber
 //
@@ -64,6 +65,7 @@ BEGIN
 
     RETURN l_count;
 END;
+//
 
 DROP FUNCTION IF EXISTS getSCTestAttemptNumber
 //
@@ -73,8 +75,7 @@ DROP FUNCTION IF EXISTS getSCTestAttemptNumber
 * Please see TestResultsConstants class in TARS for available Result Ids.
 * p_candidate_id         the Candidate Individual Id.
 */
-CREATE FUNCTION getSCTestAttemptNumber(p_candidate_id INT)
-    RETURNS INT
+CREATE FUNCTION getSCTestAttemptNumber(p_candidate_id INT) RETURNS INT
 BEGIN
     DECLARE l_count INT;
 
