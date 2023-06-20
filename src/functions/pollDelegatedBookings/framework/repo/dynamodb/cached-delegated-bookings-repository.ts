@@ -1,5 +1,6 @@
 import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { Key } from 'aws-sdk/clients/dynamodb';
 
 import { config } from '../../config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
@@ -22,17 +23,31 @@ const getDynamoClient: () => DynamoDB.DocumentClient = () => {
 };
 
 export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
-  const scanParams = {
-    TableName: config().delegatedBookingsDynamodbTableName,
+  const ddb = getDynamoClient();
+  const tableName = config().delegatedBookingsDynamodbTableName;
+
+  const params: DynamoDB.DocumentClient.ScanInput = {
+    TableName: tableName,
   };
-  const scanResult = await ddb.scan(scanParams).promise();
 
-  if (!scanResult.Items) {
-    return [];
-  }
+  let scannedItems: DelegatedBookingDetail[] = [];
+  let lastEvaluatedKey: Key | undefined;
+  do {
+    const paramsForRequest = lastEvaluatedKey !== undefined ?
+        { ...params, ExclusiveStartKey: lastEvaluatedKey }
+        : { ...params };
 
-  return scanResult.Items as DelegatedBookingDetail[];
+    const result = await ddb.scan(paramsForRequest).promise();
+
+    scannedItems = [
+        ...scannedItems,
+      ...result.Items as DelegatedBookingDetail[]
+    ];
+
+    lastEvaluatedKey = result.LastEvaluatedKey;
+  } while (lastEvaluatedKey !== undefined);
+
+  return scannedItems;
 };
 
 export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedBookingDetail[]): Promise<void> => {
