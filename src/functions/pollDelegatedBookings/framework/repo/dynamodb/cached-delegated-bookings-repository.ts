@@ -34,14 +34,14 @@ export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBoo
   let lastEvaluatedKey: Key | undefined;
   do {
     const paramsForRequest = lastEvaluatedKey !== undefined ?
-        { ...params, ExclusiveStartKey: lastEvaluatedKey }
-        : { ...params };
+      { ...params, ExclusiveStartKey: lastEvaluatedKey }
+      : { ...params };
 
     const result = await ddb.scan(paramsForRequest).promise();
 
     scannedItems = [
-        ...scannedItems,
-      ...result.Items as DelegatedBookingDetail[]
+      ...scannedItems,
+      ...result.Items as DelegatedBookingDetail[],
     ];
 
     lastEvaluatedKey = result.LastEvaluatedKey;
