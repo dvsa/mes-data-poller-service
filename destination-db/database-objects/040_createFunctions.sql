@@ -6,151 +6,218 @@ DROP FUNCTION IF EXISTS getPreviousADIAttempts
 //
 
 /*
-* Determines the test attempt number for a Given Instructor.
-* p_candidate_id        the Candidate Individual Id.
-* p_test_category_code  the Test Category Code for the Test Category being booked.
+   * Determines the previous test attempt number for a Given Instructor.
+   * We have the naming convention used from DES with this method name.
+   * p_candidate_id        the Candidate Individual Id.
+   * p_test_category_code  the Test Category Code for the Test Category being booked.
+   * p_app_id              the Application Id of the application being booked.
 */
-CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_test_category_code VARCHAR(30)) RETURNS INT
+CREATE FUNCTION getPreviousADIAttempts(p_candidate_id INT, p_test_category_code VARCHAR(30), p_app_id INT) RETURNS INT
 BEGIN
-    -- Standards Check Test Category Check.
+    return getInstructorTestAttemptNumber(p_candidate_id, p_test_category_code, p_app_id);
+END;
+//
+
+DROP FUNCTION IF EXISTS getInstructorTestAttemptNumber
+//
+
+/*
+ * Determines the test attempt number for a Given Instructor.
+ * p_candidate_id        the Candidate Individual Id.
+ * p_test_category_code  the Test Category Code for the Test Category being booked.
+ * p_app_id              the Application Id of the application being booked.
+ */
+CREATE FUNCTION getInstructorTestAttemptNumber(p_candidate_id INT, p_test_category_code VARCHAR(30), p_app_id INT) RETURNS INT
+BEGIN
     IF 'SC' = p_test_category_code THEN
-        RETURN getSCTestAttemptNumber(p_candidate_id);
+        RETURN getSCTestAttemptNumber(p_candidate_id, p_app_id);
     ELSE
-        RETURN getADITestAttemptNumber(p_candidate_id, p_test_category_code);
+        RETURN getADITestAttemptNumber(p_candidate_id, p_test_category_code, p_app_id);
     END IF;
 END;
+//
 
 DROP FUNCTION IF EXISTS getADITestAttemptNumber
 //
 
 /*
-* Determines the ADI test attempt number of the instructor.
-* p_candidate_id         the Candidate Individual Id.
-* p_test_category_code   the Test Category Code for the Test Category being booked.
-*/
-CREATE FUNCTION getADITestAttemptNumber(p_candidate_id INT, p_test_category_code VARCHAR(30)) RETURNS INT
+ * Determines the ADI test attempt number of the instructor.
+ * p_candidate_id         the Candidate Individual Id.
+ * p_test_category_code   the Test Category Code for the Test Category being booked.
+ * p_app_id               the Application Id of the application being booked.
+ */
+CREATE FUNCTION getADITestAttemptNumber(p_candidate_id INT, p_test_category_code VARCHAR(30), p_app_id INT) RETURNS INT
 BEGIN
     DECLARE l_count INT;
 
-    -- Test has to be after the latest Part 1 pass which is after the approval date
-    --    or approval date of the register in the absence of the Part 1.
-    -- Looking for records that are
-    --  - for the test being taken.
-    --  - of failed or Unknown result
-    --  - related to the ADI Register as the instructor may have results on other registers
-    SELECT COUNT(*) INTO l_count
+      -- Test has to be after the latest Part 1 pass which is after the approval date
+      --     or approval date of the register in the absence of the Part 1.
+      --     or forever if there is no last approval date (which should never happen)
+      -- Looking for records that are
+      --  - for the test being taken.
+      --  - of failed result or Unknown result (provided the unknown result is not for the same application)
+      --  - related to the ADI Register as the instructor may have results on other registers
+    SELECT count(*) INTO l_count
     FROM TEST_HISTORY th
-             JOIN REGISTER reg ON reg.register_id = th.register_id AND reg.individual_id = th.individual_id
-    WHERE th.date_of_test >= (
-        SELECT COALESCE(MAX(t.date_of_test), r.date_last_approved) AS date_of_test
+             JOIN REGISTER reg ON reg.register_id = th.register_id
+                                      AND reg.individual_id = th.individual_id
+    WHERE th.date_of_test >= COALESCE(
+        (
+        SELECT MAX(t.date_of_test) date_of_test
         FROM REGISTER r
-                 LEFT JOIN TEST_HISTORY t ON r.individual_id = t.individual_id
-            AND t.register_id = r.register_id
-            AND t.date_of_test >= r.date_last_approved
-            AND t.exam_type_code = 2097 -- ADI Part 1
-            AND t.result_code = 2037 -- Success Result
-            AND r.register_code = 195
-        WHERE r.individual_id = th.individual_id
-    )
-      AND th.exam_type_code = (
-        SELECT cat_ref.item_id
-        FROM REF_DATA_ITEM_MASTER cat_ref
-        WHERE cat_ref.category_id = 29
-          AND cat_ref.item_desc2 = p_test_category_code
-    )
-      AND th.result_code IN (2036, 5020) -- Failed or Unknown
+        LEFT JOIN TEST_HISTORY t ON r.individual_id = t.individual_id
+                   AND t.register_id = r.register_id
+                   AND t.date_of_test >= r.date_last_approved
+                   AND t.exam_type_code = 2097  -- ADI Part 1
+                   AND t.result_code = 2037     -- Success Result
+                   AND r.register_code = 195
+                   WHERE r.individual_id = th.individual_id
+        ),
+           reg.date_last_approved
+        )
+      AND th.exam_type_code = (SELECT cat_ref.item_id
+                               FROM REF_DATA_ITEM_MASTER cat_ref
+                               WHERE cat_ref.category_id = 29
+                                 AND cat_ref.item_desc2 = p_test_category_code)
+      AND (
+            (result_code = 5020 AND COALESCE(th.application_id, -2) != COALESCE(p_app_id, -1)) -- if unknown and is for the current application then it should be ignored
+            OR
+            th.result_code = 2036 -- Failed
+        )
       AND th.individual_id = p_candidate_id
-      AND reg.register_code = 195; -- ADI Register
+      AND reg.register_code = 195;  -- ADI Register
 
     RETURN l_count;
 END;
+//
 
 DROP FUNCTION IF EXISTS getSCTestAttemptNumber
 //
 
 /*
-* Determines the Standards Check test attempt number of the instructor.
-* Please see TestResultsConstants class in TARS for available Result Ids.
-* p_candidate_id         the Candidate Individual Id.
-*/
-CREATE FUNCTION getSCTestAttemptNumber(p_candidate_id INT)
-    RETURNS INT
+  * Determines the Standards Check test attempt number of the instructor.
+  * Please see TestResultsConstants class in TARS for available Result Ids.
+  * p_candidate_id         the Candidate Individual Id.
+  * p_app_id               the Application Id of the application being booked.
+  */
+CREATE function getSCTestAttemptNumber(p_candidate_id INT, p_app_id INT) RETURNS INT
 BEGIN
     DECLARE l_count INT;
-
-    -- Test has to be after the latest Standards check pass which is after the approval date
-    --    or the approval date of the register in the absence of the Pass result.
+    -- Test has to be after the latest Standards check pass which is on or after the last approval date
+    --     or the approval date of the register in the absence of the Pass result.
+    --     or forever if there is no last approval date (which should never happen)
     -- Looking for records that are
     --  - for the test being taken.
-    --  - of failed or Unknown result
+    --  - of failed result or Unknown result (provided the unknown result is not for the same application)
     --  - related to the ADI Register as the examiner may have results on other registers
     -- Checking for Results that are recorded either in the TARS bookings or via IRDT.
     --    Status codes of 2036 to 5020 are for Results from tests that are booked through TARS
     --    Status codes of 767 to 776 and 10132 to 10181 are for Results from tests that are recorded through IRDT (Check_Test).
-    SELECT COUNT(*) INTO l_count
-    FROM V_STANDARDS_CHECKS th
-             JOIN REGISTER r ON r.register_id = th.register_id
+    SELECT COUNT(*)
+    INTO l_count
+    FROM (SELECT IF(th.date_test IS NULL, NULL,
+                    CONCAT(DATE_FORMAT(date_test, '%Y-%m-%d'), ' ', TIME_FORMAT(th.time_test, '%H:%i:%s')))
+                                            AS date_time_test,
+                 th.register_id,
+                 r.individual_id,
+                 COALESCE(th.result, 5020) AS result,
+                 NULL                      AS application_id
+          FROM CHECK_TEST th
+                   JOIN REGISTER r ON r.register_id = th.register_id
+          WHERE r.individual_id = p_candidate_id
+          UNION ALL
+          SELECT th.date_of_test   AS date_time_test,
+                 th.register_id,
+                 th.individual_id,
+                 th.result_code    AS result,
+                 th.application_id AS application_id
+          FROM TEST_HISTORY th
+                   JOIN REGISTER r ON r.register_id = th.register_id AND th.individual_id = r.individual_id
+          WHERE th.individual_id = p_candidate_id
+            AND th.exam_type_code = 5049) th
+             JOIN REGISTER r on r.register_id = th.register_id
     WHERE th.individual_id = p_candidate_id
       AND r.register_code = 195 -- ADI Register
-      AND th.date_time_test >= (
-        SELECT COALESCE(MAX(t.date_time_test), r.date_last_approved) AS date_of_test
-        FROM V_STANDARDS_CHECKS t
-        WHERE r.individual_id = t.individual_id AND t.register_id = r.register_id
-          AND t.date_time_test >= r.date_last_approved
-          AND result IN (
-                         2037, -- Pass
-                         767,  -- 6
-                         768,  -- 5
-                         769,  -- 4
-                         10132,-- A 51/51
-                         10133,-- A 50/51
-                         10134,-- A 49/51
-                         10135,-- A 48/51
-                         10136,-- A 47/51
-                         10137,-- A 46/51
-                         10138,-- A 45/51
-                         10139,-- A 44/51
-                         10140,-- A 43/51
-                         10150,-- B 42/51
-                         10151,-- B 41/51
-                         10152,-- B 40/51
-                         10153,-- B 39/51
-                         10154,-- B 38/51
-                         10155,-- B 37/51
-                         10170,-- B 36/51
-                         10171,-- B 35/51
-                         10172,-- B 34/51
-                         10173,-- B 33/51
-                         10174,-- B 32/51
-                         10175  -- B 31/51
-            )
-    )
-      AND result IN (
-                     2036, -- Failed
-                     2300, -- Failed 1
-                     2301, -- Failed 2
-                     2302, -- Failed 3
-                     2303, -- Failed Automatic 1
-                     2304, -- Failed Automatic 2
-                     2305, -- Failed Automatic 3
-                     5020, -- Unknown
-                     770,  -- 3/3
-                     771,  -- 3/2
-                     772,  -- 3/1
-                     773,  -- 2/3
-                     774,  -- 2/2
-                     775,  -- 2/1
-                     776,  -- 1
-                     10176,-- Fail 1
-                     10177,-- Fail 2
-                     10178,-- Fail 3
-                     10179,-- Fail Automatic 1
-                     10180,-- Fail Automatic 2
-                     10181,-- Fail Automatic 3
-                     9850  -- No Result
+      AND th.date_time_test >= COALESCE(
+            (SELECT MAX(t.date_time_test) date_of_test
+             FROM (SELECT IF(th.date_test IS NULL, NULL,
+                              CONCAT(DATE_FORMAT(date_test, '%Y-%m-%d'), ' ', TIME_FORMAT(th.time_test, '%H:%i:%s')))
+                                                  AS date_time_test,
+                          th.register_id,
+                          r.individual_id,
+                          IFNULL(th.result, 5020) AS result,
+                          NULL                    AS application_id
+                   FROM CHECK_TEST th
+                            JOIN REGISTER r ON r.register_id = th.register_id
+                   WHERE r.individual_id = p_candidate_id
+                   UNION ALL
+                   SELECT th.date_of_test   AS date_time_test,
+                          th.register_id,
+                          th.individual_id,
+                          th.result_code    AS result,
+                          th.application_id AS application_id
+                   FROM TEST_HISTORY th
+                            JOIN REGISTER r ON r.register_id = th.register_id AND th.individual_id = r.individual_id
+                   WHERE th.individual_id = p_candidate_id
+                     AND th.exam_type_code = 5049) t
+             WHERE r.individual_id = t.individual_id
+               AND t.register_id = r.register_id
+               AND t.date_time_test >= COALESCE(r.date_last_approved, t.date_time_test)
+               AND result IN (2037 -- Pass
+                 , 767 -- 6
+                 , 768 -- 5
+                 , 769 -- 4
+                 , 10132 -- A 51/51
+                 , 10133 -- A 50/51
+                 , 10134 -- A 49/51
+                 , 10135 -- A 48/51
+                 , 10136 -- A 47/51
+                 , 10137 -- A 46/51
+                 , 10138 -- A 45/51
+                 , 10139 -- A 44/51
+                 , 10140 -- A 43/51
+                 , 10150 -- B 42/51
+                 , 10151 -- B 41/51
+                 , 10152 -- B 40/51
+                 , 10153 -- B 39/51
+                 , 10154 -- B 38/51
+                 , 10155 -- B 37/51
+                 , 10170 -- B 36/51
+                 , 10171 -- B 35/51
+                 , 10172 -- B 34/51
+                 , 10173 -- B 33/51
+                 , 10174 -- B 32/51
+                 , 10175) -- B 31/51
+            ), r.date_last_approved
+        )
+      AND (
+            (result = 5020 AND IFNULL(th.application_id, -2) != IFNULL(p_app_id, -1)) -- if unknown and is for the current application then it should be ignored
+            OR
+            result IN (2036 -- Failed
+                , 2300 -- Failed 1
+                , 2301 -- Failed 2
+                , 2302 -- Failed 3
+                , 2303 -- Failed Automatic 1
+                , 2304 -- Failed Automatic 2
+                , 2305 -- Failed Automatic 3
+                , 2308 -- Dangerous
+                , 770 -- 3/3
+                , 771 -- 3/2
+                , 772 -- 3/1
+                , 773 -- 2/3
+                , 774 -- 2/2
+                , 775 -- 2/1
+                , 776 -- 1
+                , 10176 -- Fail 1
+                , 10177 -- Fail 2
+                , 10178 -- Fail 3
+                , 10179 -- Fail Automatic 1
+                , 10180 -- Fail Automatic 2
+                , 10181 -- Fail Automatic 3
+                , 10190 -- Dangerous
+                , 9850) -- No Result
         );
-
-    RETURN l_count;
+    return l_count;
 END;
 //
 
