@@ -140,11 +140,9 @@ BEGIN
       AND r.register_code = 195 -- ADI Register
       AND th.date_time_test >= COALESCE(
             (SELECT MAX(t.date_time_test) date_of_test
-             FROM (SELECT IF(date_test IS NULL, NULL,
-                             STR_TO_DATE(
-                                     CONCAT(DATE_FORMAT(date_test, '%Y-%m-%d'), ' ', TIME_FORMAT(time_test, '%H:%i:%s')),
-                                     '%d/%m/%Y %H:%i')
-                              )                   AS date_time_test,
+             FROM (SELECT IF(th.date_test IS NULL, NULL,
+                              CONCAT(DATE_FORMAT(date_test, '%Y-%m-%d'), ' ', TIME_FORMAT(th.time_test, '%H:%i:%s')))
+                                                  AS date_time_test,
                           th.register_id,
                           r.individual_id,
                           IFNULL(th.result, 5020) AS result,
