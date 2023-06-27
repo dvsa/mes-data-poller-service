@@ -41,7 +41,7 @@ CALL CreateIndex ('tarsreplica','BOOKING','IX_B_CANREASON','booking_cancel_reaso
 CALL CreateIndex ('tarsreplica','BOOKING','IX_B_SLOTID','slot_id');
 CALL CreateIndex ('tarsreplica','BOOKING','IX_B_STATECODE','state_code');
 CALL CreateIndex ('tarsreplica','PROGRAMME','IX_P_PROGDATE','programme_date');
-CALL CreateIndex ('tarsreplica','PROGRAMME_SLOT','IX_PS_COV','programme_date,individual_id,tc_id,tc_closed_ind,state_code,vst_code,start_time,ghost_ind');
+CALL CreateIndex ('tarsreplica','PROGRAMME_SLOT','IX_PS_COV','programme_date,individual_id,tc_id,tc_closed_ind');
 CALL CreateIndex ('tarsreplica','ADDRESS','IX_ADDR_INDID','individual_id');
 CALL CreateIndex ('tarsreplica','ADDRESS','IX_ADDR_ORGID','organisation_id');
 CALL CreateIndex ('tarsreplica','ADDRESS','IX_ADDR_TYPE','address_type_code');
