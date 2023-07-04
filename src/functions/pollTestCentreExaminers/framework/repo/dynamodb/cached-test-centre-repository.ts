@@ -55,11 +55,11 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
   customMetric('TestCentreRowUpdated', 'Number of Test Centre rows updated from Dynamo', testCentres.length);
 };
 
-export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
+export const unCacheTestCentreExaminers = async (staffNumbers: number[]): Promise<void> => {
   const ddb: DynamoDB.DocumentClient = getDynamoClient();
   const tableName: string = config().testCentreDynamodbTableName;
 
-  const deletePromises = staffNumbers.map((staffNumber: string) => {
+  const deletePromises = staffNumbers.map((staffNumber: number) => {
     const deleteParams = {
       TableName: tableName,
       Key: {

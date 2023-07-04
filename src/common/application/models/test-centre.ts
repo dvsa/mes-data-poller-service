@@ -4,12 +4,12 @@ export type Examiner = {
 };
 
 export class TestCentreDetail {
-  staffNumber: string;
+  staffNumber: number;
   examiners: Examiner[];
   testCentreIDs: number[];
 
   constructor(
-    staffNumber: string,
+    staffNumber: number,
     examiners: Examiner[],
     testCentreIDs: number[],
   ) {

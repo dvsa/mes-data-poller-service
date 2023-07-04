@@ -8,7 +8,7 @@ import { TestCentreDetail } from '../../../../../common/application/models/test-
 
 export interface TestCentreRow {
   INDIVIDUAL_ID: string;
-  STAFF_NUMBER: string;
+  STAFF_NUMBER: number;
   STAFF_NUMBERS: string;
   TEST_CENTRES: string;
 }

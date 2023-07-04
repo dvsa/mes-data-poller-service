@@ -11,7 +11,7 @@ export const buildTestCentreRowsFromQueryResult = (
   ));
 };
 
-const mapStaffNumber = (row: TestCentreRow): string => row.STAFF_NUMBER;
+const mapStaffNumber = (row: TestCentreRow): number => +row.STAFF_NUMBER;
 
 export const mapTestCentreIDs = (
   row: TestCentreRow,

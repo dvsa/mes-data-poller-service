@@ -12,7 +12,7 @@ describe('TestCentreMapper', () => {
         {name: 'Test Examiner Five', staffNumber: '000006'},
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[0]).toEqual(
-        new TestCentreDetail('1234567', ex, [1234, 9087]),
+        new TestCentreDetail(1234567, ex, [1234, 9087]),
       );
     });
     it('should map the second row from the query', () => {
@@ -22,7 +22,7 @@ describe('TestCentreMapper', () => {
         {name: 'Test Examiner Two', staffNumber: '000003'},
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[1]).toEqual(
-        new TestCentreDetail('3242339', ex, [3452, 6578]),
+        new TestCentreDetail(3242339, ex, [3452, 6578]),
       );
     });
   });

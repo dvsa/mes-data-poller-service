@@ -26,13 +26,13 @@ describe('transferTestCentreExaminers', () => {
     it('should retrieve all the active rows in the replica, ' +
         'all the staffNums in the cache and pass them to the reconciler', async () => {
       const activeTestCentres = [
-        new TestCentreDetail('123', [{ staffNumber: '345', name: 'A' }], [1234]),
-        new TestCentreDetail('456', [{ staffNumber: '432', name: 'B' }], [2341]),
+        new TestCentreDetail(123, [{ staffNumber: '345', name: 'A' }], [1234]),
+        new TestCentreDetail(456, [{ staffNumber: '432', name: 'B' }], [2341]),
       ];
       const cachedTestCentres = [
-        new TestCentreDetail('123', [{ staffNumber: '345', name: 'A' }], [1234]),
-        new TestCentreDetail('456', [{ staffNumber: '432', name: 'B' }], [2341]),
-        new TestCentreDetail('789', [{ staffNumber: '245', name: 'B' }], [8740]),
+        new TestCentreDetail(123, [{ staffNumber: '345', name: 'A' }], [1234]),
+        new TestCentreDetail(456, [{ staffNumber: '432', name: 'B' }], [2341]),
+        new TestCentreDetail(789, [{ staffNumber: '245', name: 'B' }], [8740]),
       ];
       moqTestCentreRepo.setup(x => x()).returns(() => Promise.resolve(activeTestCentres));
       moqCachedTestCentreRepo.setup(x => x()).returns(() => Promise.resolve(cachedTestCentres));

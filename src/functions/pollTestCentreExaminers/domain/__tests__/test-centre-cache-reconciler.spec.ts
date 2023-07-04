@@ -18,9 +18,9 @@ describe('Test centre cache reconciler', () => {
   describe('reconcileActiveAndCachedTestCentreRows', () => {
     it('should update all active rows', async () => {
       const activeTestCentres = [
-        new TestCentreDetail('123', [], []),
-        new TestCentreDetail('456', [], []),
-        new TestCentreDetail('789', [], []),
+        new TestCentreDetail(123, [], []),
+        new TestCentreDetail(456, [], []),
+        new TestCentreDetail(789, [], []),
       ];
       const cachedTestCentres = [];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
@@ -28,19 +28,19 @@ describe('Test centre cache reconciler', () => {
     });
     it('should determine the non-active test rows and pass them to unCache function', async () => {
       const activeTestCentres = [
-        new TestCentreDetail('123', [], []),
+        new TestCentreDetail(123, [], []),
       ];
       const cachedTestCentres = [
-        new TestCentreDetail('456', [], []),
-        new TestCentreDetail('789', [], []),
+        new TestCentreDetail(456, [], []),
+        new TestCentreDetail(789, [], []),
       ];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
       moqCacheTestCentres.verify(x => x(It.isValue(activeTestCentres)), Times.once());
-      moqUncacheTestCentres.verify(x => x(It.isValue(['456', '789'])), Times.once());
+      moqUncacheTestCentres.verify(x => x(It.isValue([456, 789])), Times.once());
     });
     it('should not unCache row if table is empty', async () => {
       const activeTestCentres = [
-        new TestCentreDetail('123', [], []),
+        new TestCentreDetail(123, [], []),
       ];
       const cachedTestCentres = [];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
