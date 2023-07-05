@@ -7,9 +7,9 @@ describe('TestCentreMapper', () => {
   describe('buildTestCentreRowsFromQueryResult', () => {
     it('should map the first row from the query', () => {
       const ex = [
-        {name: 'Test Examiner Seven', staffNumber: '000008'},
-        {name: 'Test Examiner Six', staffNumber: '000007'},
-        {name: 'Test Examiner Five', staffNumber: '000006'},
+        {name: 'Test Examiner Seven', staffNumber: '8'},
+        {name: 'Test Examiner Six', staffNumber: '7'},
+        {name: 'Test Examiner Five', staffNumber: '6'},
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[0]).toEqual(
         new TestCentreDetail(1234567, ex, [1234, 9087]),
@@ -17,9 +17,9 @@ describe('TestCentreMapper', () => {
     });
     it('should map the second row from the query', () => {
       const ex = [
-        {name: 'Test Examiner Three', staffNumber: '000004'},
-        {name: 'Test Examiner Eight', staffNumber: '000009'},
-        {name: 'Test Examiner Two', staffNumber: '000003'},
+        {name: 'Test Examiner Three', staffNumber: '4'},
+        {name: 'Test Examiner Eight', staffNumber: '9'},
+        {name: 'Test Examiner Two', staffNumber: '3'},
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[1]).toEqual(
         new TestCentreDetail(3242339, ex, [3452, 6578]),
@@ -38,18 +38,18 @@ describe('TestCentreMapper', () => {
     it('should parse a string like value into a list of staffNumber & name objects', () => {
       const row = {
         // eslint-disable-next-line max-len
-        STAFF_NUMBERS: '{"staffNumber": "000008", "name": "Test Examiner Seven"}, {"staffNumber": "000007", "name": "Test Examiner Six"}, {"staffNumber": "000006", "name": "Test Examiner Five"}, {"staffNumber": "000018", "name": "Test Examiner Eighteen"},{"staffNumber": "000005", "name": "Test Examiner Four"},{"staffNumber": "000013", "name": "Test Examiner Eleven"},{"staffNumber": "000004", "name": "Test Examiner Three"},{"staffNumber": "000009", "name": "Test Examiner Eight"},{"staffNumber": "000003", "name": "Test Examiner Two"}',
+        STAFF_NUMBERS: '{"staffNumber": "8", "name": "Test Examiner Seven"}, {"staffNumber": "7", "name": "Test Examiner Six"}, {"staffNumber": "6", "name": "Test Examiner Five"}, {"staffNumber": "18", "name": "Test Examiner Eighteen"},{"staffNumber": "5", "name": "Test Examiner Four"},{"staffNumber": "13", "name": "Test Examiner Eleven"},{"staffNumber": "4", "name": "Test Examiner Three"},{"staffNumber": "9", "name": "Test Examiner Eight"},{"staffNumber": "3", "name": "Test Examiner Two"}',
       } as TestCentreRow;
       expect(mapExaminers(row)).toEqual([
-        {staffNumber: '000008', name: 'Test Examiner Seven'},
-        {staffNumber: '000007', name: 'Test Examiner Six'},
-        {staffNumber: '000006', name: 'Test Examiner Five'},
-        {staffNumber: '000018', name: 'Test Examiner Eighteen'},
-        {staffNumber: '000005', name: 'Test Examiner Four'},
-        {staffNumber: '000013', name: 'Test Examiner Eleven'},
-        {staffNumber: '000004', name: 'Test Examiner Three'},
-        {staffNumber: '000009', name: 'Test Examiner Eight'},
-        {staffNumber: '000003', name: 'Test Examiner Two'},
+        {staffNumber: '8', name: 'Test Examiner Seven'},
+        {staffNumber: '7', name: 'Test Examiner Six'},
+        {staffNumber: '6', name: 'Test Examiner Five'},
+        {staffNumber: '18', name: 'Test Examiner Eighteen'},
+        {staffNumber: '5', name: 'Test Examiner Four'},
+        {staffNumber: '13', name: 'Test Examiner Eleven'},
+        {staffNumber: '4', name: 'Test Examiner Three'},
+        {staffNumber: '9', name: 'Test Examiner Eight'},
+        {staffNumber: '3', name: 'Test Examiner Two'},
       ]);
     });
   });
