@@ -1,5 +1,6 @@
 import { TestCentreRow } from './test-centre-repository';
 import { Examiner, TestCentreDetail } from '../../../../../common/application/models/test-centre';
+import { trimLeadingZeroes } from '../../../../../common/application/utils/trimLeadingZeros';
 
 export const buildTestCentreRowsFromQueryResult = (
   queryResult: TestCentreRow[],
@@ -11,7 +12,7 @@ export const buildTestCentreRowsFromQueryResult = (
   ));
 };
 
-const mapStaffNumber = (row: TestCentreRow): string => row.STAFF_NUMBER;
+const mapStaffNumber = (row: TestCentreRow): string => trimLeadingZeroes(row.STAFF_NUMBER);
 
 export const mapTestCentreIDs = (
   row: TestCentreRow,
