@@ -5,6 +5,7 @@ import {
 import { groupBy } from 'lodash';
 import { ExaminerRole } from '../../../domain/constants/examiner-roles';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { trimLeadingZeroes } from '../../../../../common/application/utils/trimLeadingZeros';
 
 export const buildStaffDetailsFromQueryResult = (
   queryResult: ExaminerQueryRecord[],
@@ -44,12 +45,4 @@ export const buildStaffDetailsFromQueryResult = (
 
 const examinerHasPermissions = (examinerRecords: ExaminerQueryRecord[]): boolean => {
   return examinerRecords.length !== 1 || examinerRecords[0].test_category_ref !== null;
-};
-
-const trimLeadingZeroes = (staffNumber: string): string | null => {
-  const numericStaffNumber = Number.parseInt(staffNumber, 10);
-  if (Number.isNaN(numericStaffNumber)) {
-    return null;
-  }
-  return numericStaffNumber.toString();
 };

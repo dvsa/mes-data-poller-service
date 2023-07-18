@@ -64,7 +64,7 @@ FROM EXAMINER AS E
     FROM PROGRAMME_SLOT AS PS1
              LEFT JOIN (
         SELECT DISTINCT PS2.INDIVIDUAL_ID,
-                        E2.STAFF_NUMBER,
+                        TRIM(LEADING '0' FROM E2.STAFF_NUMBER) as STAFF_NUMBER,
                         PS2.TC_ID,
                         I.FIRST_FORENAME,
                         I.FAMILY_NAME
