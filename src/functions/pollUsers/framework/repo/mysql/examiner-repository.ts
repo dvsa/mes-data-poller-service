@@ -1,10 +1,10 @@
 import { query } from '../../../../../common/framework/mysql/database';
-import { config } from '../../config';
 import { certificate } from '../../../../../common/certs/ssl_profiles';
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { StaffDetail, TestPermissionPeriod } from '../../../../../common/application/models/staff-details';
 import { buildStaffDetailsFromQueryResult } from './examiner-record-row-mapper';
+import { config } from '../../../../../common/framework/config/config';
 
 export interface ExaminerQueryRecord {
   individual_id: number;

@@ -1,8 +1,6 @@
 import { TestPermissionPeriod } from '../../../../../common/application/models/staff-details';
-import { config } from '../../config';
-import { certificate } from '../../../../../common/certs/ssl_profiles';
+import { executeQuery, getConnection } from '../../../../../common/framework/mysql/database';
 import * as mysql from 'mysql2';
-import { query } from '../../../../../common/framework/mysql/database';
 
 interface UniversalPermissionRecord {
   test_category_ref: string;
@@ -11,35 +9,10 @@ interface UniversalPermissionRecord {
 }
 
 export const getUniversalTestPermissions = async (): Promise<TestPermissionPeriod[]> => {
-  const configuration = config();
 
-  const connection = mysql.createConnection({
-    host: configuration.tarsReplicaDatabaseHostname,
-    database: configuration.tarsReplicaDatabaseName,
-    user: configuration.tarsReplicaDatabaseUsername,
-    password: configuration.tarsReplicaDatabasePassword,
-    charset: 'UTF8_GENERAL_CI',
-    ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
-    },
-  });
+  const connection = getConnection();
+  const queryResult = await executeQuery(connection, UniversalPermissionRecordSql());
 
-  const queryResult: UniversalPermissionRecord[] = await query(
-    connection,
-    `
-    SELECT
-      test_category_ref,
-      with_effect_from,
-      with_effect_to
-    FROM
-      DES_TEST_CRITERIA
-    WHERE
-      examiner_staff_number IS NULL
-    `,
-  );
   return queryResult.map(record => mapUniversalPermissionRecord(record));
 };
 
@@ -50,4 +23,19 @@ const mapUniversalPermissionRecord = (record: UniversalPermissionRecord): TestPe
     from: formatDate(record.with_effect_from),
     to: formatDate(record.with_effect_to),
   };
+};
+
+export const UniversalPermissionRecordSql = (): string => {
+  const template =
+    `
+        SELECT test_category_ref,
+               with_effect_from,
+               with_effect_to
+        FROM DES_TEST_CRITERIA
+        WHERE examiner_staff_number IS NULL
+    `;
+
+  const args = [];
+
+  return mysql.format(template, args);
 };

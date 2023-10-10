@@ -2,7 +2,8 @@ import {
   defaultIfNotPresent,
   throwIfNotPresent,
   tryFetchRdsAccessToken,
-} from '../../../common/framework/config/config-helpers';
+} from './config-helpers';
+
 let configuration: Config;
 
 export const bootstrapConfig = async () => {

@@ -1,8 +1,8 @@
 import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
-import { config } from '../../../../pollUsers/framework/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { config } from '../../../../../common/framework/config/config';
 
 let dynamoDocumentClient: DynamoDB.DocumentClient;
 const getDynamoClient = () => {

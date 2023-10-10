@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  tars-replica-db:
+    platform: linux/x86_64
+    image: mysql:8.1
+    environment:
+      MYSQL_DATABASE: tarsreplica
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_USER: tarsreplica_user
+      MYSQL_PASSWORD: Pa55word1
+    volumes:
+      - './tarsreplica_db/database-objects/010_createTables_and_indexes.sql:/docker-entrypoint-initdb.d/010_createTables_and_indexes.sql'
+      - './tarsreplica_db/database-objects/020_createViews.sql:/docker-entrypoint-initdb.d/020_createViews.sql'
+      - './tarsreplica_db/database-objects/030_createFunctions.sql:/docker-entrypoint-initdb.d/030_createFunctions.sql'
+      - './tarsreplica_db/database-objects/040_createProcedures.sql:/docker-entrypoint-initdb.d/040_createProcedures.sql'
+      - './tarsreplica_db/database-objects/050_createUser.sql:/docker-entrypoint-initdb.d/050_createUser.sql'
+      - './tarsreplica_db/sample-data-load/1030_GenerateCalendarData.sql:/docker-entrypoint-initdb.d/1030_GenerateCalendarData.sql'
+      - './tarsreplica_db/sample-data-load/1040_GenerateReferenceData.sql:/docker-entrypoint-initdb.d/1040_GenerateReferenceData.sql'
+      - './tarsreplica_db/sample-data-load/1060_JournalTestData_01234567_CatB_2Days.sql:/docker-entrypoint-initdb.d/1060_JournalTestData_01234567_CatB_2Days.sql'
+      - './tarsreplica_db/sample-data-load/1070_JournalTestData_00123456_VariousCat_1Day.sql:/docker-entrypoint-initdb.d/1070_JournalTestData_00123456_VariousCat_1Day.sql'
+    ports:
+      - '3306:3306'
