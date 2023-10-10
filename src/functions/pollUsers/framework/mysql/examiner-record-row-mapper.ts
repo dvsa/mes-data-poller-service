@@ -1,11 +1,11 @@
 import { ExaminerQueryRecord } from './examiner-repository';
 import {
   StaffDetail, TestPermissionPeriod,
-} from '../../../../../common/application/models/staff-details';
+} from '../../../../common/application/models/staff-details';
 import { groupBy } from 'lodash';
-import { ExaminerRole } from '../../../domain/constants/examiner-roles';
+import { ExaminerRole } from '../../domain/constants/examiner-roles';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { trimLeadingZeroes } from '../../../../../common/application/utils/trimLeadingZeros';
+import { trimLeadingZeroes } from '../../../../common/application/utils/trimLeadingZeros';
 
 export const buildStaffDetailsFromQueryResult = (
   queryResult: ExaminerQueryRecord[],

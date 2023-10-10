@@ -1,6 +1,6 @@
 import {
   uncacheStaffNumbers, cacheStaffDetails,
-} from '../framework/repo/dynamodb/cached-examiner-repository';
+} from '../framework/dynamodb/cached-examiner-repository';
 import { StaffDetail, TestPermissionPeriod } from '../../../common/application/models/staff-details';
 import { isEqual, groupBy } from 'lodash';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';

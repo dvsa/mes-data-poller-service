@@ -1,7 +1,7 @@
-import { getActiveExaminers } from '../framework/repo/mysql/examiner-repository';
-import { getCachedExaminers } from '../framework/repo/dynamodb/cached-examiner-repository';
+import { getActiveExaminers } from '../framework/mysql/examiner-repository';
+import { getCachedExaminers } from '../framework/dynamodb/cached-examiner-repository';
 import { reconcileActiveAndCachedExaminers } from './examiner-cache-reconciler';
-import { getUniversalTestPermissions } from '../framework/repo/mysql/universal-permissions-repository';
+import { getUniversalTestPermissions } from '../framework/mysql/universal-permissions-repository';
 
 export const transferUsers = async () => {
   const universalTestPermissions = await getUniversalTestPermissions();

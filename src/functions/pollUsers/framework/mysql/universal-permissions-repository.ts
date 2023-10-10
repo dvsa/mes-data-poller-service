@@ -1,6 +1,7 @@
-import { TestPermissionPeriod } from '../../../../../common/application/models/staff-details';
-import { executeQuery, getConnection } from '../../../../../common/framework/mysql/database';
+import { TestPermissionPeriod } from '../../../../common/application/models/staff-details';
+import { executeQuery, getConnection } from '../../../../common/framework/mysql/database';
 import * as mysql from 'mysql2';
+import { getCategoriesWithUniversalPermissionsQuery } from "../database/query-builder";
 
 interface UniversalPermissionRecord {
   test_category_ref: string;
@@ -11,8 +12,9 @@ interface UniversalPermissionRecord {
 export const getUniversalTestPermissions = async (): Promise<TestPermissionPeriod[]> => {
 
   const connection = getConnection();
-  const queryResult = await executeQuery(connection, UniversalPermissionRecordSql());
-
+  // console.log('getCategoriesWithUniversalPermissionsQuery()', getCategoriesWithUniversalPermissionsQuery());
+  const queryResult = await executeQuery(connection, getCategoriesWithUniversalPermissionsQuery());
+  console.log('results', queryResult);
   return queryResult.map(record => mapUniversalPermissionRecord(record));
 };
 

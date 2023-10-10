@@ -1,7 +1,7 @@
 import { buildStaffDetailsFromQueryResult } from '../examiner-record-row-mapper';
-import { StaffDetail, TestPermissionPeriod } from '../../../../../../common/application/models/staff-details';
+import { StaffDetail, TestPermissionPeriod } from '../../../../../common/application/models/staff-details';
 import { isEqual } from 'lodash';
-import { ExaminerRole } from '../../../../domain/constants/examiner-roles';
+import { ExaminerRole } from '../../../domain/constants/examiner-roles';
 
 describe('ExmainerRecordRowMapper', () => {
   const examinerRecords = [
