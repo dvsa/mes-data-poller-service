@@ -1,5 +1,5 @@
 import * as mysql from 'mysql2';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
 import { mapRow } from './row-mappers/personal-commitment-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';

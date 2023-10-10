@@ -1,5 +1,5 @@
 import * as mysql from 'mysql2';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
 import { mapRow } from './row-mappers/deployment-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';

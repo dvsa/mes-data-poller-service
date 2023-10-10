@@ -1,11 +1,11 @@
 import * as path from 'path';
-import { createMapper, getStatement } from "mybatis-mapper";
+import MyBatis from 'mybatis-mapper';
 
 export const getCategoriesWithUniversalPermissionsQuery = (): string => {
   try {
-    console.log('hello');
-    createMapper([path.resolve(__dirname, '../mappers/users-mapper.xml')])
-    const query = getStatement(
+    MyBatis.createMapper([path.resolve(__dirname, '../mappers/users-mapper.xml')]);
+
+    const query = MyBatis.getStatement(
       'Users',
       'CategoriesWithUniversalPermissions',
       {},

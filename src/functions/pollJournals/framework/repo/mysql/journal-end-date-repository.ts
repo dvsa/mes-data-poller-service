@@ -1,5 +1,5 @@
 import * as mysql from 'mysql2';
-import * as moment from 'moment';
+import moment from 'moment';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { get } from 'lodash';

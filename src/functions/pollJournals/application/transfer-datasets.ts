@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import { chunk } from 'lodash';
 import { ExaminerTestSlot } from '../domain/examiner-test-slot';
 import { getTestSlots } from '../framework/repo/mysql/test-slot-repository';

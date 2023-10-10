@@ -2,7 +2,7 @@
 import { getPersonalCommitments } from '../personal-commitment-repository';
 import * as mysql from 'mysql2';
 import { loadTestFile } from './test-data-utils';
-import * as moment from 'moment';
+import moment from 'moment';
 import { query } from '../../../../../../common/framework/mysql/database';
 
 export const personalCommitmentIntegrationTests = () => {

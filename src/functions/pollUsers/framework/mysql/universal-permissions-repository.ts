@@ -1,7 +1,7 @@
 import { TestPermissionPeriod } from '../../../../common/application/models/staff-details';
 import { executeQuery, getConnection } from '../../../../common/framework/mysql/database';
 import * as mysql from 'mysql2';
-import { getCategoriesWithUniversalPermissionsQuery } from "../database/query-builder";
+import { getCategoriesWithUniversalPermissionsQuery } from '../database/query-builder';
 
 interface UniversalPermissionRecord {
   test_category_ref: string;
