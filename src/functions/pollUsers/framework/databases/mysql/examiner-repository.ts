@@ -3,7 +3,7 @@ import { certificate } from '../../../../../common/certs/ssl_profiles';
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { StaffDetail, TestPermissionPeriod } from '../../../../../common/application/models/staff-details';
-import { buildStaffDetailsFromQueryResult } from './examiner-record-row-mapper';
+import { buildStaffDetailsFromQueryResult } from '../../repositories/examiner-record-row';
 import { config } from '../../../../../common/framework/config/config';
 
 export interface ExaminerQueryRecord {

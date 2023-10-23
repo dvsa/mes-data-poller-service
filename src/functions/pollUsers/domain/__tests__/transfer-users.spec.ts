@@ -1,10 +1,10 @@
 import { Mock, It, Times } from 'typemoq';
-import * as examinerRepository from '../../framework/repo/mysql/examiner-repository';
+import * as examinerRepository from '../../framework/databases/mysql/examiner-repository';
 import { transferUsers } from '../transfer-users';
-import * as cachedExaminerRepository from '../../framework/repo/dynamodb/cached-examiner-repository';
+import * as cachedExaminerRepository from '../../framework/databases/dynamodb/cached-examiner-repository';
 import * as examinerCacheReconciler from '../examiner-cache-reconciler';
 import { StaffDetail, TestPermissionPeriod } from '../../../../common/application/models/staff-details';
-import * as universalPermissionsRepository from '../../framework/repo/mysql/universal-permissions-repository';
+import * as universalPermissionsRepository from '../../framework/repositories/get-universal-permissions';
 import { ExaminerRole } from '../constants/examiner-roles';
 
 describe('transferUsers module', () => {

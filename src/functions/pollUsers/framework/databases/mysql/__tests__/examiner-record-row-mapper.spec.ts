@@ -1,4 +1,4 @@
-import { buildStaffDetailsFromQueryResult } from '../examiner-record-row-mapper';
+import { buildStaffDetailsFromQueryResult } from '../../../repositories/examiner-record-row';
 import { StaffDetail, TestPermissionPeriod } from '../../../../../../common/application/models/staff-details';
 import { isEqual } from 'lodash';
 import { ExaminerRole } from '../../../../domain/constants/examiner-roles';

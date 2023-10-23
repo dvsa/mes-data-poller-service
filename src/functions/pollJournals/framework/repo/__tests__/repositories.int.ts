@@ -6,12 +6,12 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 3 * 60 * 1000;
 
 describe('Repository integration tests', () => {
 
-  describe('MySQL repo suites', () => {
+  describe('MySQL repositories suites', () => {
     personalCommitmentIntegrationTests();
     advanceTestSlotsIntegrationTests();
   });
 
-  describe('DynamoDB repo suites', () => {
+  describe('DynamoDB repositories suites', () => {
     dynamoDBIntegrationTests();
   });
 });

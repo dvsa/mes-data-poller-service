@@ -1,6 +1,6 @@
 import { reconcileActiveAndCachedExaminers } from '../examiner-cache-reconciler';
 import { Mock, It, Times } from 'typemoq';
-import * as cachedExaminerRepository from '../../framework/repo/dynamodb/cached-examiner-repository';
+import * as cachedExaminerRepository from '../../framework/databases/dynamodb/cached-examiner-repository';
 import { StaffDetail } from '../../../../common/application/models/staff-details';
 import { ExaminerRole } from '../constants/examiner-roles';
 
