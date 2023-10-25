@@ -2,7 +2,7 @@ import { customMetric } from '@dvsa/mes-microservice-common/application/utils/lo
 import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { config } from '../../config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
-import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
+import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 
 const getDynamoClient = () =>  {
   const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
@@ -20,7 +20,7 @@ export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]
 
   const scanResult = await ddb.send(
     new ScanCommand({
-      TableName: config().testCentreDynamodbTableName,
+      TableName: config().dynamodbTableName,
     }),
   );
 
@@ -33,7 +33,7 @@ export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]
 
 export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName = config().testCentreDynamodbTableName;
+  const tableName = config().dynamodbTableName;
 
   // will update row using a put and add new rows if staffNumber not found
   const putPromises = testCentres.map((testCentre: TestCentreDetail) => {
@@ -54,7 +54,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
 
 export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName: string = config().testCentreDynamodbTableName;
+  const tableName: string = config().dynamodbTableName;
 
   const deletePromises = staffNumbers.map((staffNumber: string) => {
     const deleteParams = {

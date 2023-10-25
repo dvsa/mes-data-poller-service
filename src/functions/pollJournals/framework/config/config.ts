@@ -6,7 +6,7 @@ import {
 
 export type Config = {
   isOffline: boolean;
-  journalDynamodbTableName: string;
+  dynamodbTableName: string;
   tarsReplicaDatabaseHostname: string;
   tarsReplicaDatabaseName: string;
   tarsReplicaDatabaseUsername: string;
@@ -18,7 +18,7 @@ let configuration: Config;
 export const bootstrapConfig = async (): Promise<void> => {
   configuration = {
     isOffline: !!process.env.IS_OFFLINE,
-    journalDynamodbTableName: defaultIfNotPresent(process.env.JOURNALS_DDB_TABLE_NAME, 'journals'),
+    dynamodbTableName: defaultIfNotPresent(process.env.JOURNALS_DDB_TABLE_NAME, 'journals'),
     tarsReplicaDatabaseHostname: throwIfNotPresent(
       process.env.TARS_REPLICA_HOST_NAME,
       'tarsReplicaDatabaseHostname',

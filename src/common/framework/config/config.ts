@@ -1,14 +1,15 @@
 import {
-  defaultIfNotPresent,
   throwIfNotPresent,
   tryFetchRdsAccessToken,
-} from '../../../common/framework/config/config-helpers';
+} from './config-helpers';
+import { ddbTable, DdbTableTypes } from "../../application/utils/ddbTable";
+
 let configuration: Config;
 
-export const bootstrapConfig = async () => {
+export const bootstrapConfig = async (type: DdbTableTypes) => {
   configuration = {
     isOffline: !!process.env.IS_OFFLINE,
-    usersDynamodbTableName: defaultIfNotPresent(process.env.USERS_DDB_TABLE_NAME, 'users'),
+    dynamodbTableName: ddbTable(type),
     tarsReplicaDatabaseHostname: throwIfNotPresent(
       process.env.TARS_REPLICA_HOST_NAME,
       'tarsReplicateDatabaseHostname',
@@ -26,16 +27,18 @@ export const bootstrapConfig = async () => {
       process.env.TARS_REPLICA_DB_USERNAME,
       'SECRET_DB_PASSWORD_KEY',
     ),
+    timeTravelDate: process.env.TIME_TRAVEL_DATE,
   };
 };
 
 export type Config = {
   isOffline: boolean;
-  usersDynamodbTableName: string;
+  dynamodbTableName: string;
   tarsReplicaDatabaseHostname: string;
   tarsReplicaDatabaseName: string;
   tarsReplicaDatabaseUsername: string;
   tarsReplicaDatabasePassword: string;
+  timeTravelDate?: string;
 };
 
 export const config = (): Config => configuration;

@@ -1,11 +1,11 @@
-import {mockClient} from 'aws-sdk-client-mock';
+import { mockClient } from 'aws-sdk-client-mock';
 import * as moment from 'moment';
-import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
-import {BatchWriteCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { BatchWriteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import * as JournalRepository from '../journal-repository';
 import * as config from '../../../config/config';
-import {dummyConfig} from '../../../config/__mocks__/config';
-import {JournalRecord} from '../../../../domain/journal-record';
+import { dummyConfig } from '../../../config/__mocks__/config';
+import { JournalRecord } from '../../../../domain/journal-record';
 
 describe('JournalRepository', () => {
   const startTime = moment('2019-01-01 10:30:00.000');
@@ -89,7 +89,7 @@ describe('JournalRepository', () => {
         UnprocessedItems: {},
         ConsumedCapacity: [
           {
-            TableName: dummyConfig.journalDynamodbTableName,
+            TableName: dummyConfig.dynamodbTableName,
             CapacityUnits: 49,
           },
         ],
@@ -108,7 +108,7 @@ describe('JournalRepository', () => {
         UnprocessedItems: {},
         ConsumedCapacity: [
           {
-            TableName: dummyConfig.journalDynamodbTableName,
+            TableName: dummyConfig.dynamodbTableName,
             CapacityUnits: 49,
           },
         ],
@@ -144,7 +144,7 @@ describe('JournalRepository', () => {
         },
         ConsumedCapacity: [
           {
-            TableName: dummyConfig.journalDynamodbTableName,
+            TableName: dummyConfig.dynamodbTableName,
             CapacityUnits: 49,
           },
         ],

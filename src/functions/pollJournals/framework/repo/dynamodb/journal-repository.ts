@@ -63,7 +63,7 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
 
   if (journals.length > 0) {
     info(`STARTING SAVE: ${new Date()}`);
-    const tableName = config().journalDynamodbTableName;
+    const tableName = config().dynamodbTableName;
     const maxBatchWriteRequests = 25;
     const journalWriteBatches = chunk(journals, maxBatchWriteRequests);
     const { totalUnprocessedWrites, averageRequestRuntime } =
@@ -215,7 +215,7 @@ export const now = (): moment.Moment => {
  */
 export const getStaffNumbersWithHashes = async (startTime: Date): Promise<Partial<JournalRecord>[]> => {
   const ddb = getDynamoClient();
-  const tableName = config().journalDynamodbTableName;
+  const tableName = config().dynamodbTableName;
 
   const params: ScanCommandInput = {
     TableName: tableName,

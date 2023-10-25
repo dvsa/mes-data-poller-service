@@ -6,7 +6,7 @@ import {
 
 export type Config = {
   isOffline: boolean;
-  testCentreDynamodbTableName: string;
+  dynamodbTableName: string;
   tarsReplicaDatabaseHostname: string;
   tarsReplicaDatabaseName: string;
   tarsReplicaDatabaseUsername: string;
@@ -18,7 +18,7 @@ let configuration: Config;
 export const bootstrapTestCentreConfig = async () => {
   configuration = {
     isOffline: !!process.env.IS_OFFLINE,
-    testCentreDynamodbTableName:
+    dynamodbTableName:
       defaultIfNotPresent(process.env.TEST_CENTRE_DDB_TABLE_NAME, 'test-centre'),
     tarsReplicaDatabaseHostname: throwIfNotPresent(
       process.env.TARS_REPLICA_HOST_NAME,

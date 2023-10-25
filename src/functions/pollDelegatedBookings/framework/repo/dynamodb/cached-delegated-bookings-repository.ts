@@ -20,7 +20,7 @@ export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 
   const scanResult = await ddb.send(
     new ScanCommand({
-      TableName: config().delegatedBookingsDynamodbTableName,
+      TableName: config().dynamodbTableName,
     })
   );
 
@@ -32,8 +32,8 @@ export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 };
 
 export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedBookingDetail[]): Promise<void> => {
-  const ddb = getDynamoClient();
-  const tableName = config().delegatedBookingsDynamodbTableName;
+  const ddb: DynamoDB.DocumentClient = getDynamoClient();
+  const tableName: string = config().dynamodbTableName;
 
   const putPromises = delegatedBookings.map((delegatedBooking: DelegatedBookingDetail) => {
     const putParams = {
@@ -53,8 +53,8 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
 };
 
 export const unCacheDelegatedBookingDetails = async (appRefs: number[]): Promise<void> => {
-  const ddb = getDynamoClient();
-  const tableName: string = config().delegatedBookingsDynamodbTableName;
+  const ddb: DynamoDB.DocumentClient = getDynamoClient();
+  const tableName: string = config().dynamodbTableName;
 
   const deletePromises = appRefs.map((applicationReference: number) => {
     const deleteParams = {
