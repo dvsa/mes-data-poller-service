@@ -1,7 +1,7 @@
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
-import { config } from '../../config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
+import {config} from "../../../../../common/framework/mysql/config";
 
 let dynamoDocumentClient: DynamoDB.DocumentClient;
 const getDynamoClient: () => DynamoDB.DocumentClient = () => {

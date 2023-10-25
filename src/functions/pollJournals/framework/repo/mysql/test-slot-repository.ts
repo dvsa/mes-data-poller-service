@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
-import { mapRow } from './row-mappers/test-slot-row-mapper';
+import {mapRow, TestSlotRow} from './row-mappers/test-slot-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 

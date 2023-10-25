@@ -1,5 +1,5 @@
 {
-  "name": "mes-data-replication-service",
+  "name": "mes-data-poller-service",
   "version": "0.1.0",
   "author": "DVSA",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "lodash": "^4.17.21",
     "luxon": "^3.4.3",
     "moment": "^2.29.4",
-    "mysql2": "^1.6.5",
+    "mysql2": "^3.6.2",
     "node.extend": "^2.0.3"
   },
   "devDependencies": {

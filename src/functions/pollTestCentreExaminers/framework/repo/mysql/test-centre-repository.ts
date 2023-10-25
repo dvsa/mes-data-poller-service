@@ -1,8 +1,4 @@
-import * as mysql from 'mysql2';
-
-import { config } from '../../config';
-import { certificate } from '../../../../../common/certs/ssl_profiles';
-import { query } from '../../../../../common/framework/mysql/database';
+import { getConnection, query } from '../../../../../common/framework/mysql/database';
 import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 
@@ -14,21 +10,7 @@ export interface TestCentreRow {
 }
 
 export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
-  const configuration = config();
-
-  const connection = mysql.createConnection({
-    host: configuration.tarsReplicaDatabaseHostname,
-    database: configuration.tarsReplicaDatabaseName,
-    user: configuration.tarsReplicaDatabaseUsername,
-    password: configuration.tarsReplicaDatabasePassword,
-    charset: 'UTF8_GENERAL_CI',
-    ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
-    },
-  });
+  const connection = getConnection()
 
   await query(connection, 'SET SESSION group_concat_max_len = 65000');
   const queryResult: TestCentreRow[] = await query(connection, getTestCentreQuery());

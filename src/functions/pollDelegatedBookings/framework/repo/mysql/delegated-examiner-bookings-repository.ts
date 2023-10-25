@@ -1,8 +1,4 @@
-import * as mysql from 'mysql2';
-
-import { config } from '../../config';
-import { certificate } from '../../../../../common/certs/ssl_profiles';
-import { query } from '../../../../../common/framework/mysql/database';
+import {getConnection, query} from '../../../../../common/framework/mysql/database';
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 
@@ -29,21 +25,7 @@ export interface DelegatedTestSlotRow {
 }
 
 export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
-  const configuration = config();
-
-  const connection = mysql.createConnection({
-    host: configuration.tarsReplicaDatabaseHostname,
-    database: configuration.tarsReplicaDatabaseName,
-    user: configuration.tarsReplicaDatabaseUsername,
-    password: configuration.tarsReplicaDatabasePassword,
-    charset: 'UTF8_GENERAL_CI',
-    ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
-    },
-  });
+  const connection = getConnection();
 
   const queryResult: DelegatedTestSlotRow[] = await query(
     connection,

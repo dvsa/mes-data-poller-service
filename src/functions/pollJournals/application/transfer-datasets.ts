@@ -6,7 +6,6 @@ import { getPersonalCommitments } from '../framework/repo/mysql/personal-commitm
 import { getNonTestActivities } from '../framework/repo/mysql/non-test-activity-repository';
 import { getAdvanceTestSlots } from '../framework/repo/mysql/advance-test-slots-repository';
 import { getDeployments } from '../framework/repo/mysql/deployment-repository';
-import { createConnectionPool } from '../framework/repo/mysql/pool';
 import { getExaminers } from '../framework/repo/mysql/examiner-repository';
 import { AllDatasets } from '../domain/all-datasets';
 import { JournalRecord } from '../domain/journal-record';
@@ -14,11 +13,12 @@ import { buildJournals } from './journal-builder';
 import { saveJournals } from '../framework/repo/dynamodb/journal-repository';
 import { filterChangedJournals } from './journal-change-filter';
 import { getJournalEndDate, getNextWorkingDay } from '../framework/repo/mysql/journal-end-date-repository';
-import { config } from '../framework/config/config';
 import { info, customMetric, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import {config} from "../../../common/framework/mysql/config";
+import {getConnectionPool} from "../../../common/framework/mysql/database";
 
 export const transferDatasets = async (startTime: Date): Promise<void> => {
-  const connectionPool = createConnectionPool();
+  const connectionPool = getConnectionPool();
 
   info(`STARTING QUERY PHASE: ${new Date()}`);
 

@@ -3,10 +3,10 @@ import { Agent } from 'https';
 import { JournalHashesCache } from './journal-hashes-cache';
 import { JournalRecord } from '../../../domain/journal-record';
 import { chunk, get, mean } from 'lodash';
-import { config } from '../../config/config';
 import { Key } from 'aws-sdk/clients/dynamodb';
 import moment = require('moment');
 import { customMetric, warn, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import {config} from "../../../../../common/framework/mysql/config";
 
 /*
 * Amount of time (in milliseconds), to throttle Journal writes over.

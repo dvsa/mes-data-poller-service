@@ -1,8 +1,7 @@
 import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-
-import { config } from '../../config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
+import {config} from "../../../../../common/framework/mysql/config";
 
 let dynamoDocumentClient: DynamoDB.DocumentClient;
 const getDynamoClient: () => DynamoDB.DocumentClient = () => {
