@@ -1,19 +1,23 @@
-import { DynamoDB, config as awsConfig, Credentials } from 'aws-sdk';
-import { getStaffNumbersWithHashes } from '../journal-repository';
-import { bootstrapConfig, config } from '../../../config/config';
+import {DynamoDBDocument, PutCommand} from '@aws-sdk/lib-dynamodb';
+import { DynamoDB, DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import * as dotenv from 'dotenv';
+import { getStaffNumbersWithHashes } from '../journal-repository';
+import { bootstrapConfig } from '../../../config/config';
 
-let ddb: DynamoDB.DocumentClient;
-
+let ddb: DynamoDBClient;
 export const dynamoDBIntegrationTests = () => {
   describe('DynamoDB integration tests', () => {
 
     beforeAll((done) => {
-      awsConfig.update({
+      ddb = DynamoDBDocument.from(new DynamoDB({
+        endpoint: 'http://localhost:8000',
         region: 'localhost',
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      ddb = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: 'localhost' });
+        credentials: {
+          accessKeyId: 'akid',
+          secretAccessKey: 'secret',
+          sessionToken: 'session',
+        },
+      }));
       process.env.IS_OFFLINE = 'true';
       process.env.NODE_ENV = 'local';
       dotenv.config();
@@ -38,11 +42,11 @@ export const dynamoDBIntegrationTests = () => {
 };
 
 const putStaffNumberAndHash = (staffNumber: string, hash: string) => {
-  return ddb.put({
+  return ddb.send(new PutCommand({
     TableName: 'journals',
     Item: {
       staffNumber,
       hash,
     },
-  }).promise();
+  }));
 };

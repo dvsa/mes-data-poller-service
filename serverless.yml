@@ -2,7 +2,7 @@ service: mes-data-poller-service
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs18.x
 
 package:
   individually: true
@@ -80,5 +80,5 @@ resources:
 plugins:
   - serverless-dotenv-plugin
   - serverless-webpack
-  - serverless-dynamodb-local
+  - serverless-dynamodb
   - serverless-offline

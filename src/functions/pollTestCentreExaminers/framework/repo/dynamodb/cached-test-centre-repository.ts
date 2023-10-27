@@ -1,31 +1,28 @@
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
+import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { config } from '../../config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
+import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
 
-let dynamoDocumentClient: DynamoDB.DocumentClient;
-const getDynamoClient: () => DynamoDB.DocumentClient = () => {
-  if (!dynamoDocumentClient) {
-    if (config().isOffline) {
-      const localRegion = 'localhost';
-      awsConfig.update({
-        region: localRegion,
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: localRegion });
-    } else {
-      dynamoDocumentClient = new DynamoDB.DocumentClient();
-    }
+const getDynamoClient = () =>  {
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
+
+  if (config().isOffline) {
+    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
+    opts.endpoint = 'http://localhost:8000';
+    opts.region = 'localhost';
   }
-  return dynamoDocumentClient;
+  return new DynamoDBClient(opts);
 };
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
-  const scanParams = {
-    TableName: config().testCentreDynamodbTableName,
-  };
-  const scanResult = await ddb.scan(scanParams).promise();
+  const ddb = getDynamoClient();
+
+  const scanResult = await ddb.send(
+    new ScanCommand({
+      TableName: config().testCentreDynamodbTableName,
+    }),
+  );
 
   if (!scanResult.Items) {
     return [];
@@ -35,8 +32,8 @@ export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]
 };
 
 export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[]): Promise<void> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
-  const tableName: string = config().testCentreDynamodbTableName;
+  const ddb = getDynamoClient();
+  const tableName = config().testCentreDynamodbTableName;
 
   // will update row using a put and add new rows if staffNumber not found
   const putPromises = testCentres.map((testCentre: TestCentreDetail) => {
@@ -48,7 +45,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
         testCentreIDs: testCentre.testCentreIDs,
       },
     };
-    return ddb.put(putParams).promise();
+    return ddb.send(new PutCommand(putParams));
   });
   await Promise.all(putPromises);
 
@@ -56,7 +53,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
 };
 
 export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
+  const ddb = getDynamoClient();
   const tableName: string = config().testCentreDynamodbTableName;
 
   const deletePromises = staffNumbers.map((staffNumber: string) => {
@@ -66,7 +63,7 @@ export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promis
         staffNumber,
       },
     };
-    return ddb.delete(deleteParams).promise();
+    return ddb.send(new DeleteCommand(deleteParams));
   });
 
   await Promise.all(deletePromises);

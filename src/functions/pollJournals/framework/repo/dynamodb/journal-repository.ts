@@ -1,12 +1,13 @@
-import { DynamoDB, Credentials, config as awsConfig } from 'aws-sdk';
+import {BatchWriteCommand, BatchWriteCommandInput, ScanCommand, ScanCommandInput} from '@aws-sdk/lib-dynamodb';
+import { AttributeValue, DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { Agent } from 'https';
+import { chunk, get, mean } from 'lodash';
+import { customMetric, warn, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { JournalHashesCache } from './journal-hashes-cache';
 import { JournalRecord } from '../../../domain/journal-record';
-import { chunk, get, mean } from 'lodash';
 import { config } from '../../config/config';
-import { Key } from 'aws-sdk/clients/dynamodb';
-import moment = require('moment');
-import { customMetric, warn, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import * as moment from 'moment';
 
 /*
 * Amount of time (in milliseconds), to throttle Journal writes over.
@@ -27,7 +28,6 @@ export const pollerFrequency = Number(process.env.POLLER_FREQUENCY) || 900;
 info(`Poller frequency: ${pollerFrequency}`);
 
 export const journalHashesCache = new JournalHashesCache(pollerFrequency);
-let dynamoDocumentClient: DynamoDB.DocumentClient;
 
 /**
  * Creates the DynamoDB API client. If offline then points to the local endpoint. If online then enables HTTP keep
@@ -36,30 +36,18 @@ let dynamoDocumentClient: DynamoDB.DocumentClient;
  *
  * Only exported to support integration testing.
  */
-export const getDynamoClient = (): DynamoDB.DocumentClient => {
-  if (!dynamoDocumentClient) {
-    if (config().isOffline) {
-      const localRegion = 'localhost';
-      awsConfig.update({
-        region: localRegion,
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: localRegion });
-    } else {
-      const sslAgent = new Agent({
-        keepAlive: true,
-        maxSockets: 50,
-        rejectUnauthorized: true,
-      });
-      awsConfig.update({
-        httpOptions: {
-          agent: sslAgent,
-        },
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient();
-    }
+export const getDynamoClient = () => {
+  const options = { region: 'eu-west-1' } as DynamoDBClientConfig;
+
+  if (config().isOffline) {
+    options.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
+    options.endpoint = 'http://localhost:8000';
+    options.region = 'localhost';
+  } else {
+    const sslAgent = new Agent({ keepAlive: true, maxSockets: 50, rejectUnauthorized: true });
+    options.requestHandler = new NodeHttpHandler({ httpAgent: sslAgent, httpsAgent: sslAgent });
   }
-  return dynamoDocumentClient;
+  return new DynamoDBClient(options);
 };
 
 /**
@@ -103,7 +91,7 @@ const submitSaveRequests = async (
   writeBatches: JournalRecord[][],
   tableName: string,
   startTime: Date,
-) => {
+): Promise<{ totalUnprocessedWrites: number; averageRequestRuntime: number }> => {
   const ddb = getDynamoClient();
   let totalUnprocessedWrites = 0;
   let requestRuntimes: number[] = [];
@@ -127,10 +115,14 @@ const submitSaveRequests = async (
         })),
       },
       ReturnConsumedCapacity: 'TOTAL',
-    } as DynamoDB.DocumentClient.BatchWriteItemInput;
+    } as BatchWriteCommandInput;
 
     const start = process.hrtime();
-    const result = await ddb.batchWrite(writeInput).promise();
+
+    const result = await ddb.send(
+      new BatchWriteCommand(writeInput)
+    );
+
     const timeTaken = process.hrtime(start);
     totalConsumedCapacity += get(result, 'ConsumedCapacity[0].CapacityUnits', 0);
     const duration = Math.floor(((timeTaken[0] * 1e9) + timeTaken[1]) / 1e6);
@@ -225,7 +217,7 @@ export const getStaffNumbersWithHashes = async (startTime: Date): Promise<Partia
   const ddb = getDynamoClient();
   const tableName = config().journalDynamodbTableName;
 
-  const params: DynamoDB.DocumentClient.ScanInput = {
+  const params: ScanCommandInput = {
     TableName: tableName,
     ProjectionExpression: 'staffNumber,#hash',
     ExpressionAttributeNames: {
@@ -241,14 +233,18 @@ export const getStaffNumbersWithHashes = async (startTime: Date): Promise<Partia
   warn('Journal Hashes Cache miss, reading hashes from Dynamo');
 
   let scannedItems: Partial<JournalRecord>[] = [];
-  let lastEvaluatedKey: Key | undefined;
+  let lastEvaluatedKey: Record<string, AttributeValue> | undefined;
   let totalConsumedCapacity = 0;
   do {
     const paramsForRequest = lastEvaluatedKey !== undefined ?
       { ...params, ExclusiveStartKey: lastEvaluatedKey }
       : { ...params };
     const start = process.hrtime();
-    const result = await ddb.scan(paramsForRequest).promise();
+
+    const result = await ddb.send(
+      new ScanCommand(paramsForRequest)
+    );
+
     const timeTaken = process.hrtime(start);
     const duration = Math.floor(((timeTaken[0] * 1e9) + timeTaken[1]) / 1e6);
     scannedItems = [...scannedItems, ...result.Items as Partial<JournalRecord>[]];

@@ -1,7 +1,5 @@
 import { generateSignerOptions } from '../config-helpers';
 
-const AWS = require('aws-sdk');
-
 describe('config helper: generateSignerOptions', () => {
   afterEach(() => {
     delete process.env.AWS_REGION;

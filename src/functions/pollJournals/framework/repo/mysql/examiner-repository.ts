@@ -16,7 +16,7 @@ export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date):
 
   info(`Issued examiner query starting on ${windowStart}...`);
   const start = new Date();
-  const res = await query(
+  const res = await query<ExaminerRecord>(
     connectionPool,
     `
     select e.individual_id, e.staff_number

@@ -1,32 +1,27 @@
-import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
-import { config } from '../../../../pollUsers/framework/config';
+import { DynamoDBClient, DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
+import { BatchWriteCommand, DeleteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { config } from '../../config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 
-let dynamoDocumentClient: DynamoDB.DocumentClient;
-const getDynamoClient = () => {
-  if (!dynamoDocumentClient) {
-    if (config().isOffline) {
-      const localRegion = 'localhost';
-      awsConfig.update({
-        region: localRegion,
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: localRegion });
-    } else {
-      dynamoDocumentClient = new DynamoDB.DocumentClient();
-    }
+const getDynamoClient = () =>  {
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
+
+  if (config().isOffline) {
+    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
+    opts.endpoint = 'http://localhost:8000';
+    opts.region = 'localhost';
   }
-  return dynamoDocumentClient;
+  return new DynamoDBClient(opts);
 };
 
 export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
   const ddb = getDynamoClient();
-  const scanParams = {
-    TableName: config().usersDynamodbTableName,
-  };
-  const scanResult = await ddb.scan(scanParams).promise();
+
+  const scanResult = await ddb.send(
+    new ScanCommand({TableName: config().usersDynamodbTableName}),
+  );
 
   if (!scanResult.Items) {
     return [];
@@ -52,7 +47,7 @@ export const cacheStaffDetails = async (staffDetail: StaffDetail[]): Promise<voi
         })),
       },
     };
-    return ddb.batchWrite(params).promise();
+    return ddb.send(new BatchWriteCommand(params));
   });
 
   await Promise.all(writePromises);
@@ -71,7 +66,7 @@ export const uncacheStaffNumbers = async (staffNumbers: string[]): Promise<void>
         staffNumber,
       },
     };
-    return ddb.delete(deleteParams).promise();
+    return ddb.send(new DeleteCommand(deleteParams));
   });
 
   await Promise.all(deletePromises);

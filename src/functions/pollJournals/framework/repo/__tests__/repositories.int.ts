@@ -5,7 +5,6 @@ import { dynamoDBIntegrationTests } from '../dynamodb/__tests__/journal-reposito
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 3 * 60 * 1000;
 
 describe('Repository integration tests', () => {
-
   describe('MySQL repo suites', () => {
     personalCommitmentIntegrationTests();
     advanceTestSlotsIntegrationTests();

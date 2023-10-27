@@ -1,21 +1,23 @@
+import {mockClient} from 'aws-sdk-client-mock';
+import * as moment from 'moment';
+import {DynamoDBClient} from '@aws-sdk/client-dynamodb';
+import {BatchWriteCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
 import * as JournalRepository from '../journal-repository';
 import * as config from '../../../config/config';
-import * as AWSMock from 'aws-sdk-mock';
-import { dummyConfig } from '../../../config/__mocks__/config';
-import { JournalRecord } from '../../../../domain/journal-record';
-import moment = require('moment');
+import {dummyConfig} from '../../../config/__mocks__/config';
+import {JournalRecord} from '../../../../domain/journal-record';
 
 describe('JournalRepository', () => {
   const startTime = moment('2019-01-01 10:30:00.000');
   const sufficientTime = startTime.clone().add({ seconds: 2 });
   const outOfTime = startTime.clone().add({ seconds: JournalRepository.pollerFrequency - 2 });
+  const dynamoDbMock = mockClient(DynamoDBClient);
 
   beforeEach(() => {
     spyOn(config, 'config').and.returnValue(dummyConfig);
   });
 
   describe('getStaffNumbersWithHashes', () => {
-
     const hash1 = { staffNumber: '1', hash: 'a' };
     const hash2 = { staffNumber: '2', hash: 'b' };
     const hash3 = { staffNumber: '3', hash: 'c' };
@@ -25,21 +27,19 @@ describe('JournalRepository', () => {
       spyOn(JournalRepository.journalHashesCache, 'isValid').and.returnValue(false);
       spyOn(JournalRepository.journalHashesCache, 'clearAndPopulate');
 
-      AWSMock.mock('DynamoDB.DocumentClient', 'scan', (params, cb) => {
-        let ddbResp;
+      dynamoDbMock.on(ScanCommand).callsFake((params) => {
+        console.log(params);
         if (!params.ExclusiveStartKey) {
-          ddbResp = {
+          return  {
             Items: [hash1, hash2],
             LastEvaluatedKey: hash2.staffNumber,
           };
         } else {
-          ddbResp = {
+          return {
             Items: [hash3, hash4],
           };
         }
-        cb(null, ddbResp);
       });
-
       const expected = [hash1, hash2, hash3, hash4];
 
       const result = await JournalRepository.getStaffNumbersWithHashes(startTime.toDate());
@@ -86,17 +86,14 @@ describe('JournalRepository', () => {
       const { journals, hashes } = generateDummyJournals(10); // less than batch size
       spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
 
-      AWSMock.mock('DynamoDB.DocumentClient', 'batchWrite', (params, cb) => {
-        const ddbResp = {
-          UnprocessedItems: {},
-          ConsumedCapacity: [
-            {
-              TableName: dummyConfig.journalDynamodbTableName,
-              CapacityUnits: 49,
-            },
-          ],
-        };
-        cb(null, ddbResp);
+      dynamoDbMock.on(BatchWriteCommand).resolves({
+        UnprocessedItems: {},
+        ConsumedCapacity: [
+          {
+            TableName: dummyConfig.journalDynamodbTableName,
+            CapacityUnits: 49,
+          },
+        ],
       });
 
       await JournalRepository.saveJournals(journals, startTime.toDate());
@@ -108,17 +105,14 @@ describe('JournalRepository', () => {
       const { journals, hashes } = generateDummyJournals(60); // should batch as 25, 25, 10 items
       spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
 
-      AWSMock.mock('DynamoDB.DocumentClient', 'batchWrite', (params, cb) => {
-        const ddbResp = {
-          UnprocessedItems: {},
-          ConsumedCapacity: [
-            {
-              TableName: dummyConfig.journalDynamodbTableName,
-              CapacityUnits: 49,
-            },
-          ],
-        };
-        cb(null, ddbResp);
+      dynamoDbMock.on(BatchWriteCommand).resolves({
+        UnprocessedItems: {},
+        ConsumedCapacity: [
+          {
+            TableName: dummyConfig.journalDynamodbTableName,
+            CapacityUnits: 49,
+          },
+        ],
       });
 
       await JournalRepository.saveJournals(journals, startTime.toDate());
@@ -131,33 +125,30 @@ describe('JournalRepository', () => {
       const expectedHashes = hashes.filter((hash) => { hash.staffNumber === '2000'; }); // examiner 2000 failed
       spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
 
-      AWSMock.mock('DynamoDB.DocumentClient', 'batchWrite', (params, cb) => {
-        const ddbResp = {
-          UnprocessedItems: { // examiner 2000 failed...
-            journals: [
-              {
-                PutRequest: {
-                  Item: {
-                    staffNumber: '2000',
-                    journal: {
-                      type: 'Buffer',
-                      data: [31, 139, 0, 0, 237, 182],
-                    },
-                    lastUpdatedAt: 200000,
-                    hash: '20000',
+      dynamoDbMock.on(BatchWriteCommand).resolves({
+        UnprocessedItems: { // examiner 2000 failed...
+          journals: [
+            {
+              PutRequest: {
+                Item: {
+                  staffNumber: '2000',
+                  journal: {
+                    type: 'Buffer',
+                    data: [31, 139, 0, 0, 237, 182],
                   },
+                  lastUpdatedAt: 200000,
+                  hash: '20000',
                 },
               },
-            ],
-          },
-          ConsumedCapacity: [
-            {
-              TableName: dummyConfig.journalDynamodbTableName,
-              CapacityUnits: 49,
             },
           ],
-        };
-        cb(null, ddbResp);
+        },
+        ConsumedCapacity: [
+          {
+            TableName: dummyConfig.journalDynamodbTableName,
+            CapacityUnits: 49,
+          },
+        ],
       });
 
       await JournalRepository.saveJournals(journals, startTime.toDate());
