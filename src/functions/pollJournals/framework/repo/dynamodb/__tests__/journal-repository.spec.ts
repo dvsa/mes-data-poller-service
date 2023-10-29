@@ -28,7 +28,6 @@ describe('JournalRepository', () => {
       spyOn(JournalRepository.journalHashesCache, 'clearAndPopulate');
 
       dynamoDbMock.on(ScanCommand).callsFake((params) => {
-        console.log(params);
         if (!params.ExclusiveStartKey) {
           return  {
             Items: [hash1, hash2],
