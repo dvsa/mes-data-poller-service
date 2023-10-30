@@ -43,8 +43,6 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
     },
   });
 
-  debug('Connection instantiated');
-
   const [queryResult] = await query(
     connection,
     `SELECT ps.slot_id
@@ -89,8 +87,6 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
     ON tcn.tc_id = tc.tc_id
 WHERE ex.grade_code = 'DELE'`,
   );
-
-  debug('Query return count', (queryResult as mysql.RowDataPacket[]).length);
 
   return buildDelegatedBookingsFromQueryResult(queryResult as DelegatedTestSlotRow[]);
 };
