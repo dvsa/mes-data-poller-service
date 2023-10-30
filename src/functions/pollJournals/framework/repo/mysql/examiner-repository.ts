@@ -16,7 +16,7 @@ export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date):
 
   info(`Issued examiner query starting on ${windowStart}...`);
   const start = new Date();
-  const res = await query<ExaminerRecord>(
+  const [res] = await query(
     connectionPool,
     `
     select e.individual_id, e.staff_number
@@ -27,8 +27,9 @@ export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date):
     `,
     [windowStart],
   );
+
   const end = new Date();
   info('examiner query returned');
   customDurationMetric('ExaminerQuery', 'Time taken querying examiners, in seconds', start, end);
-  return res;
+  return res as ExaminerRecord[];
 };

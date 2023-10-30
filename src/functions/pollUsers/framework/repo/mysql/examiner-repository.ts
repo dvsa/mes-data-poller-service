@@ -32,7 +32,7 @@ export const getActiveExaminers = async (
     },
   });
 
-  const queryResult: ExaminerQueryRecord[] = await query(
+  const [queryResult] = await query(
     connection,
     `
     select
@@ -52,5 +52,5 @@ export const getActiveExaminers = async (
     [moment().format('YYYY-MM-DD')],
   );
 
-  return buildStaffDetailsFromQueryResult(queryResult, universalPermissionPeriods);
+  return buildStaffDetailsFromQueryResult(queryResult as ExaminerQueryRecord[], universalPermissionPeriods);
 };

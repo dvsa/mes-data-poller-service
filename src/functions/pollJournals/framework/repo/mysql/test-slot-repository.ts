@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
-import { mapRow } from './row-mappers/test-slot-row-mapper';
+import { mapRow, TestSlotRow } from './row-mappers/test-slot-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 
@@ -27,8 +27,11 @@ export const getTestSlots = async (
 
   info(`Start run ${testSlotRun} - running test slots query from ${windowStart} to ${windowEnd}...`);
   const start = new Date();
-  const res = await query(connectionPool, getQuery(examinerIds), [windowStart, windowEnd, windowStart]);
-  const results = res.map(mapRow);
+  const [res] = await query(
+    connectionPool, getQuery(examinerIds),
+    [windowStart, windowEnd, windowStart]
+  );
+  const results = (res as TestSlotRow[]).map(mapRow);
   const end = new Date();
   info(`Finished run ${testSlotRun} - ${results.length} test slots loaded and mapped`);
   customDurationMetric('TestSlotsQuery', 'Time taken querying detailed test slots, in seconds', start, end);

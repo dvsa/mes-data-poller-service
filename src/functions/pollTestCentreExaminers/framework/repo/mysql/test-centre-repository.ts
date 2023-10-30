@@ -29,8 +29,8 @@ export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]
   });
 
   await query(connection, 'SET SESSION group_concat_max_len = 65000');
-  const queryResult: TestCentreRow[] = await query(connection, getTestCentreQuery());
-  return buildTestCentreRowsFromQueryResult(queryResult);
+  const [queryResult] = await query(connection, getTestCentreQuery());
+  return buildTestCentreRowsFromQueryResult(queryResult as TestCentreRow[]);
 };
 
 const getTestCentreQuery = (): string => {

@@ -1,5 +1,5 @@
 import * as mysql from 'mysql2';
-
+import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../config';
 import { certificate } from '../../../../../common/certs/ssl_profiles';
 import { query } from '../../../../../common/framework/mysql/database';
@@ -43,7 +43,9 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
     },
   });
 
-  const queryResult: DelegatedTestSlotRow[] = await query(
+  debug('Connection instantiated');
+
+  const [queryResult] = await query(
     connection,
     `SELECT ps.slot_id
      , ps.start_time
@@ -88,5 +90,7 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 WHERE ex.grade_code = 'DELE'`,
   );
 
-  return buildDelegatedBookingsFromQueryResult(queryResult);
+  debug('Query return count', (queryResult as mysql.RowDataPacket[]).length);
+
+  return buildDelegatedBookingsFromQueryResult(queryResult as DelegatedTestSlotRow[]);
 };

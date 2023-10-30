@@ -18,7 +18,7 @@ import { error } from '@dvsa/mes-microservice-common/application/utils/logger';
  *
  * This needs updating if the SQL query is ever changed.
  */
-interface TestSlotRow {
+export interface TestSlotRow {
   slot_id: number; // not nullable
   start_time: Date; // not nullable
   minutes: number; // not nullable

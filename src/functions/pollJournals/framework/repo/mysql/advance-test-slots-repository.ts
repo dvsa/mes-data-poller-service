@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
-import { mapRow } from './row-mappers/advance-test-slot-row-mapper';
+import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 
@@ -21,7 +21,7 @@ export const getAdvanceTestSlots = async (connectionPool: mysql.Pool, startDate:
 
   info(`running advanced test slots query from ${windowStart} to ${windowEnd}...`);
   const start = new Date();
-  const res = await query(
+  const [res] = await query(
     connectionPool,
     `
     select w.individual_id, w.slot_id, w.start_time, w.minutes, w.tc_id, tcn.tc_name,
@@ -35,7 +35,7 @@ export const getAdvanceTestSlots = async (connectionPool: mysql.Pool, startDate:
     `,
     [windowStart, windowEnd, windowStart],
   );
-  const results = res.map(mapRow);
+  const results = (res as AdvanceTestSlotRow[]).map(mapRow);
   const end = new Date();
   info(`${results.length} advance test slots loaded and mapped`);
   customDurationMetric('AdvanceTestSlotsQuery', 'Time taken querying advance test slots, in seconds', start, end);

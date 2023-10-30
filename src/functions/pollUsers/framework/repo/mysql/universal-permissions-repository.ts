@@ -25,7 +25,7 @@ export const getUniversalTestPermissions = async (): Promise<TestPermissionPerio
     },
   });
 
-  const queryResult: UniversalPermissionRecord[] = await query(
+  const [queryResult] = await query(
     connection,
     `
     SELECT
@@ -38,7 +38,10 @@ export const getUniversalTestPermissions = async (): Promise<TestPermissionPerio
       examiner_staff_number IS NULL
     `,
   );
-  return queryResult.map(record => mapUniversalPermissionRecord(record));
+
+  return (queryResult as UniversalPermissionRecord[]).map(
+    (record) => mapUniversalPermissionRecord(record),
+  );
 };
 
 const mapUniversalPermissionRecord = (record: UniversalPermissionRecord): TestPermissionPeriod => {

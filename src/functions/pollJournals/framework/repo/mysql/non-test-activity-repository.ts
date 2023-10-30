@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerNonTestActivity } from '../../../domain/examiner-non-test-activity';
-import { mapRow } from './row-mappers/non-test-activity-row-mapper';
+import {mapRow, NonTestActivityRow} from './row-mappers/non-test-activity-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 
@@ -20,7 +20,7 @@ export const getNonTestActivities = async (connectionPool: mysql.Pool, startDate
 
   info(`running non test activity query between ${windowStart} and ${windowEnd}...`);
   const start = new Date();
-  const res = await query(
+  const [res] = await query(
     connectionPool,
     `
     select w.individual_id, w.slot_id, w.start_time, w.minutes, w.non_test_activity_code,
@@ -34,7 +34,8 @@ export const getNonTestActivities = async (connectionPool: mysql.Pool, startDate
     `,
     [windowStart, windowStart, windowEnd],
   );
-  const results = res.map(mapRow);
+
+  const results = (res as NonTestActivityRow[]).map(mapRow);
   const end = new Date();
   info(`${results.length} non test activities loaded and mapped`);
   customDurationMetric('NonTestActivitiesQuery', 'Time taken querying non test activities, in seconds', start, end);

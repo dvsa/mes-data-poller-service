@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
-import { mapRow } from './row-mappers/personal-commitment-row-mapper';
+import {mapRow, PersonalCommitmentRow} from './row-mappers/personal-commitment-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 
@@ -22,7 +22,7 @@ Promise<ExaminerPersonalCommitment[]> => {
 
   info(`Running query for personal commitments from ${windowStartString} to ${windowEndString}...`);
   const start = new Date();
-  const res = await query(
+  const [res] = await query(
     connectionPool,
     `
     select e.individual_id, cas.slot_id, pc.commitment_id, pc.non_test_activity_code, reason.reason_desc
@@ -44,7 +44,8 @@ Promise<ExaminerPersonalCommitment[]> => {
     `,
     [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString],
   );
-  const results = res.map(mapRow);
+
+  const results = (res as PersonalCommitmentRow[]).map(mapRow);
   const end = new Date();
   info(`${results.length} personal commitments loaded and mapped`);
   customDurationMetric('PersonalCommitmentsQuery', 'Time taken querying personal commitments, in seconds', start, end);

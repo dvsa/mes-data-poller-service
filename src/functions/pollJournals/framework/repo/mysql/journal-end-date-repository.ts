@@ -20,12 +20,14 @@ export const getNextWorkingDay = async (connectionPool: mysql.Pool, startDate: D
   const windowStart = moment(startDate).format(sqlYearFormat);
 
   info(`running journal end date query starting on ${windowStart}...`);
-  const res = await query(
+
+  const [res] = await query(
     connectionPool,
     'select tarsreplica.getJournalEndDate(1, ?) as next_working_day',
     [windowStart],
   );
-  return res.map((row: JournalEndDateRow) => row.next_working_day as Date)[0];
+
+  return (res as JournalEndDateRow[]).map((row) => row.next_working_day as Date)[0];
 };
 
 export const getJournalEndDate = (): Date => {

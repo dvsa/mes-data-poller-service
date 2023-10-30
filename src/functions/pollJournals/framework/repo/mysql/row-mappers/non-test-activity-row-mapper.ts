@@ -1,7 +1,7 @@
 import { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 import { formatDateToStartTime } from '../../../../application/formatters/date-formatter';
 
-interface NonTestActivityRow {
+export interface NonTestActivityRow {
   individual_id: number;
   slot_id: number;
   start_time: Date;

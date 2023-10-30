@@ -1,6 +1,6 @@
 import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 
-interface DeploymentRow {
+export interface DeploymentRow {
   deployment_id: number;
   individual_id: number;
   tc_id: number;
