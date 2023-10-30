@@ -69,13 +69,13 @@ export const buildJournals = (examiners: ExaminerRecord[], datasets: AllDatasets
   return filteredJournals;
 };
 
-const enrichJournalWithDataset = (individualId: string) => function <D> (
+const enrichJournalWithDataset = (individualId: string) => (function<D> (
   journal: ExaminerWorkSchedule,
   dataset: {
     [examinerId: string]: D[];
   },
   datasetKey: keyof D,
-  journalKey: keyof ExaminerWorkSchedule,
+  journalKey: keyof ExaminerWorkSchedule
 ): ExaminerWorkSchedule {
   let enrichedJournal = journal;
   if (dataset[individualId]) {
@@ -85,7 +85,7 @@ const enrichJournalWithDataset = (individualId: string) => function <D> (
     };
   }
   return enrichedJournal;
-};
+});
 
 const filterNullAndDuplicateJournals = (journalRecords: (JournalRecord | null)[]): JournalRecord[] => {
   const nonNullJournals = journalRecords.filter(record => record !== null);

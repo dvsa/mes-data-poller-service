@@ -20,14 +20,12 @@ export const getUniversalTestPermissions = async (): Promise<TestPermissionPerio
     password: configuration.tarsReplicaDatabasePassword,
     charset: 'UTF8_GENERAL_CI',
     ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
+    authPlugins: {
+      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
     },
   });
 
-  const queryResult: UniversalPermissionRecord[] = await query(
+  const [queryResult] = await query(
     connection,
     `
     SELECT
@@ -40,7 +38,10 @@ export const getUniversalTestPermissions = async (): Promise<TestPermissionPerio
       examiner_staff_number IS NULL
     `,
   );
-  return queryResult.map(record => mapUniversalPermissionRecord(record));
+
+  return (queryResult as UniversalPermissionRecord[]).map(
+    (record) => mapUniversalPermissionRecord(record),
+  );
 };
 
 const mapUniversalPermissionRecord = (record: UniversalPermissionRecord): TestPermissionPeriod => {

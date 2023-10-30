@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
-import { mapRow } from './row-mappers/deployment-row-mapper';
+import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 import { query } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 
@@ -22,7 +22,7 @@ Promise<ExaminerDeployment[]> => {
 
   info(`running deployment query from on ${windowStartString} to ${windowEndString}...`);
   const start = new Date();
-  const res = await query(
+  const [res] = await query(
     connectionPool,
     `
     select d.deployment_id, e.individual_id, d.tc_id, tcn.tc_name, tc.tc_cost_centre_code, p.programme_date
@@ -47,7 +47,8 @@ Promise<ExaminerDeployment[]> => {
     `,
     [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString],
   );
-  const results = res.map(mapRow);
+
+  const results = (res as DeploymentRow[]).map(mapRow);
   const end = new Date();
   info(`${results.length} deployments loaded and mapped`);
   customDurationMetric('DeploymentsQuery', 'Time taken querying deployments, in seconds', start, end);

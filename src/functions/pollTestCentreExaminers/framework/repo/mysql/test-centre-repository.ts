@@ -23,16 +23,14 @@ export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]
     password: configuration.tarsReplicaDatabasePassword,
     charset: 'UTF8_GENERAL_CI',
     ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
+    authPlugins: {
+      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
     },
   });
 
   await query(connection, 'SET SESSION group_concat_max_len = 65000');
-  const queryResult: TestCentreRow[] = await query(connection, getTestCentreQuery());
-  return buildTestCentreRowsFromQueryResult(queryResult);
+  const [queryResult] = await query(connection, getTestCentreQuery());
+  return buildTestCentreRowsFromQueryResult(queryResult as TestCentreRow[]);
 };
 
 const getTestCentreQuery = (): string => {

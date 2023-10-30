@@ -1,5 +1,4 @@
-/* tslint:disable:max-line-length */
-import { When, Then, setDefaultTimeout, BeforeAll } from 'cucumber';
+import { When, Then, setDefaultTimeout, BeforeAll } from '@cucumber/cucumber';
 import { DynamoDB } from 'aws-sdk';
 import nodeFetch from 'node-fetch';
 import { expect } from 'chai';

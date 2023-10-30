@@ -1,5 +1,4 @@
 import { spawn, ChildProcess } from 'child_process';
-import { writeFileSync } from 'fs';
 
 let slsOfflineProcess: ChildProcess;
 

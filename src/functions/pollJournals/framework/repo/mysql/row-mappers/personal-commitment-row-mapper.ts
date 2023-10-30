@@ -1,6 +1,6 @@
 import { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
 
-interface PersonalCommitmentRow {
+export interface PersonalCommitmentRow {
   individual_id: number;
   commitment_id: number;
   slot_id: number;

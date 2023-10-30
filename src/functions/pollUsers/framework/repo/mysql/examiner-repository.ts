@@ -27,14 +27,12 @@ export const getActiveExaminers = async (
     password: configuration.tarsReplicaDatabasePassword,
     charset: 'UTF8_GENERAL_CI',
     ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
+    authPlugins: {
+      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
     },
   });
 
-  const queryResult: ExaminerQueryRecord[] = await query(
+  const [queryResult] = await query(
     connection,
     `
     select
@@ -54,5 +52,5 @@ export const getActiveExaminers = async (
     [moment().format('YYYY-MM-DD')],
   );
 
-  return buildStaffDetailsFromQueryResult(queryResult, universalPermissionPeriods);
+  return buildStaffDetailsFromQueryResult(queryResult as ExaminerQueryRecord[], universalPermissionPeriods);
 };

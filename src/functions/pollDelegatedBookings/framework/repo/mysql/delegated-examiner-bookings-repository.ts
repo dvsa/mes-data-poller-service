@@ -1,5 +1,5 @@
 import * as mysql from 'mysql2';
-
+import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../config';
 import { certificate } from '../../../../../common/certs/ssl_profiles';
 import { query } from '../../../../../common/framework/mysql/database';
@@ -38,14 +38,12 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
     password: configuration.tarsReplicaDatabasePassword,
     charset: 'UTF8_GENERAL_CI',
     ssl: process.env.TESTING_MODE ? null : certificate,
-    authSwitchHandler(data, cb) {
-      if (data.pluginName === 'mysql_clear_password') {
-        cb(null, Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`));
-      }
+    authPlugins: {
+      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
     },
   });
 
-  const queryResult: DelegatedTestSlotRow[] = await query(
+  const [queryResult] = await query(
     connection,
     `SELECT ps.slot_id
      , ps.start_time
@@ -90,5 +88,5 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 WHERE ex.grade_code = 'DELE'`,
   );
 
-  return buildDelegatedBookingsFromQueryResult(queryResult);
+  return buildDelegatedBookingsFromQueryResult(queryResult as DelegatedTestSlotRow[]);
 };

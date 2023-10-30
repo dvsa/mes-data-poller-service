@@ -11,7 +11,6 @@ import { HttpStatus } from '../../../../common/application/api/HttpStatus';
 
 describe('pollDelegatedBookings handler', () => {
   let dummyEvent: APIGatewayProxyEvent;
-  let dummyContext: Context;
   const moqConfigBootstrap = Mock.ofInstance(config.bootstrapDelegatedExaminerConfig);
   const moqTransferUsers = Mock.ofInstance(transferDelegatedBookings.transferDelegatedBookings);
   const moqCreateResponse = Mock.ofInstance(createResponse.default);
@@ -25,7 +24,6 @@ describe('pollDelegatedBookings handler', () => {
     moqResponse.reset();
 
     dummyEvent = lambdaTestUtils.mockEventCreator.createAPIGatewayEvent();
-    dummyContext = lambdaTestUtils.mockContextCreator(() => null);
 
     moqResponse.setup((x: any) => x.then).returns(() => undefined);
 
@@ -38,7 +36,7 @@ describe('pollDelegatedBookings handler', () => {
   });
 
   it('should bootstrap configuration, call transferDelegatedBookings and return a response with no error', async () => {
-    const result = await handler(dummyEvent, dummyContext);
+    const result = await handler(dummyEvent);
 
     moqConfigBootstrap.verify(x => x(), Times.once());
     moqTransferUsers.verify(x => x(), Times.once());
@@ -50,7 +48,7 @@ describe('pollDelegatedBookings handler', () => {
         'when the configBootstrap throws an error', async () => {
     moqConfigBootstrap.setup(x => x()).throws(new Error('AWS down'));
 
-    const result = await handler(dummyEvent, dummyContext);
+    const result = await handler(dummyEvent);
 
     expect(result).toBe(moqResponse.object);
     moqCreateResponse.verify(x => x(
@@ -63,7 +61,7 @@ describe('pollDelegatedBookings handler', () => {
         'when the user transfer throws an error', async () => {
     moqTransferUsers.setup(x => x()).throws(new Error('MySQL down'));
 
-    const result = await handler(dummyEvent, dummyContext);
+    const result = await handler(dummyEvent);
 
     expect(result).toBe(moqResponse.object);
     moqCreateResponse.verify(x => x(

@@ -1,32 +1,28 @@
-import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
+import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
+import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-
 import { config } from '../../config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 
-let dynamoDocumentClient: DynamoDB.DocumentClient;
-const getDynamoClient: () => DynamoDB.DocumentClient = () => {
-  if (!dynamoDocumentClient) {
-    if (config().isOffline) {
-      const localRegion = 'localhost';
-      awsConfig.update({
-        region: localRegion,
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: localRegion });
-    } else {
-      dynamoDocumentClient = new DynamoDB.DocumentClient();
-    }
+const getDynamoClient = () =>  {
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
+
+  if (config().isOffline) {
+    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
+    opts.endpoint = 'http://localhost:8000';
+    opts.region = 'localhost';
   }
-  return dynamoDocumentClient;
+  return new DynamoDBClient(opts);
 };
 
 export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
-  const scanParams = {
-    TableName: config().delegatedBookingsDynamodbTableName,
-  };
-  const scanResult = await ddb.scan(scanParams).promise();
+  const ddb = getDynamoClient();
+
+  const scanResult = await ddb.send(
+    new ScanCommand({
+      TableName: config().delegatedBookingsDynamodbTableName,
+    })
+  );
 
   if (!scanResult.Items) {
     return [];
@@ -36,8 +32,8 @@ export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 };
 
 export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedBookingDetail[]): Promise<void> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
-  const tableName: string = config().delegatedBookingsDynamodbTableName;
+  const ddb = getDynamoClient();
+  const tableName = config().delegatedBookingsDynamodbTableName;
 
   const putPromises = delegatedBookings.map((delegatedBooking: DelegatedBookingDetail) => {
     const putParams = {
@@ -48,7 +44,7 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
         staffNumber: delegatedBooking.staffNumber,
       },
     };
-    return ddb.put(putParams).promise();
+    return ddb.send(new PutCommand(putParams));
   });
 
   await Promise.all(putPromises);
@@ -57,17 +53,15 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
 };
 
 export const unCacheDelegatedBookingDetails = async (appRefs: number[]): Promise<void> => {
-  const ddb: DynamoDB.DocumentClient = getDynamoClient();
+  const ddb = getDynamoClient();
   const tableName: string = config().delegatedBookingsDynamodbTableName;
 
   const deletePromises = appRefs.map((applicationReference: number) => {
     const deleteParams = {
       TableName: tableName,
-      Key: {
-        applicationReference,
-      },
+      Key: { applicationReference },
     };
-    return ddb.delete(deleteParams).promise();
+    return ddb.send(new DeleteCommand(deleteParams));
   });
 
   await Promise.all(deletePromises);
