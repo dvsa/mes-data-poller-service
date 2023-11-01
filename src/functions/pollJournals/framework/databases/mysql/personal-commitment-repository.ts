@@ -13,7 +13,7 @@ import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-co
  * @returns The personal commitments
  */
 export const getPersonalCommitments = async (connectionPool: mysql.Pool, startDate: Date, durationDays: number):
-  Promise<ExaminerPersonalCommitment[]> => {
+Promise<ExaminerPersonalCommitment[]> => {
   const windowStart = moment(startDate);
   const windowEnd = windowStart.clone().add({days: durationDays}).subtract({seconds: 1});
   const sqlDateTimeFormat = 'YYYY-MM-DD HH:mm:ss';

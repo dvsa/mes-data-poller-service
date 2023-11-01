@@ -1,6 +1,5 @@
-import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
 import { config } from '../config/config';
-
+import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 
 /**
  * Creates the DynamoDB API client. If offline then points to the local endpoint. If online then enables HTTP keep
@@ -8,20 +7,13 @@ import { config } from '../config/config';
  * multiple API calls in a loop.
  *
  */
-export const getDynamoClient: () => DynamoDB.DocumentClient = () => {
-  let dynamoDocumentClient: DynamoDB.DocumentClient;
+export const getDynamoClient = () =>  {
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
 
-  if (!dynamoDocumentClient) {
-    if (config().isOffline) {
-      const localRegion = 'localhost';
-      awsConfig.update({
-        region: localRegion,
-        credentials: new Credentials('akid', 'secret', 'session'),
-      });
-      dynamoDocumentClient = new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000', region: localRegion });
-    } else {
-      dynamoDocumentClient = new DynamoDB.DocumentClient();
-    }
+  if (config().isOffline) {
+    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
+    opts.endpoint = 'http://localhost:8000';
+    opts.region = 'localhost';
   }
-  return dynamoDocumentClient;
+  return new DynamoDBClient(opts);
 };

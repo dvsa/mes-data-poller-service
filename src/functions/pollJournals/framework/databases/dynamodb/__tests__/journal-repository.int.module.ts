@@ -3,7 +3,7 @@ import { DynamoDB, DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import * as dotenv from 'dotenv';
 import { getStaffNumbersWithHashes } from '../journal-repository';
 import { bootstrapConfig } from '../../../../../../common/framework/config/config';
-import { DdbTableTypes } from "../../../../../../common/application/utils/ddbTable";
+import { DdbTableTypes } from '../../../../../../common/application/utils/ddbTable';
 
 let ddb: DynamoDBClient;
 export const dynamoDBIntegrationTests = () => {

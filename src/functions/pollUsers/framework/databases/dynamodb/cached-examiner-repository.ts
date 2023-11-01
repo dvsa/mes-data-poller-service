@@ -4,17 +4,7 @@ import { customMetric } from '@dvsa/mes-microservice-common/application/utils/lo
 import { config } from '../../../../../common/framework/config/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
-
-const getDynamoClient = () =>  {
-  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
-
-  if (config().isOffline) {
-    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
-    opts.endpoint = 'http://localhost:8000';
-    opts.region = 'localhost';
-  }
-  return new DynamoDBClient(opts);
-};
+import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
   const ddb = getDynamoClient();

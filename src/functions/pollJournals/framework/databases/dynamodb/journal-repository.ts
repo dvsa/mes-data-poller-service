@@ -6,7 +6,7 @@ import { JournalHashesCache } from './journal-hashes-cache';
 import { JournalRecord } from '../../../domain/journal-record';
 import { config } from '../../../../../common/framework/config/config';
 import * as moment from 'moment';
-import { getDynamoClient } from "../../../../../common/framework/dynanmodb/dynamo-client";
+import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 /*
 * Amount of time (in milliseconds), to throttle Journal writes over.

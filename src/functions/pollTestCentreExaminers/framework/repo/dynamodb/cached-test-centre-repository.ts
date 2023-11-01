@@ -3,17 +3,7 @@ import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { config } from '../../../../../common/framework/config/config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-
-const getDynamoClient = () =>  {
-  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
-
-  if (config().isOffline) {
-    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
-    opts.endpoint = 'http://localhost:8000';
-    opts.region = 'localhost';
-  }
-  return new DynamoDBClient(opts);
-};
+import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   const ddb = getDynamoClient();
