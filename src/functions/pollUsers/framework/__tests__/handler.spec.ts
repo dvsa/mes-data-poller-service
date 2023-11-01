@@ -1,13 +1,14 @@
 import { handler } from '../handler';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
-import { Mock, Times, It } from 'typemoq';
-
-const lambdaTestUtils = require('aws-lambda-test-utils');
-import * as config from '../config';
-import * as transferUsers from '../../domain/transfer-users';
+import { It, Mock, Times } from 'typemoq';
+import * as transferUsers from '../../application/transfer-users';
 import * as createResponse from '../../../../common/application/utils/createResponse';
 import Response from '../../../../common/application/api/Response';
 import { HttpStatus } from '../../../../common/application/api/HttpStatus';
+import * as config from '../../../../common/framework/config/config';
+import { DdbTableTypes } from '../../../../common/application/utils/ddbTable';
+
+const lambdaTestUtils = require('aws-lambda-test-utils');
 
 describe('pollUsers handler', () => {
   let dummyEvent: APIGatewayProxyEvent;
@@ -40,7 +41,7 @@ describe('pollUsers handler', () => {
   it('should bootstrap configuration, call transferUsers and return a response with no error', async () => {
     const result = await handler(dummyEvent, dummyContext);
 
-    moqConfigBootstrap.verify(x => x(), Times.once());
+    moqConfigBootstrap.verify(x => x(DdbTableTypes.USERS), Times.once());
     moqTransferUsers.verify(x => x(), Times.once());
     moqCreateResponse.verify(x => x(It.isValue({})), Times.once());
     expect(result).toBe(moqResponse.object);
@@ -48,7 +49,7 @@ describe('pollUsers handler', () => {
 
   it('should create and return an internal server error response ' +
         'when the configBootstrap throws an error', async () => {
-    moqConfigBootstrap.setup(x => x()).throws(new Error('AWS down'));
+    moqConfigBootstrap.setup(x => x(DdbTableTypes.USERS)).throws(new Error('AWS down'));
 
     const result = await handler(dummyEvent, dummyContext);
 

@@ -1,11 +1,13 @@
 import { handler } from '../handler';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 import * as createResponse from '../../../../common/application/utils/createResponse';
-import { Mock, It, Times } from 'typemoq';
-import * as config from '../config/config';
+import { It, Mock, Times } from 'typemoq';
 import * as transferDatasets from '../../application/transfer-datasets';
-const lambdaTestUtils = require('aws-lambda-test-utils');
 import Response from '../../../../common/application/api/Response';
+import * as config from '../../../../common/framework/config/config';
+import { DdbTableTypes } from '../../../../common/application/utils/ddbTable';
+
+const lambdaTestUtils = require('aws-lambda-test-utils');
 
 describe('pollJournals handler', () => {
   let dummyApigwEvent: APIGatewayEvent;
@@ -41,7 +43,7 @@ describe('pollJournals handler', () => {
   it('should bootstrap configuration, transferDatasets and return a blank response', async () => {
     const result = await handler(dummyApigwEvent, dummyContext);
 
-    moqConfigBootstrap.verify(x => x(), Times.once());
+    moqConfigBootstrap.verify(x => x(DdbTableTypes.JOURNALS), Times.once());
     moqTransferDatasets.verify(x => x(It.isAny()), Times.once());
     moqCreateResponse.verify(x => x(It.isValue({})), Times.once());
     expect(result).toBe(moqResponse.object);

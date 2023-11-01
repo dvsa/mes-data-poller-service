@@ -2,7 +2,7 @@ import {
   throwIfNotPresent,
   tryFetchRdsAccessToken,
 } from './config-helpers';
-import { ddbTable, DdbTableTypes } from "../../application/utils/ddbTable";
+import { ddbTable, DdbTableTypes } from '../../application/utils/ddbTable';
 
 let configuration: Config;
 
@@ -38,7 +38,7 @@ export type Config = {
   tarsReplicaDatabaseName: string;
   tarsReplicaDatabaseUsername: string;
   tarsReplicaDatabasePassword: string;
-  timeTravelDate?: string;
+  timeTravelDate: string;
 };
 
 export const config = (): Config => configuration;

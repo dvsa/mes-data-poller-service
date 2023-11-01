@@ -1,5 +1,5 @@
 import { It, Mock, Times } from 'typemoq';
-import * as journalRepository from '../../framework/repo/dynamodb/journal-repository';
+import * as journalRepository from '../../framework/databases/dynamodb/journal-repository';
 import { filterChangedJournals } from '../journal-change-filter';
 import { JournalRecord } from '../../domain/journal-record';
 

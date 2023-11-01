@@ -1,6 +1,6 @@
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
-import { config } from '../../config';
+import { config } from '../../../../../common/framework/config/config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 

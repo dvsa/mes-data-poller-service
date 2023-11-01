@@ -1,7 +1,7 @@
-import { TestCentreRow } from '../test-centre-repository';
 import { mapExaminers, mapTestCentreIDs, buildTestCentreRowsFromQueryResult } from '../test-centre-row-mapper';
 import { TestCentreDetail } from '../../../../../../common/application/models/test-centre';
 import { mockTestCentreRows } from './test-centre-row-mapper.mock';
+import { TestCentreRow } from '../../../../../../common/application/models/test-centre-journal';
 
 describe('TestCentreMapper', () => {
   describe('buildTestCentreRowsFromQueryResult', () => {

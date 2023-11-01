@@ -1,19 +1,19 @@
-/* tslint:disable:max-line-length */
 import { handler } from '../handler';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { Mock, Times, It } from 'typemoq';
 
 const lambdaTestUtils = require('aws-lambda-test-utils');
-import * as config from '../config';
+import * as config from '../../../../common/framework/config/config';
 import * as transferTestCentreExaminers from '../../domain/transfer-test-centre-examiners';
 import * as createResponse from '../../../../common/application/utils/createResponse';
 import Response from '../../../../common/application/api/Response';
 import { HttpStatus } from '../../../../common/application/api/HttpStatus';
+import { DdbTableTypes } from '../../../../common/application/utils/ddbTable';
 
 describe('pollTestCentreExaminers handler', () => {
   let dummyEvent: APIGatewayProxyEvent;
   let dummyContext: Context;
-  const moqConfigBootstrap = Mock.ofInstance(config.bootstrapTestCentreConfig);
+  const moqConfigBootstrap = Mock.ofInstance(config.bootstrapConfig);
   const moqTransferTestCentres = Mock.ofInstance(transferTestCentreExaminers.transferTestCentreExaminers);
   const moqCreateResponse = Mock.ofInstance(createResponse.default);
 
@@ -30,7 +30,7 @@ describe('pollTestCentreExaminers handler', () => {
 
     moqResponse.setup((x: any) => x.then).returns(() => undefined);
 
-    spyOn(config, 'bootstrapTestCentreConfig').and.callFake(moqConfigBootstrap.object);
+    spyOn(config, 'bootstrapConfig').and.callFake(moqConfigBootstrap.object);
     spyOn(transferTestCentreExaminers, 'transferTestCentreExaminers')
       .and.callFake(moqTransferTestCentres.object);
     spyOn(createResponse, 'default').and.callFake(moqCreateResponse.object);
@@ -43,7 +43,7 @@ describe('pollTestCentreExaminers handler', () => {
         'return a response with no error', async () => {
     const result = await handler(dummyEvent, dummyContext);
 
-    moqConfigBootstrap.verify(x => x(), Times.once());
+    moqConfigBootstrap.verify(x => x(DdbTableTypes.TEST_CENTRE), Times.once());
     moqTransferTestCentres.verify(x => x(), Times.once());
     moqCreateResponse.verify(x => x(It.isValue({})), Times.once());
     expect(result).toBe(moqResponse.object);
@@ -51,7 +51,7 @@ describe('pollTestCentreExaminers handler', () => {
 
   it('should create and return an internal server error response' +
         'when the configBootstrap throws an error', async () => {
-    moqConfigBootstrap.setup(x => x()).throws(new Error('AWS down'));
+    moqConfigBootstrap.setup(x => x(DdbTableTypes.TEST_CENTRE)).throws(new Error('AWS down'));
 
     const result = await handler(dummyEvent, dummyContext);
 

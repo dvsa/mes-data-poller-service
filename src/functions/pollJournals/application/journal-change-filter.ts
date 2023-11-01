@@ -1,5 +1,5 @@
 import { JournalRecord } from '../domain/journal-record';
-import { getStaffNumbersWithHashes } from '../framework/repo/dynamodb/journal-repository';
+import { getStaffNumbersWithHashes } from '../framework/databases/dynamodb/journal-repository';
 import { get } from 'lodash';
 
 export const filterChangedJournals = async (allJournals: JournalRecord[], startTime: Date):

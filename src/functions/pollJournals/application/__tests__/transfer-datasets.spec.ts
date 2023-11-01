@@ -1,32 +1,32 @@
-import * as examinerRepo from '../../framework/repo/mysql/examiner-repository';
-import * as testSlotRepo from '../../framework/repo/mysql/test-slot-repository';
-import * as personalCommitmentRepo from '../../framework/repo/mysql/personal-commitment-repository';
-import * as nonTestActivityRepo from '../../framework/repo/mysql/non-test-activity-repository';
-import * as advanceTestSlotsRepo from '../../framework/repo/mysql/advance-test-slots-repository';
-import * as deploymentRepo from '../../framework/repo/mysql/deployment-repository';
-import * as journalEndDateRepo from '../../framework/repo/mysql/journal-end-date-repository';
-import * as journalRepo from '../../framework/repo/dynamodb/journal-repository';
+import * as examinerRepo from '../../framework/databases/mysql/examiner-repository';
+import * as testSlotRepo from '../../framework/databases/mysql/test-slot-repository';
+import * as personalCommitmentRepo from '../../framework/databases/mysql/personal-commitment-repository';
+import * as nonTestActivityRepo from '../../framework/databases/mysql/non-test-activity-repository';
+import * as advanceTestSlotsRepo from '../../framework/databases/mysql/advance-test-slots-repository';
+import * as deploymentRepo from '../../framework/databases/mysql/deployment-repository';
+import * as journalEndDateRepo from '../../framework/databases/mysql/journal-end-date-repository';
+import * as journalRepo from '../../framework/databases/dynamodb/journal-repository';
 import * as journalBuilder from '../journal-builder';
-import { transferDatasets } from '../transfer-datasets';
-import * as config from '../../framework/config/config';
-import * as pool from '../../framework/repo/mysql/pool';
-import { Mock, Times, It } from 'typemoq';
-import * as mysql from 'mysql2';
-import { dummyConfig } from '../../framework/config/__mocks__/config';
 import * as journalChangeFilter from '../journal-change-filter';
-import {ExaminerTestSlot} from '../../domain/examiner-test-slot';
-import {AllDatasets} from '../../domain/all-datasets';
-import {JournalRecord} from '../../domain/journal-record';
-import {ExaminerPersonalCommitment} from '../../domain/examiner-personal-commitment';
-import {ExaminerRecord} from '../../domain/examiner-record';
+import { transferDatasets } from '../transfer-datasets';
+import * as config from '../../../../common/framework/config/config';
+import * as database from '../../../../common/framework/mysql/database';
+import * as mysql from 'mysql2';
+import { Mock, Times, It } from 'typemoq';
+import { ExaminerRecord } from '../../domain/examiner-record';
+import { ExaminerTestSlot } from '../../domain/examiner-test-slot';
+import { ExaminerPersonalCommitment } from '../../domain/examiner-personal-commitment';
+import { JournalRecord } from '../../domain/journal-record';
+import { dummyConfig } from '../../../../common/framework/config/__mocks__/config';
+import { AllDatasets } from '../../domain/all-datasets';
 
-const dummyNonTestActivityDataset = [{ examinerId: 3, nonTestActivity: {} }];
-const dummyAdvanceTestSlotDataset = [{ examinerId: 4, advanceTestSlot: {} }];
-const dummyDeploymentDataset = [{ examinerId: 5, deployment: {} }];
+const dummyNonTestActivityDataset = [{examinerId: 3, nonTestActivity: {}}];
+const dummyAdvanceTestSlotDataset = [{examinerId: 4, advanceTestSlot: {}}];
+const dummyDeploymentDataset = [{examinerId: 5, deployment: {}}];
 
 describe('transferDatasets', () => {
   const moqConfig = Mock.ofInstance(config.config);
-  const moqCreateConnectionPool = Mock.ofInstance(pool.createConnectionPool);
+  const moqCreateConnectionPool = Mock.ofInstance(database.getConnectionPool);
   const moqGetExaminers = Mock.ofInstance(examinerRepo.getExaminers);
   const moqGetNextWorkingDay = Mock.ofInstance(journalEndDateRepo.getNextWorkingDay);
   const moqGetJournalEndDate = Mock.ofInstance(journalEndDateRepo.getJournalEndDate);
@@ -42,34 +42,34 @@ describe('transferDatasets', () => {
   const moqConnectionPool = Mock.ofType<mysql.Pool>();
 
   const dummyExaminers = [
-    { individual_id: 1, staff_number: '99' },
-    { individual_id: 2, staff_number: '98' },
-    { individual_id: 3, staff_number: '97' },
-    { individual_id: 4, staff_number: '96' },
-    { individual_id: 5, staff_number: '95' },
+    {individual_id: 1, staff_number: '99'},
+    {individual_id: 2, staff_number: '98'},
+    {individual_id: 3, staff_number: '97'},
+    {individual_id: 4, staff_number: '96'},
+    {individual_id: 5, staff_number: '95'},
   ] as ExaminerRecord[];
   const dummyNextWorkingDay = new Date();
   const dummyTestSlotDataset = [
-    { examinerId: 1, testSlot: {} },
+    {examinerId: 1, testSlot: {}},
   ] as ExaminerTestSlot[];
   const dummyTestSlotsDataset = [
-    { examinerId: 1, testSlot: {} },
-    { examinerId: 1, testSlot: {} },
-    { examinerId: 1, testSlot: {} },
-    { examinerId: 1, testSlot: {} },
-    { examinerId: 1, testSlot: {} },
+    {examinerId: 1, testSlot: {}},
+    {examinerId: 1, testSlot: {}},
+    {examinerId: 1, testSlot: {}},
+    {examinerId: 1, testSlot: {}},
+    {examinerId: 1, testSlot: {}},
   ] as ExaminerTestSlot[];
   const dummyPersonalCommitmentDataset = [
-    { examinerId: 2, personalCommitment: {} },
+    {examinerId: 2, personalCommitment: {}},
   ] as ExaminerPersonalCommitment[];
   const dummyTransformedJournals = [
-    { staffNumber: '1' },
-    { staffNumber: '2' },
-    { staffNumber: '3' },
-    { staffNumber: '4' },
-    { staffNumber: '5' },
+    {staffNumber: '1'},
+    {staffNumber: '2'},
+    {staffNumber: '3'},
+    {staffNumber: '4'},
+    {staffNumber: '5'},
   ] as JournalRecord[];
-  const dummyFilteredJournals = [{ staffNumber: '1' }] as JournalRecord[];
+  const dummyFilteredJournals = [{staffNumber: '1'}] as JournalRecord[];
   const dummyStartTime = new Date();
   const mockJournalEndDate: Date = new Date('2020-01-01');
   const mockNextWorkingDay: Date = new Date('2021-01-01');
@@ -90,7 +90,7 @@ describe('transferDatasets', () => {
     moqSaveJournals.reset();
 
     spyOn(config, 'config').and.callFake(moqConfig.object);
-    spyOn(pool, 'createConnectionPool').and.callFake(moqCreateConnectionPool.object);
+    spyOn(database, 'getConnectionPool').and.callFake(moqCreateConnectionPool.object);
     spyOn(examinerRepo, 'getExaminers').and.callFake(moqGetExaminers.object);
     spyOn(testSlotRepo, 'getTestSlots').and.callFake(moqGetTestSlots.object);
     spyOn(personalCommitmentRepo, 'getPersonalCommitments').and.callFake(moqGetPersonalCommitments.object);
@@ -149,7 +149,7 @@ describe('transferDatasets', () => {
     moqSaveJournals.verify(x => x(It.isValue(dummyFilteredJournals), It.isValue(dummyStartTime)), Times.once());
   });
 
-  it('should use the journal end date if one is available',  async () => {
+  it('should use the journal end date if one is available', async () => {
     spyOn(journalEndDateRepo, 'getJournalEndDate').and.callFake(() => mockJournalEndDate);
     spyOn(journalEndDateRepo, 'getNextWorkingDay').and.callFake(() => Promise.resolve(mockNextWorkingDay));
     await transferDatasets(dummyStartTime);

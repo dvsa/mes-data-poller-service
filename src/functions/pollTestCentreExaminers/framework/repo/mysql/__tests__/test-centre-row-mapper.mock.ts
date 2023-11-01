@@ -1,4 +1,4 @@
-import { TestCentreRow } from '../test-centre-repository';
+import { TestCentreRow } from '../../../../../../common/application/models/test-centre-journal';
 
 export const mockTestCentreRows: TestCentreRow[] = [
   {

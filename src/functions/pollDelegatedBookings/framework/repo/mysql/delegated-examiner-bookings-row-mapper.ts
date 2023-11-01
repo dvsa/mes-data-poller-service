@@ -8,7 +8,7 @@ import {
   setNumberIfNotNull,
   setNumberIfTruthy,
   setStringIfPopulated,
-} from '../../../../pollJournals/framework/repo/mysql/row-mappers/test-slot-row-mapper';
+} from '../../../../pollJournals/framework/databases/mysql/row-mappers/test-slot-row-mapper';
 import {
   formatDateToIso8601,
   formatDateToStartTime,

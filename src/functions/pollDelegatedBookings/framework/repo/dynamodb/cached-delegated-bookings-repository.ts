@@ -1,7 +1,7 @@
 import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config } from '../../config';
+import { config } from '../../../../../common/framework/config/config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 
 const getDynamoClient = () =>  {

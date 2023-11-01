@@ -5,6 +5,7 @@ import { TestCentreDetail } from '../../../common/application/models/test-centre
 import { reconcileActiveAndCachedTestCentreRows } from './test-centre-cache-reconciler';
 
 export const transferTestCentreExaminers = async (): Promise<void> => {
+  console.log('test');
   const activeTestCentres: TestCentreDetail[] = await getActiveTestCentreExaminers();
   info(`Number of active test centre rows: ${activeTestCentres.length}`);
 
