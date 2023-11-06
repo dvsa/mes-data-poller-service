@@ -1,26 +1,15 @@
-import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
-import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config } from '../../config';
+import { config } from '../../../../../common/framework/config/config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
-
-const getDynamoClient = () =>  {
-  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
-
-  if (config().isOffline) {
-    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
-    opts.endpoint = 'http://localhost:8000';
-    opts.region = 'localhost';
-  }
-  return new DynamoDBClient(opts);
-};
+import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
   const ddb = getDynamoClient();
 
   const scanResult = await ddb.send(
     new ScanCommand({
-      TableName: config().delegatedBookingsDynamodbTableName,
+      TableName: config().dynamodbTableName,
     })
   );
 
@@ -33,7 +22,7 @@ export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 
 export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedBookingDetail[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName = config().delegatedBookingsDynamodbTableName;
+  const tableName: string = config().dynamodbTableName;
 
   const putPromises = delegatedBookings.map((delegatedBooking: DelegatedBookingDetail) => {
     const putParams = {
@@ -54,7 +43,7 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
 
 export const unCacheDelegatedBookingDetails = async (appRefs: number[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName: string = config().delegatedBookingsDynamodbTableName;
+  const tableName: string = config().dynamodbTableName;
 
   const deletePromises = appRefs.map((applicationReference: number) => {
     const deleteParams = {

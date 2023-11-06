@@ -1,6 +1,6 @@
-import { TestCentreRow } from './test-centre-repository';
 import { Examiner, TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import { trimLeadingZeroes } from '../../../../../common/application/utils/trimLeadingZeros';
+import { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
 
 export const buildTestCentreRowsFromQueryResult = (
   queryResult: TestCentreRow[],

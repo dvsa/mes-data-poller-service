@@ -33,6 +33,7 @@ export class DateTime {
     return this.moment.format(formatString);
   }
 
+
   daysDiff(targetDate: DateTime | string | Date): number {
     const date = new DateTime(targetDate);
     const today = this.moment.startOf(Duration.DAY);

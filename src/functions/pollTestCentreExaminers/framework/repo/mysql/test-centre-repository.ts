@@ -1,40 +1,22 @@
-import * as mysql from 'mysql2';
-
-import { config } from '../../config';
-import { certificate } from '../../../../../common/certs/ssl_profiles';
-import { query } from '../../../../../common/framework/mysql/database';
+import { getConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
 import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
-
-export interface TestCentreRow {
-  INDIVIDUAL_ID: string;
-  STAFF_NUMBER: string;
-  STAFF_NUMBERS: string;
-  TEST_CENTRES: string;
-}
+import * as mysql from 'mysql2';
+import { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
 
 export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
-  const configuration = config();
+  const connection = getConnectionPool();
 
-  const connection = mysql.createConnection({
-    host: configuration.tarsReplicaDatabaseHostname,
-    database: configuration.tarsReplicaDatabaseName,
-    user: configuration.tarsReplicaDatabaseUsername,
-    password: configuration.tarsReplicaDatabasePassword,
-    charset: 'UTF8_GENERAL_CI',
-    ssl: process.env.TESTING_MODE ? null : certificate,
-    authPlugins: {
-      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
-    },
-  });
-
-  await query(connection, 'SET SESSION group_concat_max_len = 65000');
-  const [queryResult] = await query(connection, getTestCentreQuery());
-  return buildTestCentreRowsFromQueryResult(queryResult as TestCentreRow[]);
+  await poolQuery(connection, 'SET SESSION group_concat_max_len = 65000');
+  const queryResult: TestCentreRow[] = await poolQuery(
+    connection,
+    getTestCentreQuery()
+  );
+  return buildTestCentreRowsFromQueryResult(queryResult);
 };
 
 const getTestCentreQuery = (): string => {
-  return `
+  const template = `
 SELECT E.INDIVIDUAL_ID                   AS INDIVIDUAL_ID,
        E.STAFF_NUMBER                    AS STAFF_NUMBER,
        GROUP_CONCAT(DISTINCT PS.TC_ID) AS TEST_CENTRES,
@@ -93,4 +75,6 @@ FROM EXAMINER AS E
 WHERE E.GRADE_CODE <> 'DELE'
 GROUP BY STAFF_NUMBER, INDIVIDUAL_ID
   `;
+
+  return mysql.format(template, []);
 };

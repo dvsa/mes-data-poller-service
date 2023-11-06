@@ -1,8 +1,4 @@
-import * as mysql from 'mysql2';
-import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config } from '../../config';
-import { certificate } from '../../../../../common/certs/ssl_profiles';
-import { query } from '../../../../../common/framework/mysql/database';
+import { getConnection, query } from '../../../../../common/framework/mysql/database';
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 
@@ -29,21 +25,10 @@ export interface DelegatedTestSlotRow {
 }
 
 export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
-  const configuration = config();
 
-  const connection = mysql.createConnection({
-    host: configuration.tarsReplicaDatabaseHostname,
-    database: configuration.tarsReplicaDatabaseName,
-    user: configuration.tarsReplicaDatabaseUsername,
-    password: configuration.tarsReplicaDatabasePassword,
-    charset: 'UTF8_GENERAL_CI',
-    ssl: process.env.TESTING_MODE ? null : certificate,
-    authPlugins: {
-      mysql_clear_password: () => () => Buffer.from(`${configuration.tarsReplicaDatabasePassword}\0`),
-    },
-  });
+  const connection = getConnection();
 
-  const [queryResult] = await query(
+  const queryResult: DelegatedTestSlotRow[] = await query(
     connection,
     `SELECT ps.slot_id
      , ps.start_time
@@ -88,5 +73,5 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
 WHERE ex.grade_code = 'DELE'`,
   );
 
-  return buildDelegatedBookingsFromQueryResult(queryResult as DelegatedTestSlotRow[]);
+  return buildDelegatedBookingsFromQueryResult(queryResult);
 };

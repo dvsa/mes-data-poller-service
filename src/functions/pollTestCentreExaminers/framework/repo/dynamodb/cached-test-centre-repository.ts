@@ -1,26 +1,16 @@
 import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
-import { config } from '../../config';
+import { config } from '../../../../../common/framework/config/config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
-import {DeleteCommand, PutCommand, ScanCommand} from '@aws-sdk/lib-dynamodb';
-
-const getDynamoClient = () =>  {
-  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
-
-  if (config().isOffline) {
-    opts.credentials = { accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session' };
-    opts.endpoint = 'http://localhost:8000';
-    opts.region = 'localhost';
-  }
-  return new DynamoDBClient(opts);
-};
+import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   const ddb = getDynamoClient();
 
   const scanResult = await ddb.send(
     new ScanCommand({
-      TableName: config().testCentreDynamodbTableName,
+      TableName: config().dynamodbTableName,
     }),
   );
 
@@ -33,7 +23,7 @@ export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]
 
 export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName = config().testCentreDynamodbTableName;
+  const tableName = config().dynamodbTableName;
 
   // will update row using a put and add new rows if staffNumber not found
   const putPromises = testCentres.map((testCentre: TestCentreDetail) => {
@@ -54,7 +44,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
 
 export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
   const ddb = getDynamoClient();
-  const tableName: string = config().testCentreDynamodbTableName;
+  const tableName: string = config().dynamodbTableName;
 
   const deletePromises = staffNumbers.map((staffNumber: string) => {
     const deleteParams = {
