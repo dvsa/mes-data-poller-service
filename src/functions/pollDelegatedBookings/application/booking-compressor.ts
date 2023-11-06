@@ -2,9 +2,18 @@ import { gzipSync, gunzipSync } from 'zlib';
 import { DelegatedExaminerTestSlot } from '../../pollJournals/domain/examiner-test-slot';
 
 export const compressDelegatedBooking = (examinerBookingDetail: DelegatedExaminerTestSlot): Buffer => {
-  return gzipSync(JSON.stringify(examinerBookingDetail));
+  try {
+    return gzipSync(JSON.stringify(examinerBookingDetail));
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const decompressDelegatedBooking = (examinerBookingDetailBuffer: Buffer): DelegatedExaminerTestSlot => {
-  return JSON.parse(gunzipSync(examinerBookingDetailBuffer).toString());
+  try {
+    const booking = gunzipSync(examinerBookingDetailBuffer).toString();
+    return JSON.parse(booking);
+  } catch (err) {
+    throw err;
+  }
 };
