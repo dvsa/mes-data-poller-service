@@ -8,5 +8,5 @@ destination-db/user-creation/*.sql
 destination-db/database-initialisation/010_applyLanguageSettings.sql
 source/*.sql
 source-db/*.sql
-src/functions/pollJournals/framework/repo/mysql/__tests__/data/**/*.sql
+src/functions/pollJournals/framework/databases/mysql/__tests__/data/**/*.sql
 .npmrc
