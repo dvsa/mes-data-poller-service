@@ -1,4 +1,4 @@
-import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import {debug, info} from '@dvsa/mes-microservice-common/application/utils/logger';
 import { DelegatedBookingDetail } from '../../../common/application/models/delegated-booking-details';
 import { getActiveDelegatedExaminerBookings } from '../framework/repo/mysql/delegated-examiner-bookings-repository';
 import { reconcileActiveAndCachedDelegatedBookings } from './delegated-bookings-cache-reconciler';
@@ -12,6 +12,7 @@ export const transferDelegatedBookings = async (): Promise<void> => {
   const cachedDelegatedBookings: DelegatedBookingDetail[] = await getCachedDelegatedExaminerBookings();
   info(`Number of cached delegated bookings: ${cachedDelegatedBookings.length}`);
 
+  debug('Reconciling active and cached bookings');
   await reconcileActiveAndCachedDelegatedBookings(
     activeDelegatedBookings,
     cachedDelegatedBookings,
