@@ -11,5 +11,5 @@ jobs:
     uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@sonar
     secrets:
       DES_ACCESS_TOKEN: ${{ secrets.DES_ACCESS_TOKEN }}
-      SONAR_TOKEN: ${{ secrets.DES_SONARQUBE_TOKEN }}
-      SONAR_HOST_URL: ${{ secrets.DES_SONARQUBE_HOST_URL }}
+      DES_SONARQUBE_TOKEN: ${{ secrets.DES_SONARQUBE_TOKEN }}
+      DES_SONARQUBE_HOST_URL: ${{ secrets.DES_SONARQUBE_HOST_URL }}
