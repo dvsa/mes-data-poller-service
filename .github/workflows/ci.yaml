@@ -9,4 +9,8 @@ on:
 jobs:
   runs-ci:
     uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@sonar
-    secrets: inherit
+    secrets:
+      DES_ACCESS_TOKEN: ${{ secrets.DES_ACCESS_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
