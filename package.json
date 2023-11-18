@@ -33,7 +33,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.437.0",
     "@aws-sdk/lib-dynamodb": "^3.437.0",
-    "@aws-sdk/rds-signer": "^3.437.0",
+    "@aws-sdk/rds-signer": "^3.438.0",
     "@dvsa/mes-microservice-common": "1.1.0",
     "escape-json-node": "^2.0.0",
     "lodash": "^4.17.21",
