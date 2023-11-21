@@ -1,5 +1,4 @@
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
@@ -25,6 +24,11 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
   const ddb = getDynamoClient();
   const tableName = config().dynamodbTableName;
 
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('updateTestCentreExaminers - Skipping DynamoDB put', { testCentreCount: testCentres.length });
+    return;
+  }
+
   // will update row using a put and add new rows if staffNumber not found
   const putPromises = testCentres.map((testCentre: TestCentreDetail) => {
     const putParams = {
@@ -45,6 +49,11 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
 export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
   const ddb = getDynamoClient();
   const tableName: string = config().dynamodbTableName;
+
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('unCacheTestCentreExaminers - Skipping DynamoDB delete', { staffCount: staffNumbers.length });
+    return;
+  }
 
   const deletePromises = staffNumbers.map((staffNumber: string) => {
     const deleteParams = {

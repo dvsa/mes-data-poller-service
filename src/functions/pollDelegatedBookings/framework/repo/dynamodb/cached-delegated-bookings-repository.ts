@@ -1,5 +1,5 @@
 import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
@@ -24,6 +24,11 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
   const ddb = getDynamoClient();
   const tableName: string = config().dynamodbTableName;
 
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('cacheDelegatedBookingDetails - Skipping DynamoDB put', { delegatedBookingCount: delegatedBookings.length });
+    return;
+  }
+
   const putPromises = delegatedBookings.map((delegatedBooking: DelegatedBookingDetail) => {
     const putParams = {
       TableName: tableName,
@@ -44,6 +49,11 @@ export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedB
 export const unCacheDelegatedBookingDetails = async (appRefs: number[]): Promise<void> => {
   const ddb = getDynamoClient();
   const tableName: string = config().dynamodbTableName;
+
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('unCacheDelegatedBookingDetails - Skipping DynamoDB delete', { appRefCount: appRefs.length });
+    return;
+  }
 
   const deletePromises = appRefs.map((applicationReference: number) => {
     const deleteParams = {

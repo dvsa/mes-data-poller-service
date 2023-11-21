@@ -1,7 +1,7 @@
 import { BatchWriteCommand, BatchWriteCommandInput, ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
 import { AttributeValue } from '@aws-sdk/client-dynamodb';
 import { chunk, get, mean } from 'lodash';
-import { customMetric, warn, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { customMetric, warn, info, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { JournalHashesCache } from './journal-hashes-cache';
 import { JournalRecord } from '../../../domain/journal-record';
 import { config } from '../../../../../common/framework/config/config';
@@ -77,6 +77,12 @@ const submitSaveRequests = async (
   let totalWrittenJournals = 0;
 
   const sleepDuration = totalSaveDuration / writeBatches.length;
+
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('submitSaveRequests - Skipping DynamoDB batch write', { batchCount: writeBatches.length });
+    return { totalUnprocessedWrites: 0, averageRequestRuntime: 0 };
+  }
+
   for (const writeBatch of writeBatches) {
     if (runOutOfTime(startTime, sleepDuration)) {
       // this is a good point to raise an alert
