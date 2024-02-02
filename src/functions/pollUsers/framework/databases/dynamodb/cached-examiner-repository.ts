@@ -1,6 +1,5 @@
-import { DynamoDBClient, DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import { BatchWriteCommand, DeleteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
@@ -27,6 +26,11 @@ export const cacheStaffDetails = async (staffDetail: StaffDetail[]): Promise<voi
   const maxBatchWriteRequests = 25;
   const staffDetailWriteBatches: StaffDetail[][] = chunk(staffDetail, maxBatchWriteRequests);
 
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('cacheStaffDetails - Skipping DynamoDB write', { staffCount: staffDetail.length });
+    return;
+  }
+
   const writePromises = staffDetailWriteBatches.map((batch) => {
     const params = {
       RequestItems: {
@@ -48,6 +52,11 @@ export const cacheStaffDetails = async (staffDetail: StaffDetail[]): Promise<voi
 export const uncacheStaffNumbers = async (staffNumbers: string[]): Promise<void> => {
   const ddb = getDynamoClient();
   const tableName = config().dynamodbTableName;
+
+  if (process.env.SKIP_DYNAMO_WRITE === 'true') {
+    debug('uncacheStaffNumbers - Skipping DynamoDB delete', { staffCount: staffNumbers.length });
+    return;
+  }
 
   const deletePromises = staffNumbers.map((staffNumber) => {
     const deleteParams = {
