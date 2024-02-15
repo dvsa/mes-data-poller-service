@@ -2,7 +2,8 @@ import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
 import { config } from '../../../../pollUsers/framework/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import {customMetric, error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
+import {AttributeValue} from 'aws-lambda';
 
 let dynamoDocumentClient: DynamoDB.DocumentClient;
 const getDynamoClient = () => {
@@ -21,18 +22,36 @@ const getDynamoClient = () => {
   return dynamoDocumentClient;
 };
 
+// @TODO: This should be repurposed to scan any table recursively by passing in the `TableName`
 export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
   const ddb = getDynamoClient();
+
+  const rows: StaffDetail[] = [];
+  let lastEvaluatedKey: Record<string, AttributeValue> | undefined = undefined;
+
   const scanParams = {
     TableName: config().usersDynamodbTableName,
+    ExclusiveStartKey: lastEvaluatedKey,
   };
-  const scanResult = await ddb.scan(scanParams).promise();
 
-  if (!scanResult.Items) {
-    return [];
-  }
+  do {
+    try {
+      const data = await ddb.scan(scanParams).promise();
 
-  return scanResult.Items as StaffDetail[];
+      if (data.Items) {
+        info(`Found ${data.Items.length} items in DynamoDB`);
+        rows.push(...data.Items as StaffDetail[]);
+      }
+
+      lastEvaluatedKey = data.LastEvaluatedKey;
+      scanParams.ExclusiveStartKey = data.LastEvaluatedKey;
+    } catch (err) {
+      error('`ScanCommand` has thrown an error.', err);
+      throw err;
+    }
+  } while (!!lastEvaluatedKey);
+
+  return rows as StaffDetail[];
 };
 
 export const cacheStaffDetails = async (staffDetail: StaffDetail[]): Promise<void> => {
