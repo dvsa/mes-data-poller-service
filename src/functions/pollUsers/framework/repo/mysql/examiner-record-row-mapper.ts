@@ -23,13 +23,17 @@ export const buildStaffDetailsFromQueryResult = (
         return [...staffDetailsAcc];
       }
 
-      const role = recordsForExaminer[0].test_centre_manager_ind === 1 ? ExaminerRole.LDTM : ExaminerRole.DE;
+      const records = recordsForExaminer.filter(
+        (rec) => rec.test_category_ref !== null && rec.with_effect_from !== null
+      );
+
+      const role = records[0]?.test_centre_manager_ind === 1 ? ExaminerRole.LDTM : ExaminerRole.DE;
 
       const formatDate = (date: Date) => date === null ? null : date.toISOString().split('T')[0];
 
-      const testPermissionPeriods: TestPermissionPeriod[] = examinerHasPermissions(recordsForExaminer)
+      const testPermissionPeriods: TestPermissionPeriod[] = examinerHasPermissions(records)
         ? [
-          ...recordsForExaminer.map(record => ({
+          ...records.map(record => ({
             testCategory: record.test_category_ref,
             from: formatDate(record.with_effect_from),
             to: formatDate(record.with_effect_to),
