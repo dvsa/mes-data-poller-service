@@ -2,7 +2,7 @@ import { config as awsConfig, Credentials, DynamoDB } from 'aws-sdk';
 import { config } from '../../../../pollUsers/framework/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
-import { customMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import {customMetric, error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
 import {AttributeValue} from 'aws-lambda';
 
 let dynamoDocumentClient: DynamoDB.DocumentClient;
@@ -38,12 +38,15 @@ export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
     try {
       const data = await ddb.scan(scanParams).promise();
 
-      if (data.Items) rows.push(...data.Items as StaffDetail[]);
+      if (data.Items) {
+        info(`Found ${data.Items.length} items in DynamoDB`);
+        rows.push(...data.Items as StaffDetail[]);
+      }
 
       lastEvaluatedKey = data.LastEvaluatedKey;
       scanParams.ExclusiveStartKey = data.LastEvaluatedKey;
     } catch (err) {
-      console.error('[ERROR]: `ScanCommand` has thrown an error.', err);
+      error('`ScanCommand` has thrown an error.', err);
       throw err;
     }
   } while (!!lastEvaluatedKey);
