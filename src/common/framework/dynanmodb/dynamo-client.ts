@@ -1,6 +1,7 @@
 import {config} from '../config/config';
 import {AttributeValue, DynamoDBClient, DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
 import {ScanCommand, ScanCommandInput} from '@aws-sdk/lib-dynamodb';
+import {error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
 
 /**
  * Creates the DynamoDB API client. If offline then points to the local endpoint. If online then enables HTTP keep
@@ -37,12 +38,15 @@ export const fullScan = async <T>(
         new ScanCommand(params)
       );
 
-      if (data.Items) rows.push(...data.Items as T[]);
+      if (data.Items) {
+        info(`Found ${data.Items.length} items in DynamoDB`);
+        rows.push(...data.Items as T[]);
+      }
 
       lastEvaluatedKey = data.LastEvaluatedKey;
       params.ExclusiveStartKey = data.LastEvaluatedKey;
     } catch (err) {
-      console.error('[ERROR]: `ScanCommand` has thrown an error.', err);
+      error('`ScanCommand` has thrown an error.', err);
       throw err;
     }
   } while (!!lastEvaluatedKey);
