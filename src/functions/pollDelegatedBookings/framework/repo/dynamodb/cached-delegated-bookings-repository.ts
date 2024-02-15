@@ -1,23 +1,12 @@
-import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { DeleteCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
 import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
-import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
+import { fullScan, getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
   const ddb = getDynamoClient();
-
-  const scanResult = await ddb.send(
-    new ScanCommand({
-      TableName: config().dynamodbTableName,
-    })
-  );
-
-  if (!scanResult.Items) {
-    return [];
-  }
-
-  return scanResult.Items as DelegatedBookingDetail[];
+  return await fullScan<DelegatedBookingDetail>(ddb, config().dynamodbTableName);
 };
 
 export const cacheDelegatedBookingDetails = async (delegatedBookings: DelegatedBookingDetail[]): Promise<void> => {

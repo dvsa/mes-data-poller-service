@@ -1,22 +1,13 @@
-import { BatchWriteCommand, DeleteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { BatchWriteCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
-import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
+import {fullScan, getDynamoClient} from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
   const ddb = getDynamoClient();
-
-  const scanResult = await ddb.send(
-    new ScanCommand({TableName: config().dynamodbTableName}),
-  );
-
-  if (!scanResult.Items) {
-    return [];
-  }
-
-  return scanResult.Items as StaffDetail[];
+  return await fullScan<StaffDetail>(ddb, config().dynamodbTableName);
 };
 
 export const cacheStaffDetails = async (staffDetail: StaffDetail[]): Promise<void> => {
