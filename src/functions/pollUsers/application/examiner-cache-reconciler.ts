@@ -44,10 +44,10 @@ const staffDetailIsEqual = (sd1: StaffDetail, sd2: StaffDetail): boolean => {
     && testPermissionPeriodsMatch(sd1.testPermissionPeriods, sd2.testPermissionPeriods);
 };
 
-const testPermissionPeriodsMatch = (tp1: TestPermissionPeriod[], tp2: TestPermissionPeriod[]): boolean => {
-  return tp1.every(compareFromPeriod =>
-    tp2.find(compareToPeriod => isEqual(compareFromPeriod, compareToPeriod)) !== undefined);
-};
+const testPermissionPeriodsMatch = (
+  tp1: TestPermissionPeriod[],
+  tp2: TestPermissionPeriod[],
+): boolean => isEqual(tp1, tp2);
 
 const filterDuplicateUsers = (staffDetails: StaffDetail[]): StaffDetail[] => {
   const usersByStaffNumber = groupBy(staffDetails, record => record.staffNumber);
