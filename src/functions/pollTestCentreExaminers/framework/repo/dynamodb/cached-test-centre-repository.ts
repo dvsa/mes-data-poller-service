@@ -1,23 +1,12 @@
 import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { config } from '../../../../../common/framework/config/config';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
-import { DeleteCommand, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
+import { DeleteCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { fullScan, getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   const ddb = getDynamoClient();
-
-  const scanResult = await ddb.send(
-    new ScanCommand({
-      TableName: config().dynamodbTableName,
-    }),
-  );
-
-  if (!scanResult.Items) {
-    return [];
-  }
-
-  return scanResult.Items as TestCentreDetail[];
+  return await fullScan<TestCentreDetail>(ddb, config().dynamodbTableName);
 };
 
 export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[]): Promise<void> => {
