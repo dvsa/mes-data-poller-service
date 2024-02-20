@@ -23,12 +23,12 @@ export const buildStaffDetailsFromQueryResult = (
         return [...staffDetailsAcc];
       }
 
+      const role = recordsForExaminer[0]?.test_centre_manager_ind === 1 ? ExaminerRole.LDTM : ExaminerRole.DE;
+
+      // filter records where category and effective date is null
       const records = recordsForExaminer.filter(
         (rec) => rec.test_category_ref !== null && rec.with_effect_from !== null
       );
-
-      const role = records[0]?.test_centre_manager_ind === 1 ? ExaminerRole.LDTM : ExaminerRole.DE;
-
       const formatDate = (date: Date) => date === null ? null : date.toISOString().split('T')[0];
 
       const testPermissionPeriods: TestPermissionPeriod[] = examinerHasPermissions(records)

@@ -100,6 +100,20 @@ describe('ExmainerRecordRowMapper', () => {
     expect(result).toEqual([new StaffDetail('1', ExaminerRole.DE)]);
   });
 
+  it('should handle an manager record without any permissions', () => {
+    const permissionlessManagerRecord = {
+      individual_id: 1,
+      staff_number: '01',
+      test_centre_manager_ind: 1,
+      test_category_ref: null,
+      with_effect_from: null,
+      with_effect_to: null,
+    };
+
+    const result = buildStaffDetailsFromQueryResult([permissionlessManagerRecord], []);
+    expect(result).toEqual([new StaffDetail('1', ExaminerRole.LDTM)]);
+  });
+
   it('should include universal permissions in each examiners StaffDetails', () => {
     const result = buildStaffDetailsFromQueryResult(examinerRecords, universalPermissions);
 
