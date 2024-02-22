@@ -10,7 +10,7 @@ JOIN PROGRAMME_SLOT ps
     AND ps.tc_id = p.tc_id
 JOIN EXAMINER e on e.individual_id = p.individual_id
 JOIN EXAMINER_STATUS es on es.individual_id = e.individual_id
-	AND CURDATE() between es.start_date and es.end_date
+	AND CURDATE() between es.start_date and IFNULL(es.end_date, '4000-01-01')
 WHERE ps.tc_closed_ind != 1
 AND IFNULL(ps.deployed_to_from_code, 0) != 1
 AND IFNULL(e.grade_code, 'ZZZ') != 'DELE'
