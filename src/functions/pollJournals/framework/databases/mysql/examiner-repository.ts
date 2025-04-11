@@ -20,12 +20,11 @@ export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date):
     connectionPool,
     mysql.format(
       `
-    select e.individual_id, e.staff_number
-    from EXAMINER e
-        left join EXAMINER_STATUS es on es.individual_id = e.individual_id
-    where IFNULL(e.grade_code, 'ZZZ') <> 'DELE'
-    and IFNULL(es.end_date, '4000-01-01') >= ?
-    `,
+          SELECT e.individual_id, e.staff_number
+          FROM EXAMINER e
+                   LEFT JOIN EXAMINER_STATUS es ON es.individual_id = e.individual_id
+          WHERE IFNULL(e.grade_code, 'ZZZ') <> 'DELE'
+            AND ? BETWEEN IFNULL(es.start_date, '1900-01-01') AND IFNULL(es.end_date, '4000-01-01')`,
       [windowStart],
     )
   );
