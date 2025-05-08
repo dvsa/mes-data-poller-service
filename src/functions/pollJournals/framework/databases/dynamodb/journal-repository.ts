@@ -1,4 +1,10 @@
-import { BatchWriteCommand, BatchWriteCommandInput, ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
+import {
+  BatchWriteCommand,
+  BatchWriteCommandInput,
+  DeleteCommand,
+  ScanCommand,
+  ScanCommandInput,
+} from '@aws-sdk/lib-dynamodb';
 import { AttributeValue } from '@aws-sdk/client-dynamodb';
 import { chunk, get, mean } from 'lodash';
 import { customMetric, warn, info, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
@@ -53,6 +59,37 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
   } else {
     info('NO SAVE NEEDED');
   }
+};
+
+/**
+ * Identifies inactive journals in DynamoDB by comparing active staff numbers.
+ * @param activeStaffNumbers List of active staff numbers.
+ * @returns List of inactive staff numbers.
+ */
+export const identifyInactiveJournals = async (activeStaffNumbers: string[]): Promise<string[]> => {
+  const ddb = getDynamoClient();
+  const tableName = config().dynamodbTableName;
+
+  const params = {
+    TableName: tableName,
+    ProjectionExpression: 'staffNumber',
+  };
+
+  let inactiveStaffNumbers: string[] = [];
+  let lastEvaluatedKey: any;
+
+  do {
+    const result = await ddb.send(new ScanCommand({ ...params, ExclusiveStartKey: lastEvaluatedKey }));
+    const dynamoStaffNumbers = result.Items?.map((item) => item.staffNumber) || [];
+    inactiveStaffNumbers = [
+      ...inactiveStaffNumbers,
+      ...dynamoStaffNumbers.filter((staffNumber) => !activeStaffNumbers.includes(staffNumber)),
+    ];
+    lastEvaluatedKey = result.LastEvaluatedKey;
+  } while (lastEvaluatedKey);
+
+  info(`Identified ${inactiveStaffNumbers.length} inactive journals.`);
+  return inactiveStaffNumbers;
 };
 
 /**
@@ -240,4 +277,32 @@ export const getStaffNumbersWithHashes = async (startTime: Date): Promise<Partia
   info(`read ${scannedItems.length} journal hashes, took ${totalConsumedCapacity} RCUs`);
   journalHashesCache.clearAndPopulate(scannedItems, startTime);
   return scannedItems;
+};
+
+/**
+ * Removes inactive journals from DynamoDB.
+ * @param inactiveStaffNumbers List of inactive staff numbers to remove.
+ */
+export const removeInactiveJournals = async (inactiveStaffNumbers: string[]): Promise<void> => {
+  if (inactiveStaffNumbers.length === 0) {
+    info('No inactive journals to remove.');
+    return;
+  }
+
+  const ddb = getDynamoClient();
+  const tableName = config().dynamodbTableName;
+
+  for (const staffNumber of inactiveStaffNumbers) {
+    try {
+      await ddb.send(
+        new DeleteCommand({
+          TableName: tableName,
+          Key: { staffNumber },
+        }),
+      );
+      info(`Removed journal for staff number: ${staffNumber}`);
+    } catch (error) {
+      warn(`Failed to remove journal for staff number: ${staffNumber}`, error);
+    }
+  }
 };

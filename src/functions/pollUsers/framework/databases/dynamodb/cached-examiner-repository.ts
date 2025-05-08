@@ -5,6 +5,10 @@ import { chunk } from 'lodash';
 import { StaffDetail } from '../../../../../common/application/models/staff-details';
 import {fullScan, getDynamoClient} from '../../../../../common/framework/dynanmodb/dynamo-client';
 
+/**
+ * Retrieves all current examiner details from a DynamoDB table.
+ * and returns all items as an array of `StaffDetail` objects.
+ */
 export const getCachedExaminers = async (): Promise<StaffDetail[]> => {
   const ddb = getDynamoClient();
   return await fullScan<StaffDetail>(ddb, config().dynamodbTableName);
