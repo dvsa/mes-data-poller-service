@@ -2,10 +2,6 @@ import { StaffDetail, TestPermissionPeriod } from '../../../common/application/m
 import { isEqual, groupBy } from 'lodash';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { cacheStaffDetails, uncacheStaffNumbers } from '../framework/databases/dynamodb/cached-examiner-repository';
-import {
-  identifyInactiveJournals,
-  removeInactiveJournals,
-} from '../../pollJournals/framework/databases/dynamodb/journal-repository';
 
 export const reconcileActiveAndCachedExaminers = async (
   activeStaffDetails: StaffDetail[],
@@ -19,10 +15,6 @@ export const reconcileActiveAndCachedExaminers = async (
 
   const staffNumbersToUncache = cachedStaffNumbers.filter(staffNumber => !activeStaffNumbers.includes(staffNumber));
   await uncacheStaffNumbers(staffNumbersToUncache);
-
-
-  const inactiveStaffNumbers = await identifyInactiveJournals(activeStaffNumbers);
-  await removeInactiveJournals(inactiveStaffNumbers);
 };
 
 const selectStaffDetailsToCache = (
@@ -42,7 +34,7 @@ const staffDetailEligibleForCache = (staffDetail: StaffDetail, cachedStaffDetail
     return true;
   }
 
-  // Simple isEqual comparision won't work here, probably because of differing prototypes
+  // Simple isEqual comparison won't work here, probably because of differing prototypes
   return !staffDetailIsEqual(staffDetail, oldStaffDetailForExaminer);
 };
 

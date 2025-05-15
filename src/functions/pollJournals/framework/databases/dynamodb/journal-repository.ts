@@ -62,17 +62,21 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
 };
 
 /**
- * Identifies inactive journals in DynamoDB by comparing active staff numbers.
- * @param activeStaffNumbers List of active staff numbers.
- * @returns List of inactive staff numbers.
+ * Identifies inactive journals by scanning a DynamoDB table and filtering records
+ * where the `lastUpdatedAt` attribute is older than 3 months.
+ *
+ * @returns {Promise<string[]>} A promise that resolves to an array of staff numbers
+ *                              corresponding to inactive journals.
  */
-export const identifyInactiveJournals = async (activeStaffNumbers: string[]): Promise<string[]> => {
+export const identifyInactiveJournals = async (): Promise<string[]> => {
   const ddb = getDynamoClient();
   const tableName = config().dynamodbTableName;
 
+  const threeMonthsAgo = moment().subtract(3, 'months').valueOf();
+
   const params = {
     TableName: tableName,
-    ProjectionExpression: 'staffNumber',
+    ProjectionExpression: 'staffNumber, lastUpdatedAt',
   };
 
   let inactiveStaffNumbers: string[] = [];
@@ -80,11 +84,9 @@ export const identifyInactiveJournals = async (activeStaffNumbers: string[]): Pr
 
   do {
     const result = await ddb.send(new ScanCommand({ ...params, ExclusiveStartKey: lastEvaluatedKey }));
-    const dynamoStaffNumbers = result.Items?.map((item) => item.staffNumber) || [];
-    inactiveStaffNumbers = [
-      ...inactiveStaffNumbers,
-      ...dynamoStaffNumbers.filter((staffNumber) => !activeStaffNumbers.includes(staffNumber)),
-    ];
+    const dynamoStaffNumbers = result.Items?.filter((item) => item.lastUpdatedAt < threeMonthsAgo)
+      .map((item) => item.staffNumber) || [];
+    inactiveStaffNumbers = [...inactiveStaffNumbers, ...dynamoStaffNumbers];
     lastEvaluatedKey = result.LastEvaluatedKey;
   } while (lastEvaluatedKey);
 
