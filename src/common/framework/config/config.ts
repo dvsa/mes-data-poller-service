@@ -31,6 +31,18 @@ export const bootstrapConfig = async (type: DdbTableTypes) => {
   };
 };
 
+export const bootstrapReapJournalsConfig = async (type: DdbTableTypes) => {
+  configuration = {
+    isOffline: !!process.env.IS_OFFLINE,
+    dynamodbTableName: ddbTable(DdbTableTypes.JOURNALS),
+    tarsReplicaDatabaseHostname: undefined, // Not required for reapJournals
+    tarsReplicaDatabaseName: undefined, // Not required for reapJournals
+    tarsReplicaDatabaseUsername: undefined, // Not required for reapJournals
+    tarsReplicaDatabasePassword: undefined, // Not required for reapJournals
+    timeTravelDate: undefined, // Not required for reapJournals
+  };
+};
+
 export type Config = {
   isOffline: boolean;
   dynamodbTableName: string;

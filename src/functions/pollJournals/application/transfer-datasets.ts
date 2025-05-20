@@ -27,5 +27,4 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   }
 
   await getJournalDetails(startTime, startDate, journalStartDate);
-
 };

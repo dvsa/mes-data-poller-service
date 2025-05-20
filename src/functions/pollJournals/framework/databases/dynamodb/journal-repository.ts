@@ -1,4 +1,9 @@
-import { BatchWriteCommand, BatchWriteCommandInput, ScanCommand, ScanCommandInput } from '@aws-sdk/lib-dynamodb';
+import {
+  BatchWriteCommand,
+  BatchWriteCommandInput,
+  ScanCommand,
+  ScanCommandInput,
+} from '@aws-sdk/lib-dynamodb';
 import { AttributeValue } from '@aws-sdk/client-dynamodb';
 import { chunk, get, mean } from 'lodash';
 import { customMetric, warn, info, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
