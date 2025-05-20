@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { config } from '../../../common/framework/config/config';
 import { getJournalDetails } from '../framework/repositories/get-journal-details';
-import { getInactiveExaminers } from '../framework/repositories/get-inactive-examiners';
 
 export const transferDatasets = async (startTime: Date): Promise<void> => {
 
@@ -28,6 +27,4 @@ export const transferDatasets = async (startTime: Date): Promise<void> => {
   }
 
   await getJournalDetails(startTime, startDate, journalStartDate);
-  await getInactiveExaminers();
-
 };

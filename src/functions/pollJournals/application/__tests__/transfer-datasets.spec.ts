@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { transferDatasets } from '../transfer-datasets';
 import * as journalDetailsRepo from '../../framework/repositories/get-journal-details';
-import * as inactiveExaminersRepo from '../../framework/repositories/get-inactive-examiners';
 import * as config from '../../../../common/framework/config/config';
 
 describe('transferDatasets', () => {
@@ -11,7 +10,6 @@ describe('transferDatasets', () => {
 
   beforeEach(() => {
     mockGetJournalDetails = spyOn(journalDetailsRepo, 'getJournalDetails');
-    mockGetInactiveExaminers = spyOn(inactiveExaminersRepo, 'getInactiveExaminers');
     mockConfig = spyOn(config, 'config');
   });
 
@@ -34,7 +32,6 @@ describe('transferDatasets', () => {
     await transferDatasets(startTime);
 
     expect(mockGetJournalDetails).toHaveBeenCalledWith(startTime, startDate, journalStartDate);
-    expect(mockGetInactiveExaminers).toHaveBeenCalled();
   });
 
   it('calls getJournalDetails with correct values when timeTravelDate is not set', async () => {
@@ -55,6 +52,5 @@ describe('transferDatasets', () => {
     await transferDatasets(startTime);
 
     expect(mockGetJournalDetails).toHaveBeenCalledWith(startTime, startDate, journalStartDate);
-    expect(mockGetInactiveExaminers).toHaveBeenCalled();
   });
 });
