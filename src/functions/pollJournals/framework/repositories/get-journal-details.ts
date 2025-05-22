@@ -80,7 +80,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
-  info(`FINISHED TRANSFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
+  info(`FINISHED TRANFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 
   const changedJournals = await filterChangedJournals(journals, startTime);
   info(`FINISHED FILTER PHASE, STARTING SAVE PHASE FOR ${changedJournals.length} JOURNALS: ${new Date()}`);

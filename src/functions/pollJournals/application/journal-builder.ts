@@ -8,7 +8,7 @@ import { ExaminerDeployment } from '../domain/examiner-deployment';
 import { ExaminerTestSlot } from '../domain/examiner-test-slot';
 import { ExaminerPersonalCommitment } from '../domain/examiner-personal-commitment';
 import { AllDatasets } from '../domain/all-datasets';
-import { compressJournal } from './journal-compressor';
+import { compressJournal } from '../application/journal-compressor';
 import { ExaminerRecord } from '../domain/examiner-record';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 
