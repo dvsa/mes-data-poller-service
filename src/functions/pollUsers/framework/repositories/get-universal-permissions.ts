@@ -9,9 +9,6 @@ interface UniversalPermissionRecord {
   with_effect_to: Date | null;
 }
 
-/**
- * Extract effective dates for test categories that apply to all users.
- */
 export const getUniversalTestPermissions = async () => {
 
   const connection = getConnection();

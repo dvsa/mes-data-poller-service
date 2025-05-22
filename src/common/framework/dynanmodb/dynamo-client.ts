@@ -20,11 +20,6 @@ export const getDynamoClient = () => {
   return new DynamoDBClient(opts);
 };
 
-/**
- * Performs a full scan of a DynamoDB table and retrieves all items.
- * @param ddb - The DynamoDB client used to perform the scan.
- * @param tableName - The name of the DynamoDB table to scan.
- */
 export const fullScan = async <T>(
   ddb: DynamoDBClient,
   tableName: string,

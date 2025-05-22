@@ -34,7 +34,7 @@ const staffDetailEligibleForCache = (staffDetail: StaffDetail, cachedStaffDetail
     return true;
   }
 
-  // Simple isEqual comparison won't work here, probably because of differing prototypes
+  // Simple isEqual comparision won't work here, probably because of differing prototypes
   return !staffDetailIsEqual(staffDetail, oldStaffDetailForExaminer);
 };
 
