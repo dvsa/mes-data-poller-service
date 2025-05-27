@@ -46,7 +46,7 @@
   "devDependencies": {
     "@cucumber/cucumber": "^10.0.1",
     "@dvsa/mes-journal-schema": "1.4.0",
-    "@dvsa/mes-test-schema": "3.44.0",
+    "@dvsa/mes-test-schema": "3.45.0",
     "@types/aws-lambda": "^8.10.126",
     "@types/aws-sdk": "^2.7.0",
     "@types/chai": "^4.3.10",
