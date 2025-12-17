@@ -16,6 +16,9 @@ interface JournalEndDateRow {
  * @returns The next working day
  */
 export const getNextWorkingDay = async (connectionPool: mysql.Pool, startDate: Date): Promise<Date> => {
+  if (process.env.IS_DEV) {
+    return (moment(startDate).add(1, 'days').toDate());
+  }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);
 

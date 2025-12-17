@@ -1,4 +1,4 @@
-import { getConnection, query } from '../../../../../common/framework/mysql/database';
+import { getTARSConnection, query } from '../../../../../common/framework/mysql/database';
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 
@@ -26,7 +26,7 @@ export interface DelegatedTestSlotRow {
 
 export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
 
-  const connection = getConnection();
+  const connection = getTARSConnection();
 
   const queryResult: DelegatedTestSlotRow[] = await query(
     connection,

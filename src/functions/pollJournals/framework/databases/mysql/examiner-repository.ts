@@ -11,6 +11,14 @@ import { ExaminerRecord } from '../../../domain/examiner-record';
  * @returns The examiners
  */
 export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date): Promise<ExaminerRecord[]> => {
+  if (process.env.IS_DEV) {
+    return [
+      {individual_id: 1, staff_number: '2'},
+      {individual_id: 3, staff_number: '4'},
+      {individual_id: 5, staff_number: '6'},
+      {individual_id: 7, staff_number: '8'},
+    ];
+  }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);
 

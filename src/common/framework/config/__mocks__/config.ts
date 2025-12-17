@@ -8,4 +8,8 @@ export const dummyConfig: Config = {
   tarsReplicaDatabasePassword: 'dummypassword',
   tarsReplicaDatabaseUsername: 'dummyusername',
   timeTravelDate: '2019-03-13',
+  desDatabaseHostname: 'localhost',
+  desDatabaseName: 'dummydesdbname',
+  desDatabasePassword: 'dummydespassword',
+  desDatabaseUsername: 'dummydesusername',
 };

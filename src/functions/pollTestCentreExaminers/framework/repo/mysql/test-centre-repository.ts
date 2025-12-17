@@ -1,11 +1,11 @@
-import { getConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
+import { getTARSConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
 import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import * as mysql from 'mysql2';
 import { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
 
 export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
-  const connection = getConnectionPool();
+  const connection = getTARSConnectionPool();
 
   await poolQuery(connection, 'SET SESSION group_concat_max_len = 65000');
   const queryResult: TestCentreRow[] = await poolQuery(

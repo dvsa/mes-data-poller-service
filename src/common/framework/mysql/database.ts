@@ -30,7 +30,7 @@ export const query = async (
 /**
  * Establish a connection to a database to facilitate a single query
  */
-export const getConnection = (): mysql.Connection => {
+export const getTARSConnection = (): mysql.Connection => {
   const configuration = config();
   const connection = mysql.createConnection({
     host: configuration.tarsReplicaDatabaseHostname,
@@ -66,7 +66,7 @@ export const poolQuery = async (
 /**
  * Establish a connection to a database to facilitate multiple queries
  */
-export const getConnectionPool = (): mysql.Pool => {
+export const getTARSConnectionPool = (): mysql.Pool => {
   const configuration = config();
   return mysql.createPool({
     host: configuration.tarsReplicaDatabaseHostname,
