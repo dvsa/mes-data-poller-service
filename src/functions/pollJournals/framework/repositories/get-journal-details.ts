@@ -16,6 +16,12 @@ import { getDeployments } from '../databases/mysql/deployment-repository';
 import { getTestSlots } from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
 import { getDSPTestSlots } from '../databases/mysql/test-slot-repository-des-schedule';
+import {
+  getDeploymentsMock,
+  getExaminersMock, getNextWorkingDayMock, getNonTestActivitiesMock,
+  getPersonalCommitmentsMock,
+  getTestSlotsMock,
+} from '../../../mock/repository.mock';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getConnectionPool('TARS');
@@ -26,8 +32,8 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     examiners,
     nextWorkingDay,
   ] = await Promise.all([
-    getExaminers(connectionPool, startDate),
-    getNextWorkingDay(connectionPool, startDate),
+    process.env.SHOULD_SEED_JOURNALS ? getExaminersMock() : getExaminers(connectionPool, startDate),
+    process.env.SHOULD_SEED_JOURNALS ? getNextWorkingDayMock() : getNextWorkingDay(connectionPool, startDate),
   ]);
 
   const examinerIds = examiners.map(examiner => examiner.individual_id);
@@ -43,10 +49,14 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     deployments,
     testSlotsDSP,
   ] = await Promise.all([
-    getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
-    getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
-    getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
-    getDeployments(connectionPool, startDate, 6), // 6 months range
+    process.env.SHOULD_SEED_JOURNALS ?
+      getPersonalCommitmentsMock() : getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
+    process.env.SHOULD_SEED_JOURNALS ?
+      getNonTestActivitiesMock() : getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
+    process.env.SHOULD_SEED_JOURNALS ?
+      Promise.resolve([]) : getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
+    process.env.SHOULD_SEED_JOURNALS ?
+      getDeploymentsMock() : getDeployments(connectionPool, startDate, 6), // 6 months range
     process.env.GET_DSP_BOOKINGS ?
       getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
       : [],
@@ -57,7 +67,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
 
-  const testSlotsTARS = (
+  const testSlotsTARS = process.env.SHOULD_SEED_JOURNALS ? await getTestSlotsMock() :(
     await Promise.all(
       examinerChunks.map(
         (examinerChunk, index) =>
