@@ -29,7 +29,7 @@ const iamRdsConfigValid = (hostname: string | undefined, username: string | unde
   return hostnameValid && usernameValid;
 };
 
-export const tryFetchRdsAccessToken = async (
+export const tryFetchTARSRdsAccessToken = async (
   hostname: string,
   username: string,
   fallbackEnvvar: string,
@@ -37,7 +37,7 @@ export const tryFetchRdsAccessToken = async (
   if (!iamRdsConfigValid(hostname, username)) {
     const envvar = process.env[fallbackEnvvar];
     if (!envvar) {
-      throw new Error(`No value for fallback envvar ${fallbackEnvvar} for config`);
+      throw new Error(`No value for fallback envvar ${fallbackEnvvar} for config (TARS)`);
     }
     return envvar;
   }
@@ -53,6 +53,34 @@ export const tryFetchRdsAccessToken = async (
     return await signer.getAuthToken();
   } catch (err) {
     const msg = err instanceof Error ? err.message : JSON.stringify(err);
-    throw new Error(`Generating an auth token failed. Error message: ${msg}`);
+    throw new Error(`Generating an auth token for TARS failed. Error message: ${msg}`);
+  }
+};
+
+export const tryFetchDESRdsAccessToken = async (
+  hostname: string,
+  username: string,
+  fallbackEnvvar: string,
+): Promise<string> => {
+  if (!iamRdsConfigValid(hostname, username)) {
+    const envvar = process.env[fallbackEnvvar];
+    if (!envvar) {
+      throw new Error(`No value for fallback envvar ${fallbackEnvvar} for config (DES)`);
+    }
+    return envvar;
+  }
+
+  throwIfNotPresent(hostname, 'mesDatabaseHostname');
+  throwIfNotPresent(username, 'mesDatabaseUsername');
+
+  try {
+    const signerOptions = generateSignerOptions(hostname, username);
+
+    const signer = new Signer(signerOptions);
+
+    return await signer.getAuthToken();
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : JSON.stringify(err);
+    throw new Error(`Generating an auth token for DES failed. Error message: ${msg}`);
   }
 };

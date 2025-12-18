@@ -63,6 +63,22 @@ export const poolQuery = async (
   return queryResult;
 };
 
+export const getDESConnectionPool = (): mysql.Pool => {
+  const configuration = config();
+  return mysql.createPool({
+    host: configuration.desDatabaseHostname,
+    database: configuration.desDatabaseName,
+    user: configuration.desDatabaseUsername,
+    password: configuration.desDatabasePassword,
+    charset: 'UTF8_GENERAL_CI',
+    ssl: process.env.TESTING_MODE ? null : certificate,
+    authPlugins: {
+      mysql_clear_password: () => () => Buffer.from(`${configuration.desDatabasePassword}\0`),
+    },
+    connectionLimit: 50,
+  });
+};
+
 /**
  * Establish a connection to a database to facilitate multiple queries
  */

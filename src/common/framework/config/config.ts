@@ -1,6 +1,7 @@
 import {
   throwIfNotPresent,
-  tryFetchRdsAccessToken,
+  tryFetchDESRdsAccessToken,
+  tryFetchTARSRdsAccessToken,
 } from './config-helpers';
 import { ddbTable, DdbTableTypes } from '../../application/utils/ddbTable';
 
@@ -22,7 +23,7 @@ export const bootstrapConfig = async (type: DdbTableTypes) => {
       process.env.TARS_REPLICA_DB_USERNAME,
       'tarsReplicaDatabaseUsername',
     ),
-    tarsReplicaDatabasePassword: await tryFetchRdsAccessToken(
+    tarsReplicaDatabasePassword: await tryFetchTARSRdsAccessToken(
       process.env.TARS_REPLICA_ENDPOINT,
       process.env.TARS_REPLICA_DB_USERNAME,
       'SECRET_DB_PASSWORD_KEY',
@@ -40,11 +41,13 @@ export const bootstrapConfig = async (type: DdbTableTypes) => {
       process.env.DES_DATABASE_USERNAME,
       'desDatabaseUsername',
     ),
-    desDatabasePassword: await tryFetchRdsAccessToken(
-      process.env.DES_DATABASE_ENDPOINT,
-      process.env.DES_DATABASE_USERNAME,
-      'SECRET_DB_PASSWORD_KEY',
-    ),
+    desDatabasePassword: (process.env.IS_OFFLINE === 'true')
+      ? process.env.DES_DATABASE_PASSWORD
+      : await tryFetchDESRdsAccessToken(
+        process.env.DES_DATABASE_ENDPOINT || '',
+        process.env.DES_DATABASE_USERNAME || '',
+        'SECRET_DB_PASSWORD_KEY',
+      ),
   };
 };
 

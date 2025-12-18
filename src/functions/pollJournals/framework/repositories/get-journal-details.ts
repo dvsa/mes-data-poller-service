@@ -6,14 +6,14 @@ import { JournalRecord } from '../../domain/journal-record';
 import { buildJournals } from '../../application/journal-builder';
 import { filterChangedJournals } from '../../application/journal-change-filter';
 import { saveJournals } from '../databases/dynamodb/journal-repository';
-import { getTARSConnectionPool} from '../../../../common/framework/mysql/database';
+import {getDESConnectionPool, getTARSConnectionPool} from '../../../../common/framework/mysql/database';
 import { getExaminers } from '../databases/mysql/examiner-repository';
 import { getJournalEndDate, getNextWorkingDay } from '../databases/mysql/journal-end-date-repository';
 import { getPersonalCommitments } from '../databases/mysql/personal-commitment-repository';
 import { getNonTestActivities } from '../databases/mysql/non-test-activity-repository';
 import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repository';
 import { getDeployments } from '../databases/mysql/deployment-repository';
-import { getTestSlots } from '../databases/mysql/test-slot-repository';
+import {getDESTestSlots, getTestSlots} from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
@@ -41,11 +41,13 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     nonTestActivities,
     advanceTestSlots,
     deployments,
+    testSlotsDES,
   ] = await Promise.all([
     getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
+    getDESTestSlots(getDESConnectionPool(), examiners, journalStartDate, journalEndDate),
   ]);
 
   const examinerIdGroupCount = Math.ceil(examiners.length / 5);
@@ -61,80 +63,6 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
       ),
     )
   ).reduce((acc: ExaminerTestSlot[], curr: ExaminerTestSlot[]) => acc?.concat(curr));
-
-  // const testSlotsDES = (
-  //   await Promise.all(
-  //     examinerChunks.map(
-  //       (examinerChunk, index) =>
-  //         getTestSlots(getDESConnectionPool(), examinerChunk, journalStartDate, journalEndDate, index),
-  //     ),
-  //   )
-  // ).reduce((acc: ExaminerTestSlot[], curr: ExaminerTestSlot[]) => acc?.concat(curr));
-
-  const testSlotsDES: ExaminerTestSlot[] = [
-    {
-      examinerId: 1,
-      testSlot: {
-        booking: {
-          application: {
-            applicationId: 10,
-            bookingSequence: 10,
-            checkDigit: 1,
-            entitlementCheck: false,
-            extendedTest: false,
-            fitMarker: true,
-            progressiveAccess: false,
-            specialNeedsCode: 'NONE',
-            specialNeedsExtendedTest: false,
-            testCategory: 'B',
-            vehicleGearbox: 'Automatic',
-            welshTest: false,
-            meetingPlace: 'Test Meeting Place.',
-            categoryEntitlementCheck: false,
-          },
-          candidate: {
-            candidateAddress: {
-              addressLine1: 'Address Line 1',
-              addressLine2: 'Address Line 2',
-              addressLine3: 'Address Line 3',
-              addressLine4: 'Address Line 4',
-              addressLine5: 'Address Line 5',
-              postcode: 'PO57 0DE',
-            },
-            candidateId: 9010,
-            candidateName: {
-              firstName: 'Firstname',
-              lastName: 'Surname',
-              title: 'Title',
-            },
-            driverNumber: 'SURNA123456789DO',
-            mobileTelephone: '07111 123456',
-            primaryTelephone: '01234 567890',
-            secondaryTelephone: '04321 098765',
-            dateOfBirth: '1977-07-02',
-            ethnicityCode: 'D',
-            gender: 'F',
-          },
-          previousCancellation: [
-            'Act of nature',
-          ],
-        },
-        slotDetail: {
-          duration: 57,
-          slotId: 1010,
-          start: moment(Date.now()).format('YYYY-MM-DDTHH:mm:ss'),
-        },
-        testCentre: {
-          centreId: 1,
-          centreName: 'Test Centre 1',
-          costCode: 'TC1',
-        },
-        vehicleTypeCode: 'C',
-        vehicleSlotTypeCode: 7,
-        examinerVisiting: false,
-      },
-    },
-  ];
 
   const journalQueryPhaseEnd = new Date();
   customDurationMetric(
@@ -155,10 +83,8 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
-  info(`FINISHED TRANSFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 
   const changedJournals = await filterChangedJournals(journals, startTime);
-  info(`FINISHED FILTER PHASE, STARTING SAVE PHASE FOR ${changedJournals.length} JOURNALS: ${new Date()}`);
   customMetric('JournalsChanged', 'Number of Journals found to have changed', changedJournals.length);
 
   const journalWritePhaseStart = new Date();
