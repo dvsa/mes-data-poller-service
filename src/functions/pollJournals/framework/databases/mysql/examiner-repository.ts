@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerRecord } from '../../../domain/examiner-record';
+import {TARSUserMock} from './__mocks__/users.mock';
 
 /**
  * Get all active examiners, for the specified time window.
@@ -12,12 +13,7 @@ import { ExaminerRecord } from '../../../domain/examiner-record';
  */
 export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date): Promise<ExaminerRecord[]> => {
   if (process.env.IS_DEV) {
-    return [
-      {individual_id: 1, staff_number: '2'},
-      {individual_id: 3, staff_number: '4'},
-      {individual_id: 5, staff_number: '6'},
-      {individual_id: 7, staff_number: '8'},
-    ];
+    return TARSUserMock;
   }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);

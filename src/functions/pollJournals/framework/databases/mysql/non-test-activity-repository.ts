@@ -4,6 +4,7 @@ import { mapRow, NonTestActivityRow } from './row-mappers/non-test-activity-row-
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerNonTestActivity } from '../../../domain/examiner-non-test-activity';
+import {TARSNonTestActivitesMock} from './__mocks__/non-test-activites.mock';
 
 /**
  * Get all Non-test activities, within the specified time window.
@@ -16,76 +17,7 @@ export const getNonTestActivities = async (connectionPool: mysql.Pool, startDate
 : Promise<ExaminerNonTestActivity[]> => {
 
   if(process.env.IS_DEV) {
-    return [
-      {
-        examinerId: 1,
-        nonTestActivity: {
-          slotDetail: {
-            slotId: 100,
-            start: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-            duration: 57,
-          },
-          activityCode: '100',
-          activityDescription: 'Non Test Activity 100',
-          testCentre: {
-            centreId: 1,
-            centreName: 'Test Centre 1',
-            costCode: 'TC1',
-          },
-        },
-      },
-      {
-        examinerId: 3,
-        nonTestActivity: {
-          slotDetail: {
-            slotId: 101,
-            start: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-            duration: 57,
-          },
-          activityCode: '101',
-          activityDescription: 'Non Test Activity 101',
-          testCentre: {
-            centreId: 2,
-            centreName: 'Test Centre 2',
-            costCode: 'TC2',
-          },
-        },
-      },
-      {
-        examinerId: 1,
-        nonTestActivity: {
-          slotDetail: {
-            slotId: 102,
-            start: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-            duration: 57,
-          },
-          activityCode: '102',
-          activityDescription: 'Non Test Activity 102',
-          testCentre: {
-            centreId: 3,
-            centreName: 'Test Centre 3',
-            costCode: 'TC3',
-          },
-        },
-      },
-      {
-        examinerId: 1,
-        nonTestActivity: {
-          slotDetail: {
-            slotId: 100,
-            start: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
-            duration: 57,
-          },
-          activityCode: '100',
-          activityDescription: 'Non Test Activity 100',
-          testCentre: {
-            centreId: 1,
-            centreName: 'Test Centre 1',
-            costCode: 'TC1',
-          },
-        },
-      },
-    ];
+    return TARSNonTestActivitesMock;
   }
 
   const sqlYearFormat = 'YYYY-MM-DD';

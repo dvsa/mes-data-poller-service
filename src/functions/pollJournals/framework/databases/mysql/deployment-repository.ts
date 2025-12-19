@@ -4,6 +4,7 @@ import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
+import {TARSDeploymentsMock} from './__mocks__/deployments.mock';
 
 /**
  * Get all deployments, for the specified time window.
@@ -16,56 +17,7 @@ export const getDeployments = async (connectionPool: mysql.Pool, startDate: Date
 Promise<ExaminerDeployment[]> => {
 
   if (process.env.IS_DEV) {
-    return [
-      {
-        examinerId: 1,
-        deployment: {
-          deploymentId: 1,
-          testCentre: {
-            centreId: 1,
-            centreName: 'Test Centre 1',
-            costCode: 'TC1',
-          },
-          date: moment(Date.now()).format('YYYY-MM-DD'),
-        },
-      },
-      {
-        examinerId: 3,
-        deployment: {
-          deploymentId: 2,
-          testCentre: {
-            centreId: 2,
-            centreName: 'Test Centre 2',
-            costCode: 'TC2',
-          },
-          date: moment(Date.now()).format('YYYY-MM-DD'),
-        },
-      },
-      {
-        examinerId: 5,
-        deployment: {
-          deploymentId: 3,
-          testCentre: {
-            centreId: 3,
-            centreName: 'Test Centre 3',
-            costCode: 'TC3',
-          },
-          date: moment(Date.now()).format('YYYY-MM-DD'),
-        },
-      },
-      {
-        examinerId: 7,
-        deployment: {
-          deploymentId: 4,
-          testCentre: {
-            centreId: 4,
-            centreName: 'Test Centre 4',
-            costCode: 'TC4',
-          },
-          date: moment(Date.now()).format('YYYY-MM-DD'),
-        },
-      },
-    ];
+    return TARSDeploymentsMock;
   }
 
   const windowStart = moment(startDate);

@@ -13,13 +13,13 @@ import { getPersonalCommitments } from '../databases/mysql/personal-commitment-r
 import { getNonTestActivities } from '../databases/mysql/non-test-activity-repository';
 import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repository';
 import { getDeployments } from '../databases/mysql/deployment-repository';
-import {getDESTestSlots, getTestSlots} from '../databases/mysql/test-slot-repository';
+import {getTestSlots} from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
+import {getDESTestSlots} from '../databases/mysql/test-slot-respository-des-schedule';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getTARSConnectionPool();
   const journalQueryPhaseStart = new Date();
-  console.log('----------------- JOURNAL POLL START -----------------');
   info('STARTING QUERY PHASE:', journalQueryPhaseStart);
 
   const [
@@ -47,7 +47,9 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
-    getDESTestSlots(getDESConnectionPool(), examiners, journalStartDate, journalEndDate),
+    process.env.GET_DES_SCHEDULE_BOOKINGS ?
+      getDESTestSlots(getDESConnectionPool(), examiners, journalStartDate, journalEndDate)
+      : [],
   ]);
 
   const examinerIdGroupCount = Math.ceil(examiners.length / 5);
@@ -83,8 +85,10 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   info(`FINISHED QUERY PHASE, STARTING TRANSFORM PHASE: ${new Date()}`);
   const journals: JournalRecord[] = buildJournals(examiners, datasets);
+  info(`FINISHED TRANSFORM PHASE, STARTING FILTER PHASE: ${new Date()}`);
 
   const changedJournals = await filterChangedJournals(journals, startTime);
+  info(`FINISHED FILTER PHASE, STARTING SAVE PHASE FOR ${changedJournals.length} JOURNALS: ${new Date()}`);
   customMetric('JournalsChanged', 'Number of Journals found to have changed', changedJournals.length);
 
   const journalWritePhaseStart = new Date();
