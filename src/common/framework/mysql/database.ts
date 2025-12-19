@@ -63,7 +63,7 @@ export const poolQuery = async (
   return queryResult;
 };
 
-export const getDESConnectionPool = (): mysql.Pool => {
+export const getDESScheduleConnectionPool = (): mysql.Pool => {
   const configuration = config();
   return mysql.createPool({
     host: configuration.desDatabaseHostname,

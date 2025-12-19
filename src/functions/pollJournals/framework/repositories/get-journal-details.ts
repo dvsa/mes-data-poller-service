@@ -6,7 +6,7 @@ import { JournalRecord } from '../../domain/journal-record';
 import { buildJournals } from '../../application/journal-builder';
 import { filterChangedJournals } from '../../application/journal-change-filter';
 import { saveJournals } from '../databases/dynamodb/journal-repository';
-import {getDESConnectionPool, getTARSConnectionPool} from '../../../../common/framework/mysql/database';
+import {getDESScheduleConnectionPool, getTARSConnectionPool} from '../../../../common/framework/mysql/database';
 import { getExaminers } from '../databases/mysql/examiner-repository';
 import { getJournalEndDate, getNextWorkingDay } from '../databases/mysql/journal-end-date-repository';
 import { getPersonalCommitments } from '../databases/mysql/personal-commitment-repository';
@@ -15,7 +15,7 @@ import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repos
 import { getDeployments } from '../databases/mysql/deployment-repository';
 import {getTestSlots} from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
-import {getDESTestSlots} from '../databases/mysql/test-slot-respository-des-schedule';
+import {getDSPTestSlots} from '../databases/mysql/test-slot-respository-des-schedule';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getTARSConnectionPool();
@@ -41,14 +41,14 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     nonTestActivities,
     advanceTestSlots,
     deployments,
-    testSlotsDES,
+    testSlotsDSP,
   ] = await Promise.all([
     getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
-    process.env.GET_DES_SCHEDULE_BOOKINGS ?
-      getDESTestSlots(getDESConnectionPool(), examiners, journalStartDate, journalEndDate)
+    process.env.GET_DSP_SCHEDULE_BOOKINGS ?
+      getDSPTestSlots(getDESScheduleConnectionPool(), examiners, journalStartDate, journalEndDate)
       : [],
   ]);
 
@@ -75,7 +75,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
   );
 
   const datasets: AllDatasets = {
-    testSlots: [...testSlotsTARS, ...testSlotsDES],
+    testSlots: [...testSlotsTARS, ...testSlotsDSP],
     personalCommitments,
     nonTestActivities,
     advanceTestSlots,

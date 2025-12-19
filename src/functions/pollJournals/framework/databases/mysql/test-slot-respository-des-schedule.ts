@@ -124,7 +124,7 @@ export const ScheduleBookings = mysqlTable(
  * @returns The detailed test slots
  */
 
-export const getDESTestSlots = async (
+export const getDSPTestSlots = async (
   connectionPool: mysql.Pool,
   examinerRecords: ExaminerRecord[],
   journalStartDate: Date,
