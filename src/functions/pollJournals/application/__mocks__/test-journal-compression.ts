@@ -1,4 +1,4 @@
-import { VehicleGearbox, Initiator } from '@dvsa/mes-journal-schema';
+import {VehicleGearbox, Initiator, ExaminerWorkSchedule} from '@dvsa/mes-journal-schema';
 
 export default {
   journal: {
@@ -49,8 +49,8 @@ export default {
           centreName: 'Example Test Centre',
           costCode: 'EXTC1',
         },
-        vehicleSlotType: 'B57mins',
+        vehicleTypeCode: 'A2',
       },
     ],
-  },
+  } as ExaminerWorkSchedule,
 };

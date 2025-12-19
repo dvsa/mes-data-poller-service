@@ -47,7 +47,7 @@ export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
     app_id: 41234569,
     slot_id: 3,
     start_time: null,
-    vehicle_type_code: 'D',
+    vehicle_type_code: 'A3',
     vehicle_slot_type_code: 4,
     booking_id: 24306181,
     driver_number: 'BART9146246AJ9AG',

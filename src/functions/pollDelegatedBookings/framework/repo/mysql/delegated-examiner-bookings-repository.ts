@@ -1,12 +1,13 @@
 import { getTARSConnection, query } from '../../../../../common/framework/mysql/database';
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
+import {VehicleTypeCode} from '@dvsa/mes-journal-schema';
 
 export interface DelegatedTestSlotRow {
   app_id: number;
   slot_id: number;
   start_time: Date;
-  vehicle_type_code: string | null; // nullable
+  vehicle_type_code: VehicleTypeCode | null; // nullable
   vehicle_slot_type_code: number | null; // nullable
   candidate_gender_code: string | null; // nullable
   booking_id: number | null;
