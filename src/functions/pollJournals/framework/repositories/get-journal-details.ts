@@ -47,7 +47,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
-    process.env.GET_DSP_SCHEDULE_BOOKINGS ?
+    process.env.GET_DSP_BOOKINGS ?
       getDSPTestSlots(getDESScheduleConnectionPool(), examiners, journalStartDate, journalEndDate)
       : [],
   ]);
