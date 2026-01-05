@@ -15,8 +15,9 @@ import {
   mysqlEnum,
 
 } from 'drizzle-orm/mysql-core';
-import {and, gt, gte, inArray, lt, lte} from 'drizzle-orm';
+import {and, gte, inArray, lte} from 'drizzle-orm';
 import {ExaminerRecord} from '../../../domain/examiner-record';
+import {eq} from 'drizzle-orm/sql/expressions/conditions';
 
 export const ScheduleBookings = mysqlTable(
   'bookings',
@@ -24,6 +25,10 @@ export const ScheduleBookings = mysqlTable(
     created_date: datetime('created_date').notNull(),
     last_updated_date: datetime('last_updated_date').notNull(),
     booking_reference: varchar('booking_reference', {length: 50}).notNull().primaryKey(),
+
+    marked_for_deletion: tinyint('marked_for_deletion'),
+    dsp_created_date: datetime('dsp_created_date').notNull(),
+    dsp_last_updated_date: datetime('dsp_last_updated_date').notNull(),
 
     examiner_staff_number: varchar('examiner_staff_number', {length: 50}).notNull(),
     examiner_title: varchar('examiner_title', {length: 50}).notNull(),
@@ -185,6 +190,7 @@ export const getDSPTestSlots = async (
     .from(ScheduleBookings)
     .where(
       and(
+        eq(ScheduleBookings.marked_for_deletion, 0),
         inArray(ScheduleBookings.examiner_staff_number, examinerRecords.map((id) => id.staff_number.toString())),
         gte(ScheduleBookings.testslot_start, windowStart),
         lte(ScheduleBookings.testslot_start, windowEnd),
