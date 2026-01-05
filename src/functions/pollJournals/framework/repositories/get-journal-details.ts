@@ -6,7 +6,7 @@ import { JournalRecord } from '../../domain/journal-record';
 import { buildJournals } from '../../application/journal-builder';
 import { filterChangedJournals } from '../../application/journal-change-filter';
 import { saveJournals } from '../databases/dynamodb/journal-repository';
-import {getDESScheduleConnectionPool, getTARSConnectionPool} from '../../../../common/framework/mysql/database';
+import { getConnectionPool } from '../../../../common/framework/mysql/database';
 import { getExaminers } from '../databases/mysql/examiner-repository';
 import { getJournalEndDate, getNextWorkingDay } from '../databases/mysql/journal-end-date-repository';
 import { getPersonalCommitments } from '../databases/mysql/personal-commitment-repository';
@@ -15,10 +15,10 @@ import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repos
 import { getDeployments } from '../databases/mysql/deployment-repository';
 import {getTestSlots} from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
-import {getDSPTestSlots} from '../databases/mysql/test-slot-respository-des-schedule';
+import { getDSPTestSlots } from '../databases/mysql/test-slot-respository-des-schedule';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
-  const connectionPool = getTARSConnectionPool();
+  const connectionPool = getConnectionPool('TARS');
   const journalQueryPhaseStart = new Date();
   info('STARTING QUERY PHASE:', journalQueryPhaseStart);
 
@@ -48,7 +48,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
     process.env.GET_DSP_BOOKINGS ?
-      getDSPTestSlots(getDESScheduleConnectionPool(), examiners, journalStartDate, journalEndDate)
+      getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
       : [],
   ]);
 
