@@ -1,7 +1,7 @@
 import { getTARSConnection, query } from '../../../../../common/framework/mysql/database';
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
-import {VehicleTypeCode} from '@dvsa/mes-journal-schema';
+import { VehicleTypeCode } from '@dvsa/mes-journal-schema';
 
 export interface DelegatedTestSlotRow {
   app_id: number;

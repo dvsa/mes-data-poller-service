@@ -1,4 +1,4 @@
-import {ExaminerRecord} from '../../../../domain/examiner-record';
+import { ExaminerRecord } from '../../../../domain/examiner-record';
 
 export const TARSUserMock: ExaminerRecord[] = [
   {individual_id: 1, staff_number: '2'},

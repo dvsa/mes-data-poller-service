@@ -15,7 +15,7 @@ import {
 } from '../../../../pollJournals/application/formatters/date-formatter';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 import { compressDelegatedBooking } from '../../../application/booking-compressor';
-import {ApplicationReference} from '@dvsa/mes-test-schema/categories/common';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 
 export const buildDelegatedBookingsFromQueryResult = (
   queryResult: DelegatedTestSlotRow[],
