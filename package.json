@@ -27,7 +27,7 @@
     "stack:up": "ts-node start-stack.ts",
     "stack:down": "ts-node stop-stack.ts",
     "start": "sls dynamodb install && sls offline start",
-    "test": "npm run compile && jasmine",
+    "test": "npm run clone-journal-json && npm run compile && jasmine",
     "test:jasmine-coverage": "c8 npm run test",
     "prepare": "husky install",
     "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",

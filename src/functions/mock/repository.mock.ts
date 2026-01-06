@@ -1,11 +1,12 @@
 import { ExaminerTestSlot } from '../pollJournals/domain/examiner-test-slot';
 import * as fs from 'fs';
 import * as path from 'path';
-import {NonTestActivity, PersonalCommitment, TestSlot} from '@dvsa/mes-journal-schema';
+import { AdvanceTestSlot, Deployment, NonTestActivity, PersonalCommitment, TestSlot } from '@dvsa/mes-journal-schema';
 import {ExaminerRecord} from '../pollJournals/domain/examiner-record';
 import {ExaminerPersonalCommitment} from '../pollJournals/domain/examiner-personal-commitment';
 import {ExaminerNonTestActivity} from '../pollJournals/domain/examiner-non-test-activity';
 import {ExaminerDeployment} from '../pollJournals/domain/examiner-deployment';
+import { ExaminerAdvanceTestSlot } from '../pollJournals/domain/examiner-advance-test-slot';
 
 const journalsDir = './test-data/journals';
 const files = fs.readdirSync(journalsDir);
@@ -89,7 +90,7 @@ export async function getDeploymentsMock(): Promise<ExaminerDeployment[]>  {
       const filePath = path.join(journalsDir, file);
       const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
       const examinerId = data?.journal?.examiner?.individualId;
-      const deployments: any[] | undefined = data?.journal?.deployments;
+      const deployments: Deployment[] | undefined = data?.journal?.deployments;
       if (Array.isArray(deployments)) {
         deployments.forEach(deployment => {
           examinerDeployments.push({ examinerId, deployment });
@@ -98,6 +99,26 @@ export async function getDeploymentsMock(): Promise<ExaminerDeployment[]>  {
     }
   });
   return examinerDeployments;
+
+}
+
+export async function getAdvanceTestSlotsMock(): Promise<ExaminerAdvanceTestSlot[]>  {
+  const examinerAdvanceTestSlots: ExaminerAdvanceTestSlot[] = [];
+
+  files.forEach(file => {
+    if (file.endsWith('.json')) {
+      const filePath = path.join(journalsDir, file);
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      const examinerId = data?.journal?.examiner?.individualId;
+      const advanceTestSlots: AdvanceTestSlot[] | undefined = data?.journal?.advanceTestSlots;
+      if (Array.isArray(advanceTestSlots)) {
+        advanceTestSlots.forEach(advanceTestSlot => {
+          examinerAdvanceTestSlots.push({ examinerId, advanceTestSlot });
+        });
+      }
+    }
+  });
+  return examinerAdvanceTestSlots;
 
 }
 
