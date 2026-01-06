@@ -11,7 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone DES Test Data Repo
-        run: git clone https://x-access-token:${GITHUB_TOKEN}@github.com/dvsa/des-test-data-journal.git journal-test-data && mkdir -p test-data && rm -rf test-data/journals && mv journal-test-data/journals test-data/ && rm -rf journal-test-data
+        uses: actions/checkout@v4
+        with:
+          repository: dvsa/des-test-data-journal
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: journal-test-data
+      - name: Move Test Data Files
+        run: mkdir -p test-data && rm -rf test-data/journals && mv journal-test-data/journals test-data/ && rm -rf journal-test-data
   runs-ci:
     needs: clones-test-data
     uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@main
