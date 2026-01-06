@@ -13,7 +13,7 @@ import { getPersonalCommitments } from '../databases/mysql/personal-commitment-r
 import { getNonTestActivities } from '../databases/mysql/non-test-activity-repository';
 import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repository';
 import { getDeployments } from '../databases/mysql/deployment-repository';
-import {getTestSlots} from '../databases/mysql/test-slot-repository';
+import { getTestSlots } from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
 import { getDSPTestSlots } from '../databases/mysql/test-slot-respository-des-schedule';
 

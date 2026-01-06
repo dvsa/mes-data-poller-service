@@ -1,8 +1,8 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
-import {info, customDurationMetric} from '@dvsa/mes-microservice-common/application/utils/logger';
-import {ExaminerTestSlot} from '../../../domain/examiner-test-slot';
-import {drizzle, MySql2Database} from 'drizzle-orm/mysql2/driver';
+import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
+import { drizzle, MySql2Database } from 'drizzle-orm/mysql2/driver';
 import {
   mysqlTable,
   varchar,
@@ -15,9 +15,9 @@ import {
   mysqlEnum,
 
 } from 'drizzle-orm/mysql-core';
-import {and, gte, inArray, lte} from 'drizzle-orm';
-import {ExaminerRecord} from '../../../domain/examiner-record';
-import {eq} from 'drizzle-orm/sql/expressions/conditions';
+import { and, gte, inArray, lte } from 'drizzle-orm';
+import { ExaminerRecord } from '../../../domain/examiner-record';
+import { eq } from 'drizzle-orm/sql/expressions/conditions';
 
 export const ScheduleBookings = mysqlTable(
   'bookings',

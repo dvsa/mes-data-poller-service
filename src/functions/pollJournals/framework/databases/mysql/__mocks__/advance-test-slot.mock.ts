@@ -1,5 +1,5 @@
 import * as moment from 'moment/moment';
-import {ExaminerAdvanceTestSlot} from '../../../../domain/examiner-advance-test-slot';
+import { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 
 export const TARSAdvanceTestSlotMock: ExaminerAdvanceTestSlot[] = [
   {

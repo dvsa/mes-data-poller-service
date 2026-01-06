@@ -1,4 +1,4 @@
-import {ExaminerTestSlot} from '../../../../domain/examiner-test-slot';
+import { ExaminerTestSlot } from '../../../../domain/examiner-test-slot';
 import * as moment from 'moment/moment';
 
 export const TARSTestSlotMock = (testSlotRun: number): ExaminerTestSlot[] => [

@@ -4,7 +4,7 @@ import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
-import {TARSDeploymentsMock} from './__mocks__/deployments.mock';
+import { TARSDeploymentsMock } from './__mocks__/deployments.mock';
 
 /**
  * Get all deployments, for the specified time window.
@@ -16,7 +16,7 @@ import {TARSDeploymentsMock} from './__mocks__/deployments.mock';
 export const getDeployments = async (connectionPool: mysql.Pool, startDate: Date, durationMonths: number):
 Promise<ExaminerDeployment[]> => {
 
-  if (process.env.IS_DEV) {
+  if (process.env.USE_MOCK_TARS_DATA) {
     return TARSDeploymentsMock;
   }
 

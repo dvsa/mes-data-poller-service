@@ -1,5 +1,5 @@
 import * as moment from 'moment/moment';
-import {ExaminerNonTestActivity} from '../../../../domain/examiner-non-test-activity';
+import { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 
 export const TARSNonTestActivitesMock: ExaminerNonTestActivity[] = [
   {

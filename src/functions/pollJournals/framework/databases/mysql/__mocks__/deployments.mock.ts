@@ -1,4 +1,4 @@
-import {ExaminerDeployment} from '../../../../domain/examiner-deployment';
+import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 import * as moment from 'moment/moment';
 
 export const TARSDeploymentsMock: ExaminerDeployment[] = [

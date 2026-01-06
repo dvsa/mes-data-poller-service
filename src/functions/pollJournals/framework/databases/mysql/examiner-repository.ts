@@ -12,7 +12,7 @@ import { TARSUserMock } from './__mocks__/users.mock';
  * @returns The examiners
  */
 export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date): Promise<ExaminerRecord[]> => {
-  if (process.env.IS_DEV) {
+  if (process.env.USE_MOCK_TARS_DATA) {
     return TARSUserMock;
   }
   const sqlYearFormat = 'YYYY-MM-DD';

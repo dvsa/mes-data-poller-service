@@ -1,4 +1,4 @@
-import {mapRow, GenderCode, TestSlotRow} from '../test-slot-row-mapper';
+import { mapRow, GenderCode, TestSlotRow } from '../test-slot-row-mapper';
 
 describe('TestSlot Row Mapper', () => {
 

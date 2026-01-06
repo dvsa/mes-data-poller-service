@@ -17,7 +17,7 @@ import { TARSAdvanceTestSlotMock } from './__mocks__/advance-test-slot.mock';
 export const getAdvanceTestSlots = async (
   connectionPool: mysql.Pool, startDate: Date, nextWorkingDay: Date,
   daysRange: number): Promise<ExaminerAdvanceTestSlot[]> => {
-  if (process.env.IS_DEV) {
+  if (process.env.USE_MOCK_TARS_DATA) {
     return TARSAdvanceTestSlotMock;
   }
 

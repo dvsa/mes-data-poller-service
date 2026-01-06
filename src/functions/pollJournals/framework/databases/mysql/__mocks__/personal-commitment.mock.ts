@@ -1,4 +1,4 @@
-import {ExaminerPersonalCommitment} from '../../../../domain/examiner-personal-commitment';
+import { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
 
 export const TARSPersonalCommitmentMock: ExaminerPersonalCommitment[] = [
   {
