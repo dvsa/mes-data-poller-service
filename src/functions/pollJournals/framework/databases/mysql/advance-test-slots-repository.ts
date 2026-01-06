@@ -1,10 +1,10 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
-import {AdvanceTestSlotRow, mapRow} from './row-mappers/advance-test-slot-row-mapper';
-import {poolQuery} from '../../../../../common/framework/mysql/database';
-import {info, customDurationMetric} from '@dvsa/mes-microservice-common/application/utils/logger';
-import {ExaminerAdvanceTestSlot} from '../../../domain/examiner-advance-test-slot';
-import {TARSAdvanceTestSlotMock} from './__mocks__/advance-test-slot.mock';
+import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-mapper';
+import { poolQuery } from '../../../../../common/framework/mysql/database';
+import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
+import { TARSAdvanceTestSlotMock } from './__mocks__/advance-test-slot.mock';
 
 /**
  * Get all test slots in the advanced time window.
