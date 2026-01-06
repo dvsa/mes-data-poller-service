@@ -1,6 +1,6 @@
 import { UniversalPermissionRecordSql } from '../databases/mysql/universal-permissions';
 import { TestPermissionPeriod } from '../../../../common/application/models/staff-details';
-import { getConnection, query } from '../../../../common/framework/mysql/database';
+import { getTARSConnection, query } from '../../../../common/framework/mysql/database';
 
 
 interface UniversalPermissionRecord {
@@ -14,7 +14,7 @@ interface UniversalPermissionRecord {
  */
 export const getUniversalTestPermissions = async () => {
 
-  const connection = getConnection();
+  const connection = getTARSConnection();
   const queryResult = await query(connection, UniversalPermissionRecordSql());
   return queryResult.map(record => mapUniversalPermissionRecord(record));
 };

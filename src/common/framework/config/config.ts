@@ -26,8 +26,31 @@ export const bootstrapConfig = async (type: DdbTableTypes) => {
       process.env.TARS_REPLICA_ENDPOINT,
       process.env.TARS_REPLICA_DB_USERNAME,
       'SECRET_DB_PASSWORD_KEY',
+      'tarsReplicateDatabaseHostname',
+      'tarsReplicaDatabaseUsername'
     ),
     timeTravelDate: process.env.TIME_TRAVEL_DATE,
+    desDatabaseHostname: throwIfNotPresent(
+      process.env.DES_DATABASE_HOSTNAME,
+      'desDatabaseHostname',
+    ),
+    desDatabaseName: throwIfNotPresent(
+      process.env.DES_DATABASE_NAME,
+      'desDatabaseName',
+    ),
+    desDatabaseUsername: throwIfNotPresent(
+      process.env.DES_DATABASE_USERNAME,
+      'desDatabaseUsername',
+    ),
+    desDatabasePassword: (process.env.IS_OFFLINE === 'true')
+      ? process.env.DES_DATABASE_PASSWORD
+      : await tryFetchRdsAccessToken(
+        process.env.DES_DATABASE_ENDPOINT || '',
+        process.env.DES_DATABASE_USERNAME || '',
+        'SECRET_DB_PASSWORD_KEY',
+        'mesDatabaseHostname',
+        'mesDatabaseUsername'
+      ),
   };
 };
 
@@ -40,6 +63,10 @@ export const bootstrapReapJournalsConfig = async (type: DdbTableTypes) => {
     tarsReplicaDatabaseUsername: undefined, // Not required for reapJournals
     tarsReplicaDatabasePassword: undefined, // Not required for reapJournals
     timeTravelDate: undefined, // Not required for reapJournals
+    desDatabaseHostname: undefined, // Not required for reapJournals
+    desDatabaseName: undefined, // Not required for reapJournals
+    desDatabaseUsername: undefined, // Not required for reapJournals
+    desDatabasePassword: undefined, // Not required for reapJournals
   };
 };
 
@@ -51,6 +78,10 @@ export type Config = {
   tarsReplicaDatabaseUsername: string;
   tarsReplicaDatabasePassword: string;
   timeTravelDate: string;
+  desDatabaseHostname: string;
+  desDatabaseName: string;
+  desDatabaseUsername: string;
+  desDatabasePassword: string;
 };
 
 export const config = (): Config => configuration;

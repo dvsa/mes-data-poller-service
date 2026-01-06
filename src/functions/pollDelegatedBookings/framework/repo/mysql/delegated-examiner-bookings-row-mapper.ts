@@ -15,6 +15,7 @@ import {
 } from '../../../../pollJournals/application/formatters/date-formatter';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 import { compressDelegatedBooking } from '../../../application/booking-compressor';
+import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
 
 export const buildDelegatedBookingsFromQueryResult = (
   queryResult: DelegatedTestSlotRow[],
@@ -65,7 +66,7 @@ const mapDelegatedExaminerBooking = (row: DelegatedTestSlotRow): DelegatedExamin
 };
 
 const mapDelegatedExaminerAppRefs = (row: DelegatedTestSlotRow): number => {
-  const app: Application = { applicationId: 0, bookingSequence: 0, checkDigit: 0 };
+  const app: ApplicationReference = { applicationId: 0, bookingSequence: 0, checkDigit: 0 };
   setNumberIfTruthy(app, 'applicationId', row.app_id);
   setNumberIfTruthy(app, 'bookingSequence', row.booking_seq);
   setNumberIfNotNull(app, 'checkDigit', row.check_digit);

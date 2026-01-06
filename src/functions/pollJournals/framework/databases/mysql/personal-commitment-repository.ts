@@ -4,6 +4,7 @@ import { mapRow, PersonalCommitmentRow } from './row-mappers/personal-commitment
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
+import { TARSPersonalCommitmentMock } from './__mocks__/personal-commitment.mock';
 
 /**
  * Get all personal commitments, for the specified time window.
@@ -14,6 +15,9 @@ import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-co
  */
 export const getPersonalCommitments = async (connectionPool: mysql.Pool, startDate: Date, durationDays: number):
 Promise<ExaminerPersonalCommitment[]> => {
+  if (process.env.USE_MOCK_TARS_DATA) {
+    return TARSPersonalCommitmentMock;
+  }
   const windowStart = moment(startDate);
   const windowEnd = windowStart.clone().add({days: durationDays}).subtract({seconds: 1});
   const sqlDateTimeFormat = 'YYYY-MM-DD HH:mm:ss';

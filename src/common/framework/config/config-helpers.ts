@@ -33,17 +33,19 @@ export const tryFetchRdsAccessToken = async (
   hostname: string,
   username: string,
   fallbackEnvvar: string,
+  hostNameValue: string,
+  userNameValue: string,
 ): Promise<string> => {
   if (!iamRdsConfigValid(hostname, username)) {
     const envvar = process.env[fallbackEnvvar];
     if (!envvar) {
-      throw new Error(`No value for fallback envvar ${fallbackEnvvar} for config`);
+      throw new Error(`No value for fallback envvar ${fallbackEnvvar} for config (${hostNameValue})`);
     }
     return envvar;
   }
 
-  throwIfNotPresent(hostname, 'tarsReplicateDatabaseHostname');
-  throwIfNotPresent(username, 'tarsReplicaDatabaseUsername');
+  throwIfNotPresent(hostname, hostNameValue);
+  throwIfNotPresent(username, userNameValue);
 
   try {
     const signerOptions = generateSignerOptions(hostname, username);
@@ -53,6 +55,6 @@ export const tryFetchRdsAccessToken = async (
     return await signer.getAuthToken();
   } catch (err) {
     const msg = err instanceof Error ? err.message : JSON.stringify(err);
-    throw new Error(`Generating an auth token failed. Error message: ${msg}`);
+    throw new Error(`Generating an auth token for ${hostNameValue} failed. Error message: ${msg}`);
   }
 };

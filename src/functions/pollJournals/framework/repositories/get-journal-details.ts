@@ -15,9 +15,10 @@ import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repos
 import { getDeployments } from '../databases/mysql/deployment-repository';
 import { getTestSlots } from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
+import { getDSPTestSlots } from '../databases/mysql/test-slot-respository-des-schedule';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
-  const connectionPool = getConnectionPool();
+  const connectionPool = getConnectionPool('TARS');
   const journalQueryPhaseStart = new Date();
   info('STARTING QUERY PHASE:', journalQueryPhaseStart);
 
@@ -40,11 +41,15 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     nonTestActivities,
     advanceTestSlots,
     deployments,
+    testSlotsDSP,
   ] = await Promise.all([
     getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
     getDeployments(connectionPool, startDate, 6), // 6 months range
+    process.env.GET_DSP_BOOKINGS ?
+      getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
+      : [],
   ]);
 
   const examinerIdGroupCount = Math.ceil(examiners.length / 5);
@@ -52,7 +57,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
 
-  const testSlots = (
+  const testSlotsTARS = (
     await Promise.all(
       examinerChunks.map(
         (examinerChunk, index) =>
@@ -70,7 +75,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
   );
 
   const datasets: AllDatasets = {
-    testSlots,
+    testSlots: [...testSlotsTARS, ...testSlotsDSP],
     personalCommitments,
     nonTestActivities,
     advanceTestSlots,

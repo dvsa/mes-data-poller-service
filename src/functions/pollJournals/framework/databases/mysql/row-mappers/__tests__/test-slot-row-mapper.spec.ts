@@ -1,12 +1,12 @@
-import { mapRow, GenderCode } from '../test-slot-row-mapper';
+import { mapRow, GenderCode, TestSlotRow } from '../test-slot-row-mapper';
 
 describe('TestSlot Row Mapper', () => {
 
-  const sampleRow = {
+  const sampleRow: TestSlotRow = {
     slot_id: 1,
     start_time: new Date('2019-02-12 08:20:00'),
     minutes: 57,
-    vehicle_type_code: '6',
+    vehicle_type_code: 'A3',
     vehicle_slot_type_code: 1,
     tc_id: 3,
     tc_cost_centre_code: 'costcentre',
@@ -30,7 +30,7 @@ describe('TestSlot Row Mapper', () => {
     height_metres: 11,
     length_metres: 12,
     width_metres: 13,
-    vehicle_category: 'vehcat',
+    vehicle_category: 'B',
     gearbox_type: 1,
     candidate_id: 14,
     candidate_title: 'Mr',
@@ -96,7 +96,7 @@ describe('TestSlot Row Mapper', () => {
               vehicleHeight: 11,
               vehicleWidth: 13,
               vehicleLength: 12,
-              testCategory: 'vehcat',
+              testCategory: 'B',
               vehicleGearbox: 'Manual',
               categoryEntitlementCheck: false,
               fitMarker: true,
@@ -158,7 +158,7 @@ describe('TestSlot Row Mapper', () => {
             centreName: 'testcentre',
             costCode: 'costcentre',
           },
-          vehicleTypeCode: '6',
+          vehicleTypeCode: 'A3',
           vehicleSlotTypeCode: 1,
           examinerVisiting: false,
         },

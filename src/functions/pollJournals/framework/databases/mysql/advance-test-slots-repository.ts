@@ -1,9 +1,10 @@
 import * as mysql from 'mysql2';
 import * as moment from 'moment';
 import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-mapper';
-import { poolQuery, query } from '../../../../../common/framework/mysql/database';
+import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
+import { TARSAdvanceTestSlotMock } from './__mocks__/advance-test-slot.mock';
 
 /**
  * Get all test slots in the advanced time window.
@@ -13,8 +14,13 @@ import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-s
  * @param daysRange The range of days to include in the time window
  * @returns The advanced test slots
  */
-export const getAdvanceTestSlots = async (connectionPool: mysql.Pool, startDate: Date, nextWorkingDay: Date,
-                                          daysRange: number): Promise<ExaminerAdvanceTestSlot[]> => {
+export const getAdvanceTestSlots = async (
+  connectionPool: mysql.Pool, startDate: Date, nextWorkingDay: Date,
+  daysRange: number): Promise<ExaminerAdvanceTestSlot[]> => {
+  if (process.env.USE_MOCK_TARS_DATA) {
+    return TARSAdvanceTestSlotMock;
+  }
+
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(nextWorkingDay).add({days: 1}).format(sqlYearFormat);
   const windowEnd = moment(startDate).add({days: (daysRange - 1)}).format(sqlYearFormat);
@@ -41,7 +47,7 @@ export const getAdvanceTestSlots = async (connectionPool: mysql.Pool, startDate:
             and w.examiner_end_date > ?
       `,
       [windowStart, windowEnd, windowStart],
-    )
+    ),
   );
   const results = (res as AdvanceTestSlotRow[]).map(mapRow);
   const end = new Date();
