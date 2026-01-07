@@ -271,7 +271,7 @@ export const getDSPTestSlots = async (
             ethnicityCode: r.candidateEthnicityCode,
           },
           application: {
-            bookingId: r.bookingReference,
+            bookingReference: r.bookingReference,
             welshTest: Boolean(r.applicationWelshTest),
             extendedTest: Boolean(r.applicationExtendedTest),
             meetingPlace: r.applicationMeetingPlace,
