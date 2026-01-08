@@ -7,19 +7,7 @@ on:
       - 'release-**'
 
 jobs:
-  clones-test-data:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone DES Test Data Repo
-        uses: actions/checkout@v4
-        with:
-          repository: dvsa/des-test-data-journal
-          token: ${{ secrets.DES_TEST_DATA_TOKEN }}
-          path: journal-test-data
-      - name: Move Test Data Files
-        run: mkdir -p test-data && rm -rf test-data/journals && mv journal-test-data/journals test-data/ && rm -rf journal-test-data
   runs-ci:
-    needs: clones-test-data
     uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@main
     secrets:
       DES_ACCESS_TOKEN: ${{ secrets.DES_ACCESS_TOKEN }}

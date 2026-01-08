@@ -32,7 +32,6 @@
     "prepare": "husky install",
     "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
     "clone-journal-json": "git clone https://github.com/dvsa/des-test-data-journal.git journal-test-data && mkdir -p test-data && rm -rf test-data/journals && mv journal-test-data/journals test-data/ && rm -rf journal-test-data"
-
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.899.0",
@@ -40,6 +39,7 @@
     "@aws-sdk/rds-signer": "^3.899.0",
     "@dvsa/des-scheduling-config": "^1.0.7",
     "@dvsa/mes-microservice-common": "1.2.2",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.45.1",
     "escape-json-node": "^2.0.0",
     "lodash": "^4.17.23",

@@ -7,9 +7,36 @@ import {ExaminerPersonalCommitment} from '../pollJournals/domain/examiner-person
 import {ExaminerNonTestActivity} from '../pollJournals/domain/examiner-non-test-activity';
 import {ExaminerDeployment} from '../pollJournals/domain/examiner-deployment';
 import { ExaminerAdvanceTestSlot } from '../pollJournals/domain/examiner-advance-test-slot';
+import { addDays, subDays, format } from 'date-fns';
 
 const journalsDir = './test-data/journals';
 const files = fs.readdirSync(journalsDir);
+
+export function replaceTodayPlaceholders(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(replaceTodayPlaceholders);
+  } else if (obj && typeof obj === 'object') {
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)])
+    );
+  } else if (typeof obj === 'string') {
+    // Match <TODAY>, <TODAY+n>, <TODAY-n>
+    const match = obj.match(/^<TODAY(?:(\+|-)(\d+))?>T(\d{2}:\d{2}:\d{2})$/);
+    if (match) {
+      const [, sign, offsetStr, time] = match;
+      const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
+      let date = new Date();
+      if (sign === '+') date = addDays(date, offset);
+      else if (sign === '-') date = subDays(date, offset);
+      // Set time
+      const [hours, minutes, seconds] = time.split(':').map(Number);
+      date.setHours(hours, minutes, seconds, 0);
+      return format(date, 'yyyy-MM-dd\'T\'HH:mm:ss');
+    }
+    return obj;
+  }
+  return obj;
+}
 
 export async function getExaminersMock():Promise<ExaminerRecord[]> {
   const examinerRecords: ExaminerRecord[] = [];
@@ -24,7 +51,7 @@ export async function getExaminersMock():Promise<ExaminerRecord[]> {
       examinerRecords.push(examinerRecord);
     }
   });
-  return examinerRecords;
+  return replaceTodayPlaceholders(examinerRecords);
 }
 
 export async function getTestSlotsMock(): Promise<ExaminerTestSlot[]> {
@@ -42,7 +69,7 @@ export async function getTestSlotsMock(): Promise<ExaminerTestSlot[]> {
       }
     }
   });
-  return examinerTestSlots;
+  return replaceTodayPlaceholders(examinerTestSlots);
 }
 
 export async function getPersonalCommitmentsMock():Promise<ExaminerPersonalCommitment[]>{
@@ -60,7 +87,7 @@ export async function getPersonalCommitmentsMock():Promise<ExaminerPersonalCommi
       }
     }
   });
-  return examinerPersonalCommitments;
+  return replaceTodayPlaceholders(examinerPersonalCommitments);
 }
 
 export async function getNonTestActivitiesMock(): Promise<ExaminerNonTestActivity[]> {
@@ -79,7 +106,7 @@ export async function getNonTestActivitiesMock(): Promise<ExaminerNonTestActivit
       }
     }
   });
-  return examinerNonTestActivities;
+  return replaceTodayPlaceholders(examinerNonTestActivities);
 }
 
 export async function getDeploymentsMock(): Promise<ExaminerDeployment[]>  {
@@ -98,7 +125,7 @@ export async function getDeploymentsMock(): Promise<ExaminerDeployment[]>  {
       }
     }
   });
-  return examinerDeployments;
+  return replaceTodayPlaceholders(examinerDeployments);
 
 }
 
@@ -118,7 +145,7 @@ export async function getAdvanceTestSlotsMock(): Promise<ExaminerAdvanceTestSlot
       }
     }
   });
-  return examinerAdvanceTestSlots;
+  return replaceTodayPlaceholders(examinerAdvanceTestSlots);
 
 }
 
