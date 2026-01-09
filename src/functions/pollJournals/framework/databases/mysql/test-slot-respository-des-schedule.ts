@@ -129,6 +129,11 @@ const stripNulls = (value: any): any => {
     return value.length ? value : undefined;
   }
 
+  // If the trimmed value is an empty string, remove it
+  if (typeof value === 'string') {
+    return value.trim().length ? value : undefined;
+  }
+
   // If the value is an object, run this function recursively on its properties to remove all null values from it
   if (typeof value === 'object') {
     // Strip nulls from object properties
