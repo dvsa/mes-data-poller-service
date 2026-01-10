@@ -39,7 +39,7 @@
     "drizzle-orm": "^0.45.1",
     "escape-json-node": "^2.0.0",
     "lodash": "^4.17.21",
-    "luxon": "^3.4.4",
+    "luxon": "^3.7.2",
     "moment": "^2.29.4",
     "mysql2": "3.9.8",
     "node.extend": "^2.0.3"
