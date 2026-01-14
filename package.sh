@@ -20,6 +20,9 @@ for func_name in ${functions}; do
     zip_filename="${func_name}-${version_num}-${git_rev}.zip"
     zip_path="${artefact_dir}${zip_filename}"
     zip -Xj ${zip_path} ${bundle_path}
+    if [ "$func_name" = "pollJournals" ] && [ -d "src/functions/pollJournals/application/__mocks__/journals" ]; then
+      zip -r ${zip_path} src/functions/pollJournals/application/__mocks__/journals
+    fi
     echo "LAMBDA ARTIFACT: ${bundle_path} => ${zip_path}"
   fi
 done

@@ -22,7 +22,7 @@ import {
   getExaminersMock, getNextWorkingDayMock, getNonTestActivitiesMock,
   getPersonalCommitmentsMock,
   getTestSlotsMock,
-} from '../../../mock/repository.mock';
+} from '../../application/__mocks__/repository.mock';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getConnectionPool('TARS');

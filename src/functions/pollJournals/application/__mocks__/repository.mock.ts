@@ -1,15 +1,15 @@
-import { ExaminerTestSlot } from '../pollJournals/domain/examiner-test-slot';
+import { ExaminerTestSlot } from '../../domain/examiner-test-slot';
 import * as fs from 'fs';
 import * as path from 'path';
 import { AdvanceTestSlot, Deployment, NonTestActivity, PersonalCommitment, TestSlot } from '@dvsa/mes-journal-schema';
-import {ExaminerRecord} from '../pollJournals/domain/examiner-record';
-import {ExaminerPersonalCommitment} from '../pollJournals/domain/examiner-personal-commitment';
-import {ExaminerNonTestActivity} from '../pollJournals/domain/examiner-non-test-activity';
-import {ExaminerDeployment} from '../pollJournals/domain/examiner-deployment';
-import { ExaminerAdvanceTestSlot } from '../pollJournals/domain/examiner-advance-test-slot';
+import {ExaminerRecord} from '../../domain/examiner-record';
+import {ExaminerPersonalCommitment} from '../../domain/examiner-personal-commitment';
+import {ExaminerNonTestActivity} from '../../domain/examiner-non-test-activity';
+import {ExaminerDeployment} from '../../domain/examiner-deployment';
+import { ExaminerAdvanceTestSlot } from '../../domain/examiner-advance-test-slot';
 import { addDays, subDays, format } from 'date-fns';
 
-const journalsDir = './test-data/journals';
+const journalsDir = path.join(process.cwd(), 'src/functions/pollJournals/application/__mocks__/journals');
 const files = fs.readdirSync(journalsDir);
 
 export function replaceTodayPlaceholders(obj: any): any {

@@ -1,0 +1,1152 @@
+{
+  "staffNumber": "10000014",
+  "hash": "manoeuvres categories",
+  "lastUpdatedAt": 0,
+  "journal": {
+    "examiner": {
+      "staffNumber": "10000014",
+      "individualId": 10000014
+    },
+    "testSlots": [
+      {
+        "slotDetail": {
+          "slotId": "5551",
+          "start": "<TODAY>T07:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512301",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "CM",
+            "vehicleGearbox": "Automatic",
+            "vehicleHeight": 6,
+            "vehicleWidth": 14,
+            "vehicleLength": 5,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": true
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4441,
+            "candidateName": {
+              "firstName": "Gurney",
+              "lastName": "Halleck",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222201",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5552",
+          "start": "<TODAY>T07:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512302",
+            "bookingSequence": 1,
+            "checkDigit": 5,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "CM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "112 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4442,
+            "candidateName": {
+              "firstName": "Duncan",
+              "lastName": "Idaho",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222202",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5553",
+          "start": "<TODAY>T08:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512303",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C1M",
+            "vehicleGearbox": "Automatic",
+            "vehicleHeight": 4,
+            "vehicleWidth": 6,
+            "vehicleLength": 22,
+            "vehicleSeats": 35,
+            "categoryEntitlementCheck": true
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4443,
+            "candidateName": {
+              "firstName": "Piter",
+              "lastName": "DeVries",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222203",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5554",
+          "start": "<TODAY>T08:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512304",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C1M",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 4,
+            "vehicleWidth": 6,
+            "vehicleLength": 22,
+            "vehicleSeats": 35,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4444,
+            "candidateName": {
+              "firstName": "Gaius Helen",
+              "lastName": "Mohian",
+              "title": "Ms"
+            },
+            "driverNumber": "CATCM22222222204",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5555",
+          "start": "<TODAY>T09:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512305",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 6,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4445,
+            "candidateName": {
+              "firstName": "Feyd",
+              "lastName": "Rautha",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222205",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5556",
+          "start": "<TODAY>T09:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512306",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 6,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": true
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4446,
+            "candidateName": {
+              "firstName": "Vladimir",
+              "lastName": "Harkonnen",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222206",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5557",
+          "start": "<TODAY>T10:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512307",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C1+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 6,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4447,
+            "candidateName": {
+              "firstName": "Liet",
+              "lastName": "Kynes",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222207",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5558",
+          "start": "<TODAY>T10:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512308",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "entitlementCheck": false,
+            "testCategory": "C1+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 4,
+            "vehicleWidth": 6,
+            "vehicleLength": 22,
+            "vehicleSeats": 35,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4448,
+            "candidateName": {
+              "firstName": "Wellington",
+              "lastName": "Yueh",
+              "title": "Dr"
+            },
+            "driverNumber": "CATCM22222222208",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5559",
+          "start": "<TODAY>T11:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512309",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "DM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4449,
+            "candidateName": {
+              "firstName": "Glossu",
+              "lastName": "Rabban",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222209",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5560",
+          "start": "<TODAY>T11:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512310",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": true,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "DM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4450,
+            "candidateName": {
+              "firstName": "Leto",
+              "lastName": "Atreides",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222210",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5561",
+          "start": "<TODAY>T12:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512311",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "D1M",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4451,
+            "candidateName": {
+              "firstName": "Shadout",
+              "lastName": "Mapes",
+              "title": "Miss"
+            },
+            "driverNumber": "CATCM22222222211",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5562",
+          "start": "<TODAY>T12:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512312",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "entitlementCheck": false,
+            "testCategory": "D1M",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4452,
+            "candidateName": {
+              "firstName": "Esmar",
+              "lastName": "Tuek",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222212",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5563",
+          "start": "<TODAY>T13:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512313",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "D+EM",
+            "vehicleGearbox": "Automatic",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4453,
+            "candidateName": {
+              "firstName": "Helena",
+              "lastName": "Atreides",
+              "title": "Mrs"
+            },
+            "driverNumber": "CATCM22222222213",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5564",
+          "start": "<TODAY>T13:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512314",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "D+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4454,
+            "candidateName": {
+              "firstName": "Kronos",
+              "lastName": "Trin",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222214",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5565",
+          "start": "<TODAY>T14:00:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512315",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "D1+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4455,
+            "candidateName": {
+              "firstName": "Cenva",
+              "lastName": "Ticia",
+              "title": "Ms"
+            },
+            "driverNumber": "CATCM22222222215",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5566",
+          "start": "<TODAY>T14:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512316",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "D1+EM",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "111 Desert Boulevard",
+              "addressLine2": "Arrakeen",
+              "addressLine3": "Imperial Basin",
+              "addressLine4": "The Funeral Plain",
+              "addressLine5": "Arrakis",
+              "postcode": "AR01 0IS"
+            },
+            "candidateId": 4456,
+            "candidateName": {
+              "firstName": "Bludd",
+              "lastName": "Whitmore",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22222222216",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessId": "88812301",
+            "businessName": "Caladan Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Arrakin Road",
+              "postcode": "FR1 1MN"
+            }
+          }
+        }
+      },
+      {
+        "slotDetail": {
+          "slotId": "5554",
+          "start": "<TODAY>T19:30:00",
+          "duration": 30
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "examinerVisiting": false,
+        "vehicleTypeCode": "LM",
+        "vehicleSlotTypeCode": 1400,
+        "booking": {
+          "application": {
+            "applicationId": "55512504",
+            "bookingSequence": 1,
+            "checkDigit": 4,
+            "welshTest": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsExtendedTest": false,
+            "specialNeedsCode": "NONE",
+            "entitlementCheck": false,
+            "testCategory": "C1M",
+            "vehicleGearbox": "Manual",
+            "vehicleHeight": 4,
+            "vehicleWidth": 6,
+            "vehicleLength": 22,
+            "vehicleSeats": 35,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "1 Swansea",
+              "addressLine2": "Swansea Street",
+              "addressLine3": "Swansea Swansea",
+              "addressLine4": "Swansea.co.uk",
+              "addressLine5": "Swansea",
+              "postcode": "SA1 1SA"
+            },
+            "candidateId": 4444,
+            "candidateName": {
+              "firstName": "Bert",
+              "lastName": "Reynolds plus loads of extra text so its really long",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCM22224222204",
+            "mobileTelephone": "(951) 402-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessId": "88812361",
+            "businessName": "Swansea Enterprises",
+            "telephone": "07777777777",
+            "businessAddress": {
+              "addressLine1": "123 Swansea Road",
+              "postcode": "AS1 1SS"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

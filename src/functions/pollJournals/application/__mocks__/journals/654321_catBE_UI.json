@@ -1,0 +1,215 @@
+{
+	"hash": "Cat B+E 8 slots +",
+	"journal": {
+    "examiner": {
+        "staffNumber": "654321",
+        "individualId": 9900000
+    },
+    "nonTestActivities": [],
+    "testSlots": [
+    {
+      "booking": {
+        "application": {
+          "applicationId": 11674327,
+          "bookingSequence": 1,
+          "checkDigit": 1,
+          "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "B+E",
+          "vehicleGearbox": "Manual",
+          "welshTest": false,
+          "vehicleHeight": 3,
+          "vehicleWidth": 6.5,
+          "vehicleLength": 6.5,
+          "vehicleSeats": 4,
+          "categoryEntitlementCheck": false
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "59 Remsen Street",
+            "addressLine2": "Carlton Avenue",
+            "addressLine3": "Lefferts Place",
+            "addressLine4": "Trail",
+            "addressLine5": "Address Line 5",
+            "postcode": "BR82 0DE"
+          },
+          "candidateId": 2983,
+          "candidateName": {
+            "firstName": "Patrick",
+            "lastName": "Head",
+            "title": "Mr"
+          },
+          "driverNumber": "CATBX12345678902",
+          "mobileTelephone": "(850) 513-3042",
+          "primaryTelephone": "(926) 596-2983",
+          "secondaryTelephone": "(967) 578-2774",
+          "dateOfBirth": "1982-06-25",
+          "ethnicityCode": "D",
+          "gender": "M"
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": "20 B+E",
+            "addressLine2": "Douglass Street",
+            "addressLine3": "Togo",
+            "postcode": "SA73 0TT"
+          },
+          "businessId": 3554,
+          "businessName": "Machine",
+          "telephone": "(994) 400-2591"
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 2061,
+        "start": "<TODAY>T08:15:00"
+      },
+      "testCentre": {
+        "centreId": 3034,
+        "centreName": "Test DA2",
+        "costCode": "B1234"
+      },
+      "vehicleTypeCode": "C",
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
+    },
+    {
+        "booking": {
+          "application": {
+            "applicationId": 22345655,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "B+E",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 6,
+            "vehicleLength": 5.5,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "28 Albany Avenue",
+              "addressLine2": "Harwood Place",
+              "addressLine3": "Everit Street",
+              "addressLine4": "Waterford",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 2192,
+            "candidateName": {
+              "firstName": "Jeff",
+              "lastName": "Goldbloom",
+              "title": "Mr"
+            },
+            "driverNumber": "JEFFGX12345678904",
+            "mobileTelephone": "(950) 449-2306",
+            "primaryTelephone": "(914) 495-3423",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 112,
+          "slotId": 3555,
+          "start": "<TODAY+1>T10:40:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+    },
+    {
+      "booking": {
+        "application": {
+          "applicationId": 11654828,
+          "bookingSequence": 1,
+          "checkDigit": 1,
+          "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "B+E",
+          "vehicleGearbox": "Manual",
+          "welshTest": false,
+          "vehicleHeight": 3,
+          "vehicleWidth": 6.5,
+          "vehicleLength": 6.5,
+          "vehicleSeats": 4,
+          "categoryEntitlementCheck": false
+        },
+        "candidate": {
+          "candidateAddress": {
+            "addressLine1": "59 Remsen Street",
+            "addressLine2": "Carlton Avenue",
+            "addressLine3": "Lefferts Place",
+            "addressLine4": "Trail",
+            "addressLine5": "Address Line 5",
+            "postcode": "BR82 0DE"
+          },
+          "candidateId": 2983,
+          "candidateName": {
+            "firstName": "Melon",
+            "lastName": "Water",
+            "title": "Mr"
+          },
+          "driverNumber": "CATBX12345678902",
+          "mobileTelephone": "(850) 513-3042",
+          "primaryTelephone": "(926) 596-2983",
+          "secondaryTelephone": "(967) 578-2774",
+          "dateOfBirth": "1982-06-25",
+          "ethnicityCode": "D",
+          "gender": "M"
+        },
+        "business": {
+          "businessAddress": {
+            "addressLine1": "20 B+E",
+            "addressLine2": "Douglass Street",
+            "addressLine3": "Togo",
+            "postcode": "SA73 0TT"
+          },
+          "businessId": 3554,
+          "businessName": "Machine",
+          "telephone": "(994) 400-2591"
+        },
+        "previousCancellation": []
+      },
+      "slotDetail": {
+        "duration": 57,
+        "slotId": 2062,
+        "start": "<TODAY>T08:15:00"
+      },
+      "testCentre": {
+        "centreId": 3034,
+        "centreName": "Test DA2",
+        "costCode": "B1234"
+      },
+      "vehicleTypeCode": "C",
+      "vehicleSlotTypeCode": 7,
+      "examinerVisiting": false
+    }
+    ]
+},
+	"lastUpdatedAt": 0,
+	"staffNumber": "654321"
+}

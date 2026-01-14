@@ -1,0 +1,218 @@
+{
+  "hash": "Cat C+E",
+  "journal": {
+    "examiner": {
+      "staffNumber": "10000003",
+      "individualId": 1000003
+    },
+    "testSlots": [
+      {
+        "booking": {
+          "application": {
+            "applicationId": 13193411,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "C+E",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 3,
+            "vehicleWidth": 6,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "56 Fountain Avenue",
+              "addressLine2": "Winthrop Street",
+              "addressLine3": "Cortelyou Road",
+              "addressLine4": "Corriganville",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 1029,
+            "candidateName": {
+              "firstName": "Lupe",
+              "lastName": "Buck",
+              "title": "Dr"
+            },
+            "driverNumber": "CATCE12345678901",
+            "mobileTelephone": "(801) 482-2702",
+            "primaryTelephone": "(867) 547-2278",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1311,
+          "start": "<TODAY>T07:50:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 13193422,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "C+E",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 4,
+            "vehicleWidth": 6,
+            "vehicleLength": 22,
+            "vehicleSeats": 35,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "50 Beach Place",
+              "addressLine2": "Rogers Avenue",
+              "addressLine3": "Conduit Boulevard",
+              "addressLine4": "Brutus",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3218,
+            "candidateName": {
+              "firstName": "Bright",
+              "lastName": "Wilson",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCE12345678902",
+            "mobileTelephone": "(962) 544-2160",
+            "primaryTelephone": "(917) 483-3164",
+            "secondaryTelephone": "(932) 486-3767",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "18 B+E",
+              "addressLine2": "Locust Street",
+              "addressLine3": "Ecuador",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 1772,
+            "businessName": "Joviold",
+            "telephone": "(895) 461-2031"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1322,
+          "start": "<TODAY>T08:45:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 13193433,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "C+E",
+            "vehicleGearbox": "Automatic",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Insectus' pub in Maury",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": true
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "54 Boynton Place",
+              "addressLine2": "Reeve Place",
+              "addressLine3": "Lefferts Avenue",
+              "addressLine4": "Roland",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 5137,
+            "candidateName": {
+              "firstName": "Hendricks",
+              "lastName": "Parsons",
+              "title": "Mr"
+            },
+            "driverNumber": "CATCE12345678903",
+            "mobileTelephone": "(925) 501-2786",
+            "primaryTelephone": "(976) 571-2007",
+            "secondaryTelephone": "(829) 582-3061",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "35 B+E",
+              "addressLine2": "Hewes Street",
+              "addressLine3": "Guadeloupe",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 5317,
+            "businessName": "Plasmosis",
+            "telephone": "(949) 528-3220"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1333,
+          "start": "<TODAY>T09:44:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      }
+    ]
+  },
+  "lastUpdatedAt": 0,
+  "staffNumber": "10000003"
+}
