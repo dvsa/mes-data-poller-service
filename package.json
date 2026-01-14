@@ -35,13 +35,12 @@
     "@aws-sdk/client-dynamodb": "^3.899.0",
     "@aws-sdk/lib-dynamodb": "^3.899.0",
     "@aws-sdk/rds-signer": "^3.899.0",
-    "@dvsa/mes-microservice-common": "1.2.1",
-    "drizzle-orm": "^0.45.1",
+    "@dvsa/mes-microservice-common": "1.2.2",
     "escape-json-node": "^2.0.0",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
     "moment": "^2.29.4",
-    "mysql2": "3.9.8",
+    "mysql2": "3.15.3",
     "node.extend": "^2.0.3"
   },
   "devDependencies": {
