@@ -15,7 +15,7 @@ import { getAdvanceTestSlots } from '../databases/mysql/advance-test-slots-repos
 import { getDeployments } from '../databases/mysql/deployment-repository';
 import { getTestSlots } from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
-import { getDSPTestSlots } from '../databases/mysql/test-slot-respository-des-schedule';
+import { getDSPTestSlots } from '../databases/mysql/test-slot-repository-des-schedule';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getConnectionPool('TARS');
