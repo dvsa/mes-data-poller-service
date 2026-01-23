@@ -146,7 +146,6 @@ export const getDSPTestSlots = async (
     info('DES Slots query returned rows:', rows.length);
     const results: ExaminerTestSlot[] = rows.map((r: any): ExaminerTestSlot => {
       info('Mapping DES test slot for booking reference:', r.bookingReference);
-      info('previous:', r.previousCancellation);
       const mappedData: ExaminerTestSlot = {
         examinerId: examinerRecords.find(
           (record: ExaminerRecord) => record.staff_number === r.examinerStaffNumber
