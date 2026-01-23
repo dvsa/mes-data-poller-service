@@ -23,7 +23,7 @@ export const getTestSlots = async (
   testSlotRun?: number,
 ): Promise<ExaminerTestSlot[]> => {
   if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSTestSlotMock(testSlotRun);
+    return TARSTestSlotMock(examinerIds, testSlotRun);
   }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(journalStartDate).format(sqlYearFormat);
