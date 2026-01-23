@@ -4,7 +4,6 @@ import { mapRow } from './row-mappers/test-slot-row-mapper';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
-import { TARSTestSlotMock } from './__mocks__/test-slot.mock';
 
 /**
  * Get all detailed test slots, for the specified time window.
@@ -22,9 +21,6 @@ export const getTestSlots = async (
   endDate: Date,
   testSlotRun?: number,
 ): Promise<ExaminerTestSlot[]> => {
-  if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSTestSlotMock(testSlotRun);
-  }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(journalStartDate).format(sqlYearFormat);
   const windowEnd = moment(endDate).format(sqlYearFormat);

@@ -1,0 +1,1535 @@
+{
+  "hash": "Home Tests and ADI",
+  "journal": {
+    "examiner": {
+      "staffNumber": "10000012",
+      "individualId": 10000012
+    },
+    "nonTestActivities": [],
+    "testSlots": [
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123400,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 100,
+            "candidateName": {
+              "firstName": "Anna",
+              "lastName": "Firstlis",
+              "title": "miss"
+            },
+            "driverNumber": "PEARS123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "F" ,
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2200,
+          "start": "<TODAY>T08:00:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123440,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "I will be at the test centre",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 145,
+            "candidateName": {
+              "firstName": "Brendan",
+              "lastName": "Money",
+              "title": "Mr"
+            },
+            "driverNumber": "XXXXX123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "M",
+            "prn": 12345,
+            "previousADITests": 1
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2240,
+          "start": "<TODAY>T13:10:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123430,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "I will be at the test centre",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 145,
+            "candidateName": {
+              "firstName": "Candidate",
+              "lastName": "Canditatinsky",
+              "title": "Mr"
+            },
+            "driverNumber": "VVVVV123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2230,
+          "start": "<TODAY>T13:55:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123420,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": true,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "I will be at the test centre",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 145,
+            "candidateName": {
+              "firstName": "John",
+              "lastName": "Locke",
+              "title": "Mr"
+            },
+            "driverNumber": "VVVVV123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "M",
+            "prn": 12300,
+            "previousADITests": 9
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2220,
+          "start": "<TODAY>T17:55:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123412,
+            "bookingSequence": 2,
+            "checkDigit": 2,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "F",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "999 Letsby Avenue",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB67 8CD"
+            },
+            "candidateId": 104,
+            "candidateName": {
+              "firstName": "Anna",
+              "lastName": "Shaw",
+              "title": "Miss"
+            },
+            "driverNumber": "SHAWX885220A99HC",
+            "mobileTelephone": "07654 123456",
+            "dateOfBirth": "1971-10-22",
+            "ethnicityCode": "A",
+            "gender": "F"
+          }
+        },
+        "slotDetail": {
+          "duration": 86,
+          "slotId": 2212,
+          "start": "<TODAY>T10:04:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 8,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123455,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "You can meet me ant any large gathering nean you",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 155,
+            "candidateName": {
+              "firstName": "Frank",
+              "lastName": "Smith",
+              "title": "Dr"
+            },
+            "driverNumber": "SMITH123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "F",
+            "prn": 12399,
+            "previousADITests": 1
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2250,
+          "start": "<TODAY>T12:10:00"
+        },
+        "testCentre": {
+          "centreId": 3026,
+          "centreName": "Wales test centre",
+          "costCode": "WALES"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123422,
+            "bookingSequence": 2,
+            "checkDigit": 2,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "F",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "999 Letsby Avenue",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB67 8CD"
+            },
+            "candidateId": 104,
+            "candidateName": {
+              "firstName": "Belinda",
+              "lastName": "Shaw",
+              "title": "Miss"
+            },
+            "driverNumber": "SHAWX885330A99HC",
+            "mobileTelephone": "07654 123456",
+            "dateOfBirth": "1971-10-22",
+            "ethnicityCode": "B",
+            "gender": "F"
+          }
+        },
+        "slotDetail": {
+          "duration": 86,
+          "slotId": 2213,
+          "start": "<TODAY-1>T10:04:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 8,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123414,
+            "bookingSequence": 1,
+            "checkDigit": 9,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "G",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "My House",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB45 6CD"
+            },
+            "candidateId": 103,
+            "candidateName": {
+              "firstName": "Carly",
+              "lastName": "Doe",
+              "title": "Mrs"
+            },
+            "driverNumber": "DOEXX653220A99HC",
+            "mobileTelephone": "07654 123456",
+            "emailAddress": "jane.doe@example.com",
+           "dateOfBirth": "1989-05-13",
+            "ethnicityCode": "C",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "DSA",
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2214,
+          "start": "<TODAY>T09:07:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123491,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "G",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Doris",
+              "lastName": "Pearson",
+              "title": "Miss"
+            },
+            "driverNumber": "PEARS123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2291,
+          "start": "<TODAY-1>T08:10:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123411,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "H",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Florence",
+              "lastName": "Pearson",
+              "title": "Miss"
+            },
+            "driverNumber": "PEARS015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "E",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2211,
+          "start": "<TODAY>T08:10:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123433,
+            "bookingSequence": 2,
+            "checkDigit": 2,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "H",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "999 Letsby Avenue",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB67 8CD"
+            },
+            "candidateId": 104,
+            "candidateName": {
+              "firstName": "Theresa",
+              "lastName": "Shaw",
+              "title": "Miss"
+            },
+            "driverNumber": "SHAWX744220A99HC",
+            "mobileTelephone": "07654 123456",
+            "dateOfBirth": "1971-10-22",
+            "ethnicityCode": "G",
+            "gender": "F"
+          }
+        },
+        "slotDetail": {
+          "duration": 86,
+          "slotId": 2233,
+          "start": "<TODAY-1>T10:04:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 8,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123478,
+            "bookingSequence": 1,
+            "checkDigit": 3,
+            "entitlementCheck": false,
+            "extendedTest": true,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "K",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "The Gables Cottage",
+              "addressLine2": "Home Farm",
+              "addressLine3": "Farm Road",
+              "addressLine4": "Farm Area",
+              "addressLine5": "Farmtown",
+              "postcode": "FA43 9XY"
+            },
+            "candidateId": 106,
+            "candidateName": {
+              "firstName": "James",
+              "lastName": "Brown",
+              "title": "Mr"
+            },
+            "driverNumber": "BROWN915254A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1973-01-07",
+            "ethnicityCode": "B",
+            "gender": "M"
+          }
+        },
+        "slotDetail": {
+          "duration": 114,
+          "slotId": 2255,
+          "start": "<TODAY>T13:24:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 9,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123477,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "K",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "1234 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Bill",
+              "lastName": "Pots",
+              "title": "Mr"
+            },
+            "driverNumber": "POTS9015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1993-16-15",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2277,
+          "start": "<TODAY-1>T08:10:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 6,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123488,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "F",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "2345 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Alice",
+              "lastName": "Cooper",
+              "title": "Miss"
+            },
+            "driverNumber": "COOPE015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1974-09-14",
+            "ethnicityCode": "E",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2288,
+          "start": "<TODAY>T09:07:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123499,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "G",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "3456 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Buxton",
+              "lastName": "Phil",
+              "title": "Mr"
+            },
+            "driverNumber": "BUXTO015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1992-12-11",
+            "ethnicityCode": "F",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2299,
+          "start": "<TODAY>T10:04:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123905,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "H",
+            "vehicleGearbox": "Automatic",
+            "welshTest": true,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Polo",
+              "lastName": "Shirt",
+              "title": "Mr"
+            },
+            "driverNumber": "SHIRT015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2281,
+          "start": "<TODAY>T11:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      },
+       {
+        "booking": {
+          "application": {
+            "applicationId": 22123904,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "T",
+              "lastName": "Shirt",
+              "title": "Mr"
+            },
+            "driverNumber": "SHIRT015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M",
+            "prn": 12345,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2282,
+          "start": "<TODAY-1>T11:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      },
+       {
+        "booking": {
+          "application": {
+            "applicationId": 22123903,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "ADI2",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Polo",
+              "lastName": "Shirt",
+              "title": "Mr"
+            },
+            "driverNumber": "SHIRT015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M",
+            "prn": 12145,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2283,
+          "start": "<TODAY>T11:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123444,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "CCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 200,
+            "candidateName": {
+              "firstName": "Steve",
+              "lastName": "Auston",
+              "title": "Mr"
+            },
+            "driverNumber": "SHIRT015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1184,
+          "start": "<TODAY>T11:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 19,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 22123466,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "CCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 200,
+            "candidateName": {
+              "firstName": "Jennifer",
+              "lastName": "Aniston",
+              "title": "Miss"
+            },
+            "driverNumber": "PEARS123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "F" ,
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1185,
+          "start": "<TODAY>T08:00:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+        {
+        "booking": {
+          "application": {
+            "applicationId": 22123467,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "DCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 198,
+            "candidateName": {
+              "firstName": "Johny",
+              "lastName": "Bravo",
+              "title": "Mr"
+            },
+            "driverNumber": "BRAVO123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "M" ,
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1186,
+          "start": "<TODAY>T17:00:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+        {
+        "booking": {
+          "application": {
+            "applicationId": 22123468,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "DCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": true,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 199,
+            "candidateName": {
+              "firstName": "James",
+              "lastName": "Johnson",
+              "title": "Mr"
+            },
+            "driverNumber": "JOHNS205056789JJ",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1983-02-05",
+            "ethnicityCode": "D",
+            "gender": "M",
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1187,
+          "start": "<TODAY>T17:20:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+        {
+        "booking": {
+          "application": {
+            "applicationId": 22123469,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "CCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 201,
+            "candidateName": {
+              "firstName": "Jean",
+              "lastName": "Shorts",
+              "title": "Miss"
+            },
+            "driverNumber": "SHORTS306056789JS",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1984-03-06",
+            "ethnicityCode": "D",
+            "gender": "F",
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1188,
+          "start": "<TODAY-1>T13:20:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+              {
+        "booking": {
+          "application": {
+            "applicationId": 22123471,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "DCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "Address Line 1",
+              "addressLine2": "Address Line 2",
+              "addressLine3": "Address Line 3",
+              "addressLine4": "Address Line 4",
+              "addressLine5": "Address Line 5",
+              "postcode": "PO57 0DE"
+            },
+            "candidateId": 198,
+            "candidateName": {
+              "firstName": "Luke",
+              "lastName": "Waterrider",
+              "title": "Mr"
+            },
+            "driverNumber": "BRAVO123456789DO",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1977-07-02",
+            "ethnicityCode": "D",
+            "gender": "M" ,
+            "prn": 9283749 ,
+            "previousADITests": 2
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 1190,
+          "start": "<TODAY-1>T17:30:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+        {
+        "booking": {
+          "application": {
+            "applicationId": 22123470,
+            "bookingSequence": 1,
+            "checkDigit": 9,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "YES",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "CCPC",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "My House",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB45 6CD"
+            },
+            "candidateId": 108,
+            "candidateName": {
+              "firstName": "Ken",
+              "lastName": "Doe",
+              "title": "Mrs"
+            },
+            "driverNumber": "DOEXX653220A99HC",
+            "mobileTelephone": "07654 123456",
+            "emailAddress": "ken.doe@example.com",
+           "dateOfBirth": "1989-05-13",
+            "ethnicityCode": "C",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "DSA",
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2218,
+          "start": "<TODAY>T09:18:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+       {
+        "booking": {
+          "application": {
+            "applicationId": 22123911,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "G",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Polo",
+              "lastName": "Shirt",
+              "title": "Mr"
+            },
+            "driverNumber": "SHIRT015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2217,
+          "start": "<TODAY>T11:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      },
+    {
+        "booking": {
+          "application": {
+            "applicationId": 22123611,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "K",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "4567 Station Street",
+              "addressLine2": "Someplace",
+              "addressLine3": "Sometown",
+              "postcode": "AB12 3CD"
+            },
+            "candidateId": 101,
+            "candidateName": {
+              "firstName": "Polo",
+              "lastName": "Shirt",
+              "title": "Mr"
+            },
+            "driverNumber": "POLOO015220A99HC",
+            "mobileTelephone": "07654 123456",
+            "primaryTelephone": "01234 567890",
+            "secondaryTelephone": "04321 098765",
+            "dateOfBirth": "1991-10-04",
+            "ethnicityCode": "G",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 3317,
+          "start": "<TODAY+1>T10:01:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 14,
+        "examinerVisiting": false
+      }
+    ]
+  },
+  "lastUpdatedAt": 0,
+  "staffNumber": "10000012"
+}

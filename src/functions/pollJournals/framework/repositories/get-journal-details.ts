@@ -16,6 +16,13 @@ import { getDeployments } from '../databases/mysql/deployment-repository';
 import { getTestSlots } from '../databases/mysql/test-slot-repository';
 import * as moment from 'moment';
 import { getDSPTestSlots } from '../databases/mysql/test-slot-repository-des-schedule';
+import {
+  getAdvanceTestSlotsMock,
+  getDeploymentsMock,
+  getExaminersMock, getNextWorkingDayMock, getNonTestActivitiesMock,
+  getPersonalCommitmentsMock,
+  getTestSlotsMock,
+} from '../../application/__mocks__/repository.mock';
 
 export const getJournalDetails = async (startTime: Date, startDate: Date, journalStartDate: Date) => {
   const connectionPool = getConnectionPool('TARS');
@@ -26,8 +33,8 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     examiners,
     nextWorkingDay,
   ] = await Promise.all([
-    getExaminers(connectionPool, startDate),
-    getNextWorkingDay(connectionPool, startDate),
+    process.env.USE_MOCK_TARS_DATA ? getExaminersMock() : getExaminers(connectionPool, startDate),
+    process.env.USE_MOCK_TARS_DATA ? getNextWorkingDayMock() : getNextWorkingDay(connectionPool, startDate),
   ]);
 
   const examinerIds = examiners.map(examiner => examiner.individual_id);
@@ -43,10 +50,14 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     deployments,
     testSlotsDSP,
   ] = await Promise.all([
-    getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
-    getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
-    getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
-    getDeployments(connectionPool, startDate, 6), // 6 months range
+    process.env.USE_MOCK_TARS_DATA ?
+      getPersonalCommitmentsMock() : getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
+    process.env.USE_MOCK_TARS_DATA ?
+      getNonTestActivitiesMock() : getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
+    process.env.USE_MOCK_TARS_DATA ?
+      getAdvanceTestSlotsMock() : getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
+    process.env.USE_MOCK_TARS_DATA ?
+      getDeploymentsMock() : getDeployments(connectionPool, startDate, 6), // 6 months range
     process.env.GET_DSP_BOOKINGS ?
       getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
       : [],
@@ -57,7 +68,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
 
   const examinerChunks = chunk(examinerIds, examinerIdGroupCount);
 
-  const testSlotsTARS = (
+  const testSlotsTARS = process.env.USE_MOCK_TARS_DATA ? await getTestSlotsMock() :(
     await Promise.all(
       examinerChunks.map(
         (examinerChunk, index) =>

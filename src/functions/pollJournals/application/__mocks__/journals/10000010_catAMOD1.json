@@ -1,0 +1,1812 @@
+{
+  "hash": "Cat A Mod1: EUA1M1, EUA2M1, EUAM1, EUAMM1",
+  "journal": {
+    "examiner": {
+      "staffNumber": "10000010",
+      "individualId": 1000010
+    },
+    "testSlots": [
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123400,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "33 Montgomery Street",
+              "addressLine2": "Coventry Road",
+              "addressLine3": "Fuller Place",
+              "addressLine4": "Salix",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 100,
+            "candidateName": {
+              "firstName": "Alisa",
+              "lastName": "Garza",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678901",
+            "mobileTelephone": "(936) 552-2157",
+            "primaryTelephone": "(882) 408-3344",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2000,
+          "start": "<TODAY>T07:50:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20100023,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "52 Hamilton Avenue",
+              "addressLine2": "Auburn Place",
+              "addressLine3": "Broadway ",
+              "addressLine4": "Zortman",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 5678,
+            "candidateName": {
+              "firstName": "Right",
+              "lastName": "Ford",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678902",
+            "mobileTelephone": "(885) 436-2142",
+            "primaryTelephone": "(802) 515-3316",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 3900,
+          "start": "<TODAY>T08:10:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123011,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "31 Cypress Avenue",
+              "addressLine2": "Fountain Avenue",
+              "addressLine3": "Beaumont Street",
+              "addressLine4": "Elwood",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 5826,
+            "candidateName": {
+              "firstName": "Deanna",
+              "lastName": "Wolf",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678903",
+            "mobileTelephone": "(951) 401-3627",
+            "primaryTelephone": "(861) 453-3422",
+            "secondaryTelephone": "(979) 526-2534",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "36 B+E",
+              "addressLine2": "Cambridge Place",
+              "addressLine3": "Bouvet Island",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 3395,
+            "businessName": "Enthaze",
+            "telephone": "(957) 586-3615"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 3911,
+          "start": "<TODAY>T09:00:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123022,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Meet me at the 'Talkola' pub in Groveville",
+            "vehicleHeight": 2,
+            "vehicleWidth": 5,
+            "vehicleLength": 15,
+            "vehicleSeats": 5,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "21 Kings Hwy",
+              "addressLine2": "Kaufman Place",
+              "addressLine3": "Kay Court",
+              "addressLine4": "Norris",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 8107,
+            "candidateName": {
+              "firstName": "Diaz",
+              "lastName": "Barber",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678904",
+            "mobileTelephone": "(876) 563-2003",
+            "primaryTelephone": "(962) 472-3474",
+            "secondaryTelephone": "(850) 586-2519",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "43 B+E",
+              "addressLine2": "Kenilworth Place",
+              "addressLine3": "Egypt",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 6361,
+            "businessName": "Fishland",
+            "telephone": "(913) 560-3945"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 3922,
+          "start": "<TODAY>T10:06:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123033,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA1M1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "38 Fillmore Place",
+              "addressLine2": "Lloyd Street",
+              "addressLine3": "Engert Avenue",
+              "addressLine4": "Ventress",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 2304,
+            "candidateName": {
+              "firstName": "Denny",
+              "lastName": "Carlson",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678905",
+            "mobileTelephone": "(838) 513-2265",
+            "primaryTelephone": "(896) 413-3938",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 112,
+          "slotId": 3933,
+          "start": "<TODAY>T10:40:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123044,
+            "bookingSequence": 3,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "meetingPlace": "Can we meet in the pub over the road from the corner shop on High Street.",
+            "vehicleHeight": 3,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "57 Butler Place",
+              "addressLine2": "Newkirk Placez",
+              "addressLine3": "Bridge Street",
+              "addressLine4": "Holcombe",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 486,
+            "candidateName": {
+              "firstName": "Tanner",
+              "lastName": "Holman",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678906",
+            "mobileTelephone": "(986) 503-2069",
+            "primaryTelephone": "(800) 471-3249",
+            "secondaryTelephone": "(981) 527-2334",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "40 B+E",
+              "addressLine2": "Neptune Court",
+              "addressLine3": "Macedonia",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 2577,
+            "businessName": "Retrotex",
+            "telephone": "(826) 517-3667"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 3944,
+          "start": "<TODAY>T13:45:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123433,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 4.5,
+            "vehicleWidth": 4.5,
+            "vehicleLength": 14,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "55 Pierrepont Street",
+              "addressLine2": "Clifford Place",
+              "addressLine3": "Provost Street",
+              "addressLine4": "Bascom",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3200,
+            "candidateName": {
+              "firstName": "Fox",
+              "lastName": "Farrell",
+              "title": "Dr"
+            },
+            "driverNumber": "CATA112345678910",
+            "mobileTelephone": "(999) 454-3317",
+            "primaryTelephone": "(805) 405-2289",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 112,
+          "slotId": 2033,
+          "start": "<TODAY>T10:40:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123444,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 6,
+            "vehicleLength": 5,
+            "vehicleSeats": 3,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "33",
+              "addressLine2": "Albemarle Road",
+              "addressLine3": "Joralemon Street",
+              "addressLine4": "Malo",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3697,
+            "candidateName": {
+              "firstName": "Sheila",
+              "lastName": "Kirk",
+              "title": "Miss"
+            },
+            "driverNumber": "CATA112345678911",
+            "mobileTelephone": "(867) 566-2487",
+            "primaryTelephone": "(846) 570-3936",
+            "secondaryTelephone": "(899) 457-3249",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "42 B+E",
+              "addressLine2": "Walker Court",
+              "addressLine3": "Armenia",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 3410,
+            "businessName": "Duflex",
+            "telephone": "(888) 491-2147"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2044,
+          "start": "<TODAY>T13:22:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123455,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Zboo' pub in Lookingglass",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "34 Bushwick Court",
+              "addressLine2": "Junius Street",
+              "addressLine3": "Chestnut Avenue",
+              "addressLine4": "Konterra",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 8885,
+            "candidateName": {
+              "firstName": "Morales",
+              "lastName": "Osborn",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678912",
+            "mobileTelephone": "(850) 548-2508",
+            "primaryTelephone": "(893) 491-3307",
+            "secondaryTelephone": "(839) 434-3070",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "27 B+E",
+              "addressLine2": "Ruby Street",
+              "addressLine3": "Guinea-Bissau",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 1055,
+            "businessName": "Austech",
+            "telephone": "(889) 512-3214"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 5428,
+          "start": "<TODAY>T14:20:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123466,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA1M1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 2.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 16,
+            "vehicleSeats": 5,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "27",
+              "addressLine2": "Howard Place",
+              "addressLine3": "Bragg Court",
+              "addressLine4": "Hartsville/Hartley",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3513,
+            "candidateName": {
+              "firstName": "Bessie",
+              "lastName": "Walls",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678913",
+            "mobileTelephone": "(972) 530-3148",
+            "primaryTelephone": "(880) 583-3566",
+            "secondaryTelephone": "(824) 537-2308",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "32 B+E",
+              "addressLine2": "Highlawn Avenue",
+              "addressLine3": "Congo",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 7314,
+            "businessName": "Surelogic",
+            "telephone": "(953) 541-2090"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2066,
+          "start": "<TODAY>T15:18:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123477,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Kog' pub in Waverly",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "40 Celeste Court",
+              "addressLine2": "Boynton Place",
+              "addressLine3": "Fillmore Avenue",
+              "addressLine4": "Beaulieu",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3641,
+            "candidateName": {
+              "firstName": "Ramsey",
+              "lastName": "Zimmerman",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678914",
+            "mobileTelephone": "(926) 488-2327",
+            "primaryTelephone": "(890) 435-3560",
+            "secondaryTelephone": "(964) 501-3921",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "57 B+E",
+              "addressLine2": "Lefferts Avenue",
+              "addressLine3": "Iran",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 7872,
+            "businessName": "Irack",
+            "telephone": "(806) 479-2387"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2077,
+          "start": "<TODAY>T16:16:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123490,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "53 Newport Street",
+              "addressLine2": "Kay Court",
+              "addressLine3": "Rapelye Street",
+              "addressLine4": "Kraemer",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 782,
+            "candidateName": {
+              "firstName": "Howe",
+              "lastName": "Stuart",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678915",
+            "mobileTelephone": "(960) 553-3201",
+            "primaryTelephone": "(874) 408-3720",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2091,
+          "start": "<TODAY+1>T07:50:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123491,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 4,
+            "vehicleLength": 7,
+            "vehicleSeats": 5,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "45",
+              "addressLine2": "Troy Avenue",
+              "addressLine3": "Minna Street",
+              "addressLine4": "Thermal",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 172,
+            "candidateName": {
+              "firstName": "Mable",
+              "lastName": "Cherry",
+              "title": "Dr"
+            },
+            "driverNumber": "CATA112345678916",
+            "mobileTelephone": "(836) 504-3797",
+            "primaryTelephone": "(891) 566-3578",
+            "secondaryTelephone": "(906) 475-3082",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "37 B+E",
+              "addressLine2": "Hampton Avenue",
+              "addressLine3": "Macedonia",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 9726,
+            "businessName": "Exerta",
+            "telephone": "(923) 458-3292"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2091,
+          "start": "<TODAY+1>T08:45:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123493,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA1M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "meetingPlace": "Meet me at the 'Tubalum' pub in Grill",
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 2,
+            "vehicleLength": 6.5,
+            "vehicleSeats": 1,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "28 Garnet Street",
+              "addressLine2": "Cedar Street",
+              "addressLine3": "Stockton Street",
+              "addressLine4": "Bainbridge",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 1161,
+            "candidateName": {
+              "firstName": "Pace",
+              "lastName": "Mcfadden",
+              "title": "Capitan"
+            },
+            "driverNumber": "CATA112345678917",
+            "mobileTelephone": "(915) 442-2203",
+            "primaryTelephone": "(821) 538-2903",
+            "secondaryTelephone": "(948) 549-2388",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "40 B+E",
+              "addressLine2": "Harway Avenue",
+              "addressLine3": "Jordan",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 3759,
+            "businessName": "Zytrax",
+            "telephone": "(827) 421-2913"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2093,
+          "start": "<TODAY+1>T09:44:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123401,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": true,
+            "progressiveAccess": false,
+            "specialNeeds": "Some extra needs",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "29 Veronica Place",
+              "addressLine2": "Powers Street",
+              "addressLine3": "Irving Avenue",
+              "addressLine4": "Williamson",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 8425,
+            "candidateName": {
+              "firstName": "Shelia",
+              "lastName": "Cantu",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678918",
+            "mobileTelephone": "(809) 540-2009",
+            "primaryTelephone": "(896) 591-3457",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 112,
+          "slotId": 2001,
+          "start": "<TODAY-1>T10:40:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123402,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "46",
+              "addressLine2": "Karweg Place",
+              "addressLine3": "Columbus Place",
+              "addressLine4": "Bonanza",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 9556,
+            "candidateName": {
+              "firstName": "Rosanne",
+              "lastName": "Miles",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678919",
+            "mobileTelephone": "(940) 471-3243",
+            "primaryTelephone": "(894) 425-2302",
+            "secondaryTelephone": "(905) 430-3687",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "34 B+E",
+              "addressLine2": "Jackson Street",
+              "addressLine3": "Papua New Guinea",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 4340,
+            "businessName": "Musanpoly",
+            "telephone": "(977) 464-2886"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2002,
+          "start": "<TODAY-1>T13:22:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123403,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": true,
+            "progressiveAccess": true,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Yogasm' pub in Madaket",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "53 Holly Street",
+              "addressLine2": "Oliver Street",
+              "addressLine3": "Jamison Lane",
+              "addressLine4": "Robinson",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 5432,
+            "candidateName": {
+              "firstName": "Burnett",
+              "lastName": "Gillespie",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678920",
+            "mobileTelephone": "(850) 553-2300",
+            "primaryTelephone": "(997) 414-3792",
+            "secondaryTelephone": "(814) 472-3857",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "52 B+E",
+              "addressLine2": "Flatbush Avenue",
+              "addressLine3": "Hong Kong",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 9701,
+            "businessName": "Snorus",
+            "telephone": "(888) 471-3252"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2003,
+          "start": "<TODAY-1>T14:20:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123404,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUA1M1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "32",
+              "addressLine2": "Ridge Boulevard",
+              "addressLine3": "Albemarle Road",
+              "addressLine4": "Westwood",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 4824,
+            "candidateName": {
+              "firstName": "Mullins",
+              "lastName": "Russo",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678921",
+            "mobileTelephone": "(900) 510-3687",
+            "primaryTelephone": "(826) 422-2638",
+            "secondaryTelephone": "(877) 431-3606",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "21 B+E",
+              "addressLine2": "Holt Court",
+              "addressLine3": "Moldova",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 2403,
+            "businessName": "Assistia",
+            "telephone": "(939) 438-2613"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2004,
+          "start": "<TODAY-1>T15:18:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123405,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": true,
+            "progressiveAccess": true,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Rodeocean' pub in Motley",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "37 Seba Avenue",
+              "addressLine2": "Hart Place",
+              "addressLine3": "Meeker Avenue",
+              "addressLine4": "Masthope",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3748,
+            "candidateName": {
+              "firstName": "Rodriquez",
+              "lastName": "Bell",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678922",
+            "mobileTelephone": "(966) 536-3956",
+            "primaryTelephone": "(966) 551-2965",
+            "secondaryTelephone": "(879) 595-2614",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "34 B+E",
+              "addressLine2": "Guernsey Street",
+              "addressLine3": "Switzerland",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 5388,
+            "businessName": "Sentia",
+            "telephone": "(833) 500-2796"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2005,
+          "start": "<TODAY-1>T16:16:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123406,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeeds": "NONE",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "20 Aurelia Court",
+              "addressLine2": "Oceanview Avenue",
+              "addressLine3": "Waldorf Court",
+              "addressLine4": "Ventress",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 7004,
+            "candidateName": {
+              "firstName": "Edwina",
+              "lastName": "Brown",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA112345678923",
+            "mobileTelephone": "(913) 575-3255",
+            "primaryTelephone": "(800) 510-3471",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2006,
+          "start": "<TODAY-1>T07:50:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123407,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "33 Rutland Road",
+              "addressLine2": "Fountain Avenue",
+              "addressLine3": "Dean Street",
+              "addressLine4": "Indio",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 7098,
+            "candidateName": {
+              "firstName": "Stephens",
+              "lastName": "Odom",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678924",
+            "mobileTelephone": "(845) 426-2303",
+            "primaryTelephone": "(850) 493-2323",
+            "secondaryTelephone": "(945) 427-3952",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "52 B+E",
+              "addressLine2": "Tudor Terrace",
+              "addressLine3": "Korea (North)",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 7798,
+            "businessName": "Zentury",
+            "telephone": "(801) 450-2500"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2007,
+          "start": "<TODAY-4>T08:45:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123408,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA1M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "meetingPlace": "Meet me at the 'Opticon' pub in Tilleda",
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "29 Kings Place",
+              "addressLine2": "National Drive",
+              "addressLine3": "Arlington Place",
+              "addressLine4": "Calpine",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 4171,
+            "candidateName": {
+              "firstName": "Mcdowell",
+              "lastName": "Goff",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678925",
+            "mobileTelephone": "(902) 402-2358",
+            "primaryTelephone": "(848) 423-2307",
+            "secondaryTelephone": "(900) 546-2502",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "45 B+E",
+              "addressLine2": "Tilden Avenue",
+              "addressLine3": "Tunisia",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 4564,
+            "businessName": "Scentric",
+            "telephone": "(819) 542-2661"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2008,
+          "start": "<TODAY-2>T09:44:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123409,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": true,
+            "progressiveAccess": false,
+            "specialNeeds": "Some extra needs",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "EUA2M1",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "42 Wolf Place",
+              "addressLine2": "Clay Street",
+              "addressLine3": "Baycliff Terrace",
+              "addressLine4": "Groton",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 9921,
+            "candidateName": {
+              "firstName": "Clarissa",
+              "lastName": "Barnett",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678926",
+            "mobileTelephone": "(956) 560-3321",
+            "primaryTelephone": "(820) 430-3799",
+            "emailAddress": "mobexaminer@gmail.com",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "previousCancellation": [
+            "Act of nature"
+          ]
+        },
+        "slotDetail": {
+          "duration": 112,
+          "slotId": 2009,
+          "start": "<TODAY-14>T10:40:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123412,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "B+E",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "25 Hutchinson Court",
+              "addressLine2": "Scholes Street",
+              "addressLine3": "Madoc Avenue",
+              "addressLine4": "Broadlands",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 5185,
+            "candidateName": {
+              "firstName": "Tammy",
+              "lastName": "Patel",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678927",
+            "mobileTelephone": "(908) 558-2960",
+            "primaryTelephone": "(983) 502-3625",
+            "secondaryTelephone": "(994) 406-2396",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "38 B+E",
+              "addressLine2": "Forrest Street",
+              "addressLine3": "Eritrea",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 6461,
+            "businessName": "Cognicode",
+            "telephone": "(935) 549-2130"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2012,
+          "start": "<TODAY-13>T13:22:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123423,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": true,
+            "progressiveAccess": true,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "B",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Dadabase' pub in Ebro",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "23 Banker Street",
+              "addressLine2": "Delevan Street",
+              "addressLine3": "Manor Court",
+              "addressLine4": "Rehrersburg",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 9971,
+            "candidateName": {
+              "firstName": "Carolina",
+              "lastName": "Robertson",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678928",
+            "mobileTelephone": "(943) 412-3409",
+            "primaryTelephone": "(899) 529-2632",
+            "secondaryTelephone": "(887) 500-3771",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "31 B+E",
+              "addressLine2": "Lewis Place",
+              "addressLine3": "Namibia",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 5120,
+            "businessName": "Prowaste",
+            "telephone": "(858) 462-2217"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2023,
+          "start": "<TODAY-7>T14:20:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123424,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUAM1",
+            "vehicleGearbox": "Automatic",
+            "welshTest": false,
+            "vehicleHeight": 3.5,
+            "vehicleWidth": 5,
+            "vehicleLength": 6,
+            "vehicleSeats": 4,
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "41 Clara Street",
+              "addressLine2": "Brigham Street",
+              "addressLine3": "Frank Court",
+              "addressLine4": "Madaket",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 6516,
+            "candidateName": {
+              "firstName": "Marci",
+              "lastName": "Page",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678929",
+            "mobileTelephone": "(894) 469-2529",
+            "primaryTelephone": "(952) 533-2294",
+            "secondaryTelephone": "(929) 517-2141",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "M"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "22 B+E",
+              "addressLine2": "Berriman Street",
+              "addressLine3": "Honduras",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 6633,
+            "businessName": "Retrack",
+            "telephone": "(989) 505-3471"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2024,
+          "start": "<TODAY-3>T15:18:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 20123425,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": true,
+            "extendedTest": true,
+            "progressiveAccess": true,
+            "specialNeeds": "Candidate has dyslexia",
+            "specialNeedsCode": "EXTRA",
+            "specialNeedsExtendedTest": true,
+            "testCategory": "EUAMM1",
+            "vehicleGearbox": "Manual",
+            "welshTest": true,
+            "meetingPlace": "Meet me at the 'Dancerity' pub in Abiquiu",
+            "categoryEntitlementCheck": false
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "43 Cherry Street",
+              "addressLine2": "Rose Street",
+              "addressLine3": "Cheever Place",
+              "addressLine4": "Sussex",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 6748,
+            "candidateName": {
+              "firstName": "Crystal",
+              "lastName": "Hughes",
+              "title": "Mr"
+            },
+            "driverNumber": "CATA112345678930",
+            "mobileTelephone": "(879) 467-3561",
+            "primaryTelephone": "(962) 541-2050",
+            "secondaryTelephone": "(885) 530-3396",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "28 B+E",
+              "addressLine2": "Regent Place",
+              "addressLine3": "Iraq",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 4027,
+            "businessName": "Tubalum",
+            "telephone": "(891) 511-3158"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 20,
+          "slotId": 2025,
+          "start": "<TODAY-3>T16:16:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      }
+    ]
+  },
+  "lastUpdatedAt": 0,
+  "staffNumber": "10000010"
+}

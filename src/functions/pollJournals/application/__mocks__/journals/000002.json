@@ -1,0 +1,154 @@
+{
+  "hash": "000002 Slots",
+  "journal": {
+    "examiner": {
+      "staffNumber": "000002",
+      "individualId": 9000001
+    },
+    "nonTestActivities": [],
+    "testSlots": [
+      {
+        "booking": {
+          "application": {
+            "applicationId": 10123311,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "B",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "meetingPlace": "Meet me at the 'Xymonk' pub in Alamo",
+            "vehicleHeight": 4,
+            "vehicleWidth": 5.5,
+            "vehicleLength": 8,
+            "vehicleSeats": 8
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "57 Furman Street",
+              "addressLine2": "Rapelye Street",
+              "addressLine3": "Halsey Street",
+              "addressLine4": "Dale",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3291,
+            "candidateName": {
+              "firstName": "Shirley",
+              "lastName": "Benton",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA123456789DO3",
+            "mobileTelephone": "(967) 506-3388",
+            "primaryTelephone": "(888) 525-3094",
+            "secondaryTelephone": "(930) 445-3382",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "53 B+E",
+              "addressLine2": "Cumberland Walk",
+              "addressLine3": "Greece",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 983,
+            "businessName": "Zolarity",
+            "telephone": "(881) 460-2794"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2210,
+          "start": "<TODAY+1>T09:44:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      },
+      {
+        "booking": {
+          "application": {
+            "applicationId": 10123312,
+            "bookingSequence": 1,
+            "checkDigit": 1,
+            "entitlementCheck": false,
+            "extendedTest": false,
+            "progressiveAccess": false,
+            "specialNeedsCode": "NONE",
+            "specialNeedsExtendedTest": false,
+            "testCategory": "B",
+            "vehicleGearbox": "Manual",
+            "welshTest": false,
+            "meetingPlace": "Meet me at the 'Xymonk' pub in Alamo",
+            "vehicleHeight": 4,
+            "vehicleWidth": 5.5,
+            "vehicleLength": 8,
+            "vehicleSeats": 8
+          },
+          "candidate": {
+            "candidateAddress": {
+              "addressLine1": "57 Furman Street",
+              "addressLine2": "Rapelye Street",
+              "addressLine3": "Halsey Street",
+              "addressLine4": "Dale",
+              "addressLine5": "Address Line 5",
+              "postcode": "BR82 0DE"
+            },
+            "candidateId": 3292,
+            "candidateName": {
+              "firstName": "Benton",
+              "lastName": "Shirley",
+              "title": "Ms"
+            },
+            "driverNumber": "CATA123456789DO3",
+            "mobileTelephone": "(967) 506-3388",
+            "primaryTelephone": "(888) 525-3094",
+            "secondaryTelephone": "(930) 445-3382",
+            "dateOfBirth": "1982-06-25",
+            "ethnicityCode": "D",
+            "gender": "F"
+          },
+          "business": {
+            "businessAddress": {
+              "addressLine1": "53 B+E",
+              "addressLine2": "Cumberland Walk",
+              "addressLine3": "Greece",
+              "postcode": "SA73 0TT"
+            },
+            "businessId": 983,
+            "businessName": "Zolarity",
+            "telephone": "(881) 460-2794"
+          },
+          "previousCancellation": []
+        },
+        "slotDetail": {
+          "duration": 57,
+          "slotId": 2244,
+          "start": "<TODAY>T10:44:00"
+        },
+        "testCentre": {
+          "centreId": 3033,
+          "centreName": "Test DA",
+          "costCode": "A1234"
+        },
+        "vehicleTypeCode": "C",
+        "vehicleSlotTypeCode": 7,
+        "examinerVisiting": false
+      }
+    ]
+  },
+  "lastUpdatedAt": 0,
+  "staffNumber": "000002"
+}

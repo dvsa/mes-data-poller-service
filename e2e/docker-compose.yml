@@ -2,6 +2,7 @@ version: '2'
 services:
   mes-data-replication-service-e2e-mysql:
     image: mysql:5.7
+    platform: linux/amd64
     container_name: mes-data-replication-service-e2e-mysql
     ports:
       - 3306:3306
