@@ -1,5 +1,7 @@
 import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 import * as moment from 'moment/moment';
+import {info} from '@dvsa/mes-microservice-common/application/utils/logger';
+import {getMockJournalData} from '../../s3bucket/S3MockJournalsRepository';
 
 export const TARSDeploymentsMock: ExaminerDeployment[] = [
   {
@@ -51,3 +53,18 @@ export const TARSDeploymentsMock: ExaminerDeployment[] = [
     },
   },
 ];
+
+export const getMockDeployments = async (staffNumbers: number[]): Promise<ExaminerDeployment[]> => {
+  const testSlots: ExaminerDeployment[] = [];
+  for (const staffNumber of staffNumbers) {
+    {
+      info('calling mock journal from s3', staffNumber.toString());
+      const mockJournal = await getMockJournalData(staffNumber.toString(), 'deployments');
+      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      if (mockJournal) {
+        testSlots.push(mockJournal);
+      }
+    }
+  }
+  return testSlots;
+};

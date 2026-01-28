@@ -1,4 +1,7 @@
 import { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
+import { ExaminerTestSlot } from '../../../../domain/examiner-test-slot';
+import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { getMockJournalData } from '../../s3bucket/S3MockJournalsRepository';
 
 export const TARSPersonalCommitmentMock: ExaminerPersonalCommitment[] = [
   {
@@ -38,3 +41,18 @@ export const TARSPersonalCommitmentMock: ExaminerPersonalCommitment[] = [
     },
   },
 ];
+
+export const getMockPersonalCommitments = async (staffNumbers: number[]): Promise<ExaminerPersonalCommitment[]> => {
+  const testSlots: ExaminerPersonalCommitment[] = [];
+  for (const staffNumber of staffNumbers) {
+    {
+      info('calling mock journal from s3', staffNumber.toString());
+      const mockJournal = await getMockJournalData(staffNumber.toString(), 'personalCommitments');
+      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      if (mockJournal) {
+        testSlots.push(mockJournal);
+      }
+    }
+  }
+  return testSlots;
+};

@@ -4,7 +4,7 @@ import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
-import { TARSAdvanceTestSlotMock } from './__mocks__/advance-test-slot.mock';
+import {getMockNonTestActivites, TARSAdvanceTestSlotMock} from './__mocks__/advance-test-slot.mock';
 
 /**
  * Get all test slots in the advanced time window.
@@ -12,13 +12,18 @@ import { TARSAdvanceTestSlotMock } from './__mocks__/advance-test-slot.mock';
  * @param startDate The start date of the time window
  * @param nextWorkingDay The date of the next working day
  * @param daysRange The range of days to include in the time window
+ * @param examinerIds a list of examiner IDs to pull commitments for when calling the mock data
  * @returns The advanced test slots
  */
 export const getAdvanceTestSlots = async (
-  connectionPool: mysql.Pool, startDate: Date, nextWorkingDay: Date,
-  daysRange: number): Promise<ExaminerAdvanceTestSlot[]> => {
+  connectionPool: mysql.Pool,
+  startDate: Date,
+  nextWorkingDay: Date,
+  daysRange: number,
+  examinerIds: number[]
+): Promise<ExaminerAdvanceTestSlot[]> => {
   if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSAdvanceTestSlotMock;
+    return getMockNonTestActivites(examinerIds);
   }
 
   const sqlYearFormat = 'YYYY-MM-DD';

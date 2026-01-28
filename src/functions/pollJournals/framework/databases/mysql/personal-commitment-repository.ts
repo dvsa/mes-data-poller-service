@@ -4,19 +4,25 @@ import { mapRow, PersonalCommitmentRow } from './row-mappers/personal-commitment
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
-import { TARSPersonalCommitmentMock } from './__mocks__/personal-commitment.mock';
+import {getMockPersonalCommitments} from './__mocks__/personal-commitment.mock';
 
 /**
  * Get all personal commitments, for the specified time window.
  * @param connectionPool The MySQL connection pool to use
  * @param startDate The start date of the time window
  * @param durationDays The duration of the time window, in days
+ * @param examinerIds a list of examiner IDs to pull commitments for when calling the mock data
  * @returns The personal commitments
  */
-export const getPersonalCommitments = async (connectionPool: mysql.Pool, startDate: Date, durationDays: number):
+export const getPersonalCommitments = async (
+  connectionPool: mysql.Pool,
+  startDate: Date,
+  durationDays: number,
+  examinerIds: number[]
+):
 Promise<ExaminerPersonalCommitment[]> => {
   if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSPersonalCommitmentMock;
+    return getMockPersonalCommitments(examinerIds);
   }
   const windowStart = moment(startDate);
   const windowEnd = windowStart.clone().add({days: durationDays}).subtract({seconds: 1});

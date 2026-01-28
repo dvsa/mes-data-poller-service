@@ -1,5 +1,7 @@
 import { ExaminerTestSlot } from '../../../../domain/examiner-test-slot';
 import * as moment from 'moment/moment';
+import { getMockJournalData } from '../../s3bucket/S3MockJournalsRepository';
+import {info} from '@dvsa/mes-microservice-common/application/utils/logger';
 
 export const TARSTestSlotMock = (testSlotRun: number): ExaminerTestSlot[] => [
   {
@@ -623,3 +625,18 @@ export const TARSTestSlotMock = (testSlotRun: number): ExaminerTestSlot[] => [
     },
   },
 ];
+
+export const getMockTestSlots = async (staffNumbers: number[]): Promise<ExaminerTestSlot[]> => {
+  const testSlots: ExaminerTestSlot[] = [];
+  for (const staffNumber of staffNumbers) {
+    {
+      info('calling mock journal from s3', staffNumber.toString());
+      const mockJournal = await getMockJournalData(staffNumber.toString(), 'testSlots');
+      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      if (mockJournal) {
+        testSlots.push(mockJournal);
+      }
+    }
+  }
+  return testSlots;
+};

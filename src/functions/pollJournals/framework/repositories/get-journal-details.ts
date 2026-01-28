@@ -43,10 +43,10 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     deployments,
     testSlotsDSP,
   ] = await Promise.all([
-    getPersonalCommitments(connectionPool, journalStartDate, 20), // 20 days range
-    getNonTestActivities(connectionPool, journalStartDate, journalEndDate),
-    getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14), // 14 days range
-    getDeployments(connectionPool, startDate, 6), // 6 months range
+    getPersonalCommitments(connectionPool, journalStartDate, 20, examinerIds), // 20 days range
+    getNonTestActivities(connectionPool, journalStartDate, journalEndDate, examinerIds),
+    getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14, examinerIds), // 14 days range
+    getDeployments(connectionPool, startDate, 6, examinerIds), // 6 months range
     process.env.GET_DSP_BOOKINGS ?
       getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
       : [],
