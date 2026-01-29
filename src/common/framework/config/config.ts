@@ -8,6 +8,7 @@ let configuration: Config;
 
 export const bootstrapConfig = async (type: DdbTableTypes) => {
   configuration = {
+    s3BucketName: process.env.S3_BUCKET_NAME,
     isOffline: !!process.env.IS_OFFLINE,
     dynamodbTableName: ddbTable(type),
     tarsReplicaDatabaseHostname: throwIfNotPresent(
@@ -67,12 +68,14 @@ export const bootstrapReapJournalsConfig = async (type: DdbTableTypes) => {
     desDatabaseName: undefined, // Not required for reapJournals
     desDatabaseUsername: undefined, // Not required for reapJournals
     desDatabasePassword: undefined, // Not required for reapJournals
+    s3BucketName: undefined, // Not required for reapJournals
   };
 };
 
 export type Config = {
   isOffline: boolean;
   dynamodbTableName: string;
+  s3BucketName: string;
   tarsReplicaDatabaseHostname: string;
   tarsReplicaDatabaseName: string;
   tarsReplicaDatabaseUsername: string;

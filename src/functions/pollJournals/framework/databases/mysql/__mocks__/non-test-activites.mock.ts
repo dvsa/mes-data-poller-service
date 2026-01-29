@@ -75,17 +75,19 @@ export const TARSNonTestActivitesMock: ExaminerNonTestActivity[] = [
 ];
 
 export const getMockNonTestActivites = async (staffNumbers: number[]): Promise<ExaminerNonTestActivity[]> => {
-  const testSlots: ExaminerNonTestActivity[] = [];
+  let slots: ExaminerNonTestActivity[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(staffNumber.toString(), 'nonTestActivities');
+      const mockJournal: ExaminerNonTestActivity[] = await getMockJournalData(
+        staffNumber.toString(), 'nonTestActivities'
+      );
       info('called mock journal from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
-        testSlots.push(mockJournal);
+        slots = slots.concat(mockJournal);
       }
     }
   }
-  return testSlots;
+  return slots;
 };
 

@@ -43,16 +43,18 @@ export const TARSPersonalCommitmentMock: ExaminerPersonalCommitment[] = [
 ];
 
 export const getMockPersonalCommitments = async (staffNumbers: number[]): Promise<ExaminerPersonalCommitment[]> => {
-  const testSlots: ExaminerPersonalCommitment[] = [];
+  let slots: ExaminerPersonalCommitment[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(staffNumber.toString(), 'personalCommitments');
+      const mockJournal: ExaminerPersonalCommitment[] = await getMockJournalData(
+        staffNumber.toString(), 'personalCommitments'
+      );
       info('called mock journal from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
-        testSlots.push(mockJournal);
+        slots = slots.concat(mockJournal);
       }
     }
   }
-  return testSlots;
+  return slots;
 };

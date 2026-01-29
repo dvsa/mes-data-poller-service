@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerRecord } from '../../../domain/examiner-record';
-import { TARSUserMock } from './__mocks__/users.mock';
+import { getMockUserData } from '../s3bucket/S3MockJournalsRepository';
 
 /**
  * Get all active examiners, for the specified time window.
@@ -13,7 +13,7 @@ import { TARSUserMock } from './__mocks__/users.mock';
  */
 export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date): Promise<ExaminerRecord[]> => {
   if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSUserMock;
+    return await getMockUserData();
   }
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);

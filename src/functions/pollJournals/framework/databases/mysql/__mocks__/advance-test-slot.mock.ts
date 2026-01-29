@@ -71,16 +71,18 @@ export const TARSAdvanceTestSlotMock: ExaminerAdvanceTestSlot[] = [
 ];
 
 export const getMockNonTestActivites = async (staffNumbers: number[]): Promise<ExaminerAdvanceTestSlot[]> => {
-  const testSlots: ExaminerAdvanceTestSlot[] = [];
+  const slots: ExaminerAdvanceTestSlot[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(staffNumber.toString(), 'advanceTestSlots');
+      const mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(
+        staffNumber.toString(), 'advanceTestSlots'
+      );
       info('called mock journal from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
-        testSlots.push(mockJournal);
+        slots.concat(mockJournal);
       }
     }
   }
-  return testSlots;
+  return slots;
 };

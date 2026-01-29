@@ -55,16 +55,18 @@ export const TARSDeploymentsMock: ExaminerDeployment[] = [
 ];
 
 export const getMockDeployments = async (staffNumbers: number[]): Promise<ExaminerDeployment[]> => {
-  const testSlots: ExaminerDeployment[] = [];
+  let slots: ExaminerDeployment[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(staffNumber.toString(), 'deployments');
+      const mockJournal = await getMockJournalData(
+        staffNumber.toString(), 'deployments'
+      );
       info('called mock journal from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
-        testSlots.push(mockJournal);
+        slots = slots.concat(mockJournal);
       }
     }
   }
-  return testSlots;
+  return slots;
 };

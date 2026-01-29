@@ -627,14 +627,13 @@ export const TARSTestSlotMock = (testSlotRun: number): ExaminerTestSlot[] => [
 ];
 
 export const getMockTestSlots = async (staffNumbers: number[]): Promise<ExaminerTestSlot[]> => {
-  const testSlots: ExaminerTestSlot[] = [];
+  let testSlots: ExaminerTestSlot[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(staffNumber.toString(), 'testSlots');
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      const mockJournal: ExaminerTestSlot[] = await getMockJournalData(staffNumber.toString(), 'testSlots');
       if (mockJournal) {
-        testSlots.push(mockJournal);
+        testSlots = testSlots.concat(mockJournal);
       }
     }
   }
