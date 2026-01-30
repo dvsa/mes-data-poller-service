@@ -4,7 +4,7 @@ import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
-import {getMockNonTestActivites, TARSAdvanceTestSlotMock} from './__mocks__/advance-test-slot.mock';
+import { getMockNonTestActivites } from './__mocks__/advance-test-slot.mock';
 
 /**
  * Get all test slots in the advanced time window.

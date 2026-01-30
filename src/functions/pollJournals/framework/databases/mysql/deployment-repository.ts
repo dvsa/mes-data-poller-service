@@ -4,7 +4,7 @@ import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
-import {getMockDeployments, TARSDeploymentsMock} from './__mocks__/deployments.mock';
+import { getMockDeployments } from './__mocks__/deployments.mock';
 
 /**
  * Get all deployments, for the specified time window.
