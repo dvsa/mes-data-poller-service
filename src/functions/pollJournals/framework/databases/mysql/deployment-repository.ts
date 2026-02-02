@@ -4,20 +4,26 @@ import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerDeployment } from '../../../domain/examiner-deployment';
-import { TARSDeploymentsMock } from './__mocks__/deployments.mock';
+import { getMockDeployments } from './__mocks__/deployments.mock';
 
 /**
  * Get all deployments, for the specified time window.
  * @param connectionPool The MySQL connection pool to use
  * @param startDate The start date of the time window
  * @param durationMonths The duration of the time window, in months
+ * @param examinerIds a list of examiner IDs to pull commitments for when calling the mock data
  * @returns The deployments
  */
-export const getDeployments = async (connectionPool: mysql.Pool, startDate: Date, durationMonths: number):
+export const getDeployments = async (
+  connectionPool: mysql.Pool,
+  startDate: Date,
+  durationMonths: number,
+  examinerIds: number[]
+):
 Promise<ExaminerDeployment[]> => {
 
   if (process.env.USE_MOCK_TARS_DATA) {
-    return TARSDeploymentsMock;
+    return getMockDeployments(examinerIds);
   }
 
   const windowStart = moment(startDate);

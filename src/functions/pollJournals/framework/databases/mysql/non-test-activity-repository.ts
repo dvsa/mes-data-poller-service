@@ -4,20 +4,26 @@ import { mapRow, NonTestActivityRow } from './row-mappers/non-test-activity-row-
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerNonTestActivity } from '../../../domain/examiner-non-test-activity';
-import { TARSNonTestActivitesMock } from './__mocks__/non-test-activites.mock';
+import { getMockNonTestActivites } from './__mocks__/non-test-activites.mock';
 
 /**
  * Get all Non-test activities, within the specified time window.
  * @param connectionPool The MySQL connection pool to use
  * @param startDate The start date of the time window
  * @param endDate The end date of the time window
+ * @param examinerIds a list of examiner IDs to pull commitments for when calling the mock data
  * @returns The Non-test activities
  */
-export const getNonTestActivities = async (connectionPool: mysql.Pool, startDate: Date, endDate: Date)
+export const getNonTestActivities = async (
+  connectionPool: mysql.Pool,
+  startDate: Date,
+  endDate: Date,
+  examinerIds: number[]
+)
 : Promise<ExaminerNonTestActivity[]> => {
 
   if(process.env.USE_MOCK_TARS_DATA) {
-    return TARSNonTestActivitesMock;
+    return getMockNonTestActivites(examinerIds);
   }
 
   const sqlYearFormat = 'YYYY-MM-DD';

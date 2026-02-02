@@ -1,0 +1,109 @@
+import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
+import { addDays, subDays, format } from 'date-fns';
+import {config} from '../../../../../common/framework/config/config';
+
+/**
+ * Creates a client to interact with an S3 bucket
+ */
+const createS3Client = (): S3Client => {
+  try {
+    return new S3Client({
+      region: 'eu-west-1',
+    });
+  } catch (err) {
+    error('Error creating S3 client', err);
+    throw err;
+  }
+};
+
+/**
+ * Recursively replaces all dynamic dates with actual dates
+ */
+export function replaceTodayPlaceholders(obj: any): any {
+  if (Array.isArray(obj)) {
+    return obj.map(replaceTodayPlaceholders);
+  } else if (obj && typeof obj === 'object') {
+    return Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)])
+    );
+  } else if (typeof obj === 'string') {
+    // Match <TODAY>, <TODAY+n>, <TODAY-n>
+    const match = obj.match(/^<TODAY(?:(\+|-)(\d+))?>T(\d{2}:\d{2}:\d{2})$/);
+    if (match) {
+      const [, sign, offsetStr, time] = match;
+      const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
+      let date = new Date();
+      if (sign === '+') date = addDays(date, offset);
+      else if (sign === '-') date = subDays(date, offset);
+      // Set time
+      const [hours, minutes, seconds] = time.split(':').map(Number);
+      date.setHours(hours, minutes, seconds, 0);
+      return format(date, 'yyyy-MM-dd\'T\'HH:mm:ss');
+    }
+    return obj;
+  }
+  return obj;
+}
+
+/**
+ * Get mock journal data from an S3 bucket
+ * @param staffNumber the user's staff number
+ * @param fileName the name of the file to retrieve
+ */
+export const getMockJournalData = async (staffNumber: string, fileName: string): Promise<any | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: `journals/${staffNumber}/${fileName}.json`,
+  };
+  info('params established', params);
+  return replaceTodayPlaceholders(await getDataFromBucket(params));
+};
+
+/**
+ * Get mock user data from an S3 bucket
+ */
+export const getMockUserData = async (): Promise<any | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: 'users.json',
+  };
+  info('params established', params);
+  return await getDataFromBucket(params);
+};
+
+/**
+ * Get data from an S3 bucket via GetObjectCommand
+ * @param params the GetObjectCommandInput parameters for the bucket
+ */
+export const getDataFromBucket = async (params: GetObjectCommandInput): Promise<any | null> => {
+  try {
+    info('Getting mock journal from s3', params);
+    const client = createS3Client();
+    const response = await client.send(new GetObjectCommand(params));
+    if (response?.Body) {
+      info('got response for', params);
+      const stringResponse = await response.Body.transformToString();
+      if (stringResponse) {
+        return JSON.parse(stringResponse);
+      }
+    }
+    info('no valid response for', params);
+    return null;
+  } catch (caught) {
+    if (caught instanceof NoSuchKey) {
+      error(
+        `Error from S3 while getting object "${params.Key}" from "${params.Bucket}". No such key exists.`,
+      );
+    } else if (caught instanceof S3ServiceException) {
+      error(
+        `Error from S3 while getting object from ${params.Bucket}.  ${caught.name}: ${caught.message}`,
+      );
+    } else {
+      error(
+        `Error from S3 ${params.Bucket}.  ${caught.name}: ${caught.message}`,
+      );
+    }
+    return null;
+  }
+};

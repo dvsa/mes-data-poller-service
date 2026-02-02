@@ -2,6 +2,7 @@ import { Config } from '../config';
 
 export const dummyConfig: Config = {
   isOffline: true,
+  s3BucketName: 'bucket',
   dynamodbTableName: 'journals',
   tarsReplicaDatabaseHostname: 'localhost',
   tarsReplicaDatabaseName: 'dummydbname',
