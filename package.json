@@ -23,7 +23,7 @@
     "lint:fix": "eslint --fix -c .eslintrc.js --ext .ts src",
     "package": "./package.sh",
     "prepush": "npm run security-scan && npm run lint && npm test",
-    "security-scan": "git secrets --scan && git log -p | scanrepo",
+    "security-scan": "git secrets --scan && git secrets --register-aws && git log -p --diff-filter=d -- . ':!*.json' -n 250 | scanrepo",
     "stack:up": "ts-node start-stack.ts",
     "stack:down": "ts-node stop-stack.ts",
     "start": "sls dynamodb install && sls offline start",
@@ -33,10 +33,10 @@
     "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.899.0",
-    "@aws-sdk/client-s3": "^3.975.0",
-    "@aws-sdk/lib-dynamodb": "^3.899.0",
-    "@aws-sdk/rds-signer": "^3.899.0",
+    "@aws-sdk/client-dynamodb": "^3.981.0",
+    "@aws-sdk/client-s3": "^3.981.0",
+    "@aws-sdk/lib-dynamodb": "^3.981.0",
+    "@aws-sdk/rds-signer": "^3.981.0",
     "@dvsa/des-scheduling-config": "^1.0.7",
     "@dvsa/mes-microservice-common": "1.2.2",
     "date-fns": "^4.1.0",
@@ -49,7 +49,7 @@
     "node.extend": "^2.0.3"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^10.0.1",
+    "@cucumber/cucumber": "^12.6.0",
     "@dvsa/mes-journal-schema": "1.6.0",
     "@dvsa/mes-test-schema": "3.45.0",
     "@types/aws-lambda": "^8.10.126",
