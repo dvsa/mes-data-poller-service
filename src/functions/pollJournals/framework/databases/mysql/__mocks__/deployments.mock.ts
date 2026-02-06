@@ -1,17 +1,29 @@
 import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { getMockJournalData } from '../../s3bucket/S3MockJournalsRepository';
+import { isWithinInterval } from 'date-fns';
 
-export const getMockDeployments = async (staffNumbers: number[]): Promise<ExaminerDeployment[]> => {
+export const getMockDeployments = async (
+  staffNumbers: number[],
+  startDate: Date,
+  endDate: Date,
+): Promise<ExaminerDeployment[]> => {
   let slots: ExaminerDeployment[] = [];
   for (const staffNumber of staffNumbers) {
     {
       info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal = await getMockJournalData(
+      let mockJournal = await getMockJournalData(
         staffNumber.toString(), 'deployments'
       );
       info('called mock journal from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
+        // Remove any slots outside the date range
+        mockJournal = mockJournal.filter((test: ExaminerDeployment) => {
+          return isWithinInterval(new Date(test.deployment.date), {
+            start: startDate,
+            end: endDate,
+          });
+        });
         slots = slots.concat(mockJournal);
       }
     }

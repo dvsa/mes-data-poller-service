@@ -22,15 +22,15 @@ export const getDeployments = async (
 ):
 Promise<ExaminerDeployment[]> => {
 
-  if (process.env.USE_MOCK_TARS_DATA) {
-    return getMockDeployments(examinerIds);
-  }
-
   const windowStart = moment(startDate);
   const windowEnd = windowStart.clone().add({months: durationMonths}).subtract({days: 1});
   const sqlDateFormat = 'YYYY-MM-DD';
   const windowStartString = windowStart.format(sqlDateFormat);
   const windowEndString = windowEnd.format(sqlDateFormat);
+
+  if (process.env.USE_MOCK_TARS_DATA) {
+    return getMockDeployments(examinerIds, new Date(windowStartString), new Date(windowEndString));
+  }
 
   info(`running deployment query from on ${windowStartString} to ${windowEndString}...`);
   const start = new Date();
