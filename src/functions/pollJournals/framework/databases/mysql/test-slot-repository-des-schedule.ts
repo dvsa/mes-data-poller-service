@@ -139,13 +139,10 @@ export const getDSPTestSlots = async (
           lte(ScheduleBookings.testslot_start, windowEnd),
         ));
 
-    info('query complete.', drizzleBookingQuery.toSQL());
-
     const rows = await drizzleBookingQuery;
 
     info('DES Slots query returned rows:', rows.length);
     const results: ExaminerTestSlot[] = rows.map((r: any): ExaminerTestSlot => {
-      info('Mapping DES test slot for booking reference:', r.bookingReference);
       const mappedData: ExaminerTestSlot = {
         examinerId: examinerRecords.find(
           (record: ExaminerRecord) => record.staff_number === r.examinerStaffNumber
@@ -232,8 +229,6 @@ export const getDSPTestSlots = async (
       };
       return stripNulls(mappedData) as ExaminerTestSlot;
     });
-
-    info('Mapping complete. ', results);
 
     const end = new Date();
     info(`Finished DES Slots run - ${results.length} test slots loaded and mapped`);

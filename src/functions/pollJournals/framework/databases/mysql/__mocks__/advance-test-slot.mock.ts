@@ -1,20 +1,33 @@
 import { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { getMockJournalData } from '../../s3bucket/S3MockJournalsRepository';
+import { isWithinInterval } from 'date-fns';
 
-export const getMockNonTestActivites = async (staffNumbers: number[]): Promise<ExaminerAdvanceTestSlot[]> => {
-  const slots: ExaminerAdvanceTestSlot[] = [];
+export const getMockAdvancedTestSlots = async (
+  staffNumbers: number[],
+  windowStart: Date,
+  windowEnd: Date
+): Promise<ExaminerAdvanceTestSlot[]> => {
+  let slots: ExaminerAdvanceTestSlot[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
-      const mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(
+      info('calling mock advancedTestSlots from s3', staffNumber.toString());
+      let mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(
         staffNumber.toString(), 'advanceTestSlots'
       );
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      info('called mock advancedTestSlots from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
-        slots.concat(mockJournal);
+        // Remove any slots outside the date range
+        mockJournal = mockJournal.filter((test: ExaminerAdvanceTestSlot) => {
+          return isWithinInterval(new Date(test.advanceTestSlot.slotDetail.start), {
+            start: windowStart,
+            end: windowEnd,
+          });
+        });
+        slots = slots.concat(mockJournal);
       }
     }
   }
+  info('finished building advanced slots', slots);
   return slots;
 };
