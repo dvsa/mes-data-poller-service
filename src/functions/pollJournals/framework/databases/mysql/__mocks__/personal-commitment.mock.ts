@@ -6,11 +6,11 @@ export const getMockPersonalCommitments = async (staffNumbers: number[]): Promis
   let slots: ExaminerPersonalCommitment[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
+      info('calling mock personalCommitment from s3', staffNumber.toString());
       const mockJournal: ExaminerPersonalCommitment[] = await getMockJournalData(
         staffNumber.toString(), 'personalCommitments'
       );
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      info('called mock personalCommitment from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
         slots = slots.concat(mockJournal);
       }

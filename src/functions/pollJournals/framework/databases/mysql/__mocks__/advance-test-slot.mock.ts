@@ -8,14 +8,14 @@ export const getMockAdvancedTestSlots = async (
   windowStart: Date,
   windowEnd: Date
 ): Promise<ExaminerAdvanceTestSlot[]> => {
-  const slots: ExaminerAdvanceTestSlot[] = [];
+  let slots: ExaminerAdvanceTestSlot[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
+      info('calling mock advancedTestSlots from s3', staffNumber.toString());
       let mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(
         staffNumber.toString(), 'advanceTestSlots'
       );
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      info('called mock advancedTestSlots from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
         // Remove any slots outside the date range
         mockJournal = mockJournal.filter((test: ExaminerAdvanceTestSlot) => {
@@ -24,9 +24,10 @@ export const getMockAdvancedTestSlots = async (
             end: windowEnd,
           });
         });
-        slots.concat(mockJournal);
+        slots = slots.concat(mockJournal);
       }
     }
   }
+  info('finished building advanced slots', slots);
   return slots;
 };

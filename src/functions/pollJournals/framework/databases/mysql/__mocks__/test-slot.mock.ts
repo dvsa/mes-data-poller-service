@@ -11,7 +11,7 @@ export const getMockTestSlots = async (
   let testSlots: ExaminerTestSlot[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
+      info('calling mock test slots from s3', staffNumber.toString());
       let mockJournal: ExaminerTestSlot[] = await getMockJournalData(staffNumber.toString(), 'testSlots');
       if (mockJournal) {
         // Remove any slots outside the date range

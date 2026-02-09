@@ -11,11 +11,11 @@ export const getMockNonTestActivities = async (
   let slots: ExaminerNonTestActivity[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
+      info('calling mock non-tests from s3', staffNumber.toString());
       let mockJournal: ExaminerNonTestActivity[] = await getMockJournalData(
         staffNumber.toString(), 'nonTestActivities'
       );
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      info('called mock non-tests from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
         // Remove any slots outside the date range
         mockJournal = mockJournal.filter((test: ExaminerNonTestActivity) => {

@@ -11,11 +11,11 @@ export const getMockDeployments = async (
   let slots: ExaminerDeployment[] = [];
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock journal from s3', staffNumber.toString());
+      info('calling mock deployments from s3', staffNumber.toString());
       let mockJournal = await getMockJournalData(
         staffNumber.toString(), 'deployments'
       );
-      info('called mock journal from s3', staffNumber.toString(), mockJournal);
+      info('called mock deployments from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
         // Remove any slots outside the date range
         mockJournal = mockJournal.filter((test: ExaminerDeployment) => {
