@@ -1,7 +1,10 @@
 import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
 import { addDays, subDays, format } from 'date-fns';
-import {config} from '../../../../../common/framework/config/config';
+import { config } from '../../../../../common/framework/config/config';
+import { UniversalPermissionRecord } from '../../../../pollUsers/framework/repositories/get-universal-permissions';
+import { ExaminerQueryRecord } from '../../../../../common/application/models/examiner-details';
+import { ExaminerRecord } from '../../../domain/examiner-record';
 
 /**
  * Creates a client to interact with an S3 bucket
@@ -25,7 +28,7 @@ export function replaceTodayPlaceholders(obj: any): any {
     return obj.map(replaceTodayPlaceholders);
   } else if (obj && typeof obj === 'object') {
     return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)])
+      Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)]),
     );
   } else if (typeof obj === 'string') {
     // Match <TODAY>, <TODAY+n>, <TODAY-n>
@@ -34,8 +37,9 @@ export function replaceTodayPlaceholders(obj: any): any {
       const [, sign, offsetStr, time] = match;
       const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
       let date = new Date();
-      if (sign === '+') date = addDays(date, offset);
-      else if (sign === '-') date = subDays(date, offset);
+      if (sign === '+') {
+        date = addDays(date, offset);
+      } else if (sign === '-') date = subDays(date, offset);
       // Set time
       const [hours, minutes, seconds] = time.split(':').map(Number);
       date.setHours(hours, minutes, seconds, 0);
@@ -60,10 +64,38 @@ export const getMockJournalData = async (staffNumber: string, fileName: string):
   return replaceTodayPlaceholders(await getDataFromBucket(params));
 };
 
+export const getMockUniversalPermissions = async (): Promise<UniversalPermissionRecord[] | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: 'universal-test-permissions.json',
+  };
+  info('params established', params);
+  return (await getDataFromBucket(params));
+};
+
+export const getMockActiveExaminers = async (): Promise<ExaminerQueryRecord[] | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: 'active-examiners.json',
+  };
+  info('params established', params);
+  const examinersInBucket = await getDataFromBucket(params);
+  if (examinersInBucket) {
+    return examinersInBucket.map((examiner) => {
+      return {
+        ...examiner,
+        with_effect_from: examiner.with_effect_from ? new Date(examiner.with_effect_from) : null,
+        with_effect_to: examiner.with_effect_to ? new Date(examiner.with_effect_to) : null,
+      };
+    });
+  }
+  return null;
+};
+
 /**
  * Get mock user data from an S3 bucket
  */
-export const getMockUserData = async (): Promise<any | null> => {
+export const getMockUserData = async (): Promise<ExaminerRecord[] | null> => {
   const params = {
     Bucket: config().s3BucketName,
     Key: 'users.json',

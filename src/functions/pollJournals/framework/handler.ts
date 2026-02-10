@@ -12,7 +12,7 @@ export async function handler(event: APIGatewayProxyEvent, fnCtx: Context): Prom
     const startTime = new Date();
 
     bootstrapLogging('journals-poller', event);
-    await bootstrapConfig(DdbTableTypes.JOURNALS);
+    await bootstrapConfig(DdbTableTypes.JOURNALS, true);
     await transferDatasets(startTime);
     return createResponse({});
   } catch (err) {
