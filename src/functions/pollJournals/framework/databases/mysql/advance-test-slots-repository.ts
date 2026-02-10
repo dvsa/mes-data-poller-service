@@ -26,7 +26,7 @@ export const getAdvanceTestSlots = async (
   const windowStart = moment(nextWorkingDay).add({days: 1}).format(sqlYearFormat);
   const windowEnd = moment(startDate).add({days: (daysRange - 1)}).format(sqlYearFormat);
 
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     info(`running advanced test mock data from ${windowStart} to ${windowEnd}...`);
     return getMockAdvancedTestSlots(
       examinerIds,

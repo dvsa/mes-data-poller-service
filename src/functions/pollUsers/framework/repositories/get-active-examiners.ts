@@ -9,7 +9,7 @@ import {info} from '@dvsa/mes-microservice-common/application/utils/logger';
 export const getActiveExaminers = async (
   universalPermissionPeriods: TestPermissionPeriod[],
 ): Promise<StaffDetail[]> => {
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     info('Getting mock activeExaminers');
     return buildStaffDetailsFromQueryResult(await getMockActiveExaminers(), universalPermissionPeriods);
   }

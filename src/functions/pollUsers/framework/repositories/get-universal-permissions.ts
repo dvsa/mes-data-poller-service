@@ -17,7 +17,7 @@ export interface UniversalPermissionRecord {
  * Extract effective dates for test categories that apply to all users.
  */
 export const getUniversalTestPermissions = async () => {
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     info('Getting mock universal permissions');
     return (await getMockUniversalPermissions());
   }

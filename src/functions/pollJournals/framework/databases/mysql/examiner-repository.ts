@@ -12,7 +12,7 @@ import { getMockUserData } from '../s3bucket/S3MockJournalsRepository';
  * @returns The examiners
  */
 export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date): Promise<ExaminerRecord[]> => {
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return await getMockUserData();
   }
   const sqlYearFormat = 'YYYY-MM-DD';
