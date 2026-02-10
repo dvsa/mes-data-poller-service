@@ -1,10 +1,12 @@
 import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
 import { addDays, subDays, format } from 'date-fns';
-import { config } from '../../../../../common/framework/config/config';
-import { UniversalPermissionRecord } from '../../../../pollUsers/framework/repositories/get-universal-permissions';
-import { ExaminerQueryRecord } from '../../../../../common/application/models/examiner-details';
-import { ExaminerRecord } from '../../../domain/examiner-record';
+import { config } from '../config/config';
+import {
+  UniversalPermissionRecord,
+} from '../../../functions/pollUsers/framework/repositories/get-universal-permissions';
+import { ExaminerQueryRecord } from '../../application/models/examiner-details';
+import { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
 
 /**
  * Creates a client to interact with an S3 bucket
@@ -70,7 +72,16 @@ export const getMockUniversalPermissions = async (): Promise<UniversalPermission
     Key: 'universal-test-permissions.json',
   };
   info('params established', params);
-  return (await getDataFromBucket(params));
+  const examinersInBucket = await getDataFromBucket(params);
+  if (examinersInBucket) {
+    return examinersInBucket.map((examiner) => {
+      return {
+        ...examiner,
+        with_effect_from: new Date(examiner.with_effect_from),
+        with_effect_to: examiner.with_effect_to ? new Date(examiner.with_effect_to) : null,
+      };
+    });
+  }
 };
 
 export const getMockActiveExaminers = async (): Promise<ExaminerQueryRecord[] | null> => {

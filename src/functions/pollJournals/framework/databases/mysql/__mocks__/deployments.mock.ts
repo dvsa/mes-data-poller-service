@@ -1,6 +1,6 @@
 import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { getMockJournalData } from '../../s3bucket/S3MockJournalsRepository';
+import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
 import { isWithinInterval } from 'date-fns';
 
 export const getMockDeployments = async (

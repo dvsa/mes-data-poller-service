@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { ExaminerRecord } from '../../../domain/examiner-record';
-import { getMockUserData } from '../s3bucket/S3MockJournalsRepository';
+import { getMockUserData } from '../../../../../common/framework/s3bucket/S3MockJournalsRepository';
 
 /**
  * Get all active examiners, for the specified time window.

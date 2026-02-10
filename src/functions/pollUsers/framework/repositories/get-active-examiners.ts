@@ -3,7 +3,7 @@ import { getTARSConnection, query } from '../../../../common/framework/mysql/dat
 import { buildStaffDetailsFromQueryResult } from './examiner-record-row';
 import { ExaminerQueryRecord } from '../../../../common/application/models/examiner-details';
 import { ActiveExaminersSql } from '../databases/mysql/active-examiners';
-import { getMockActiveExaminers } from '../../../pollJournals/framework/databases/s3bucket/S3MockJournalsRepository';
+import { getMockActiveExaminers } from '../../../../common/framework/s3bucket/S3MockJournalsRepository';
 import {info} from '@dvsa/mes-microservice-common/application/utils/logger';
 
 export const getActiveExaminers = async (

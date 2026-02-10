@@ -3,8 +3,8 @@ import { TestPermissionPeriod } from '../../../../common/application/models/staf
 import { getTARSConnection, query } from '../../../../common/framework/mysql/database';
 import {
   getMockUniversalPermissions,
-} from '../../../pollJournals/framework/databases/s3bucket/S3MockJournalsRepository';
-import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
+} from '../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 
 
 export interface UniversalPermissionRecord {
@@ -17,13 +17,19 @@ export interface UniversalPermissionRecord {
  * Extract effective dates for test categories that apply to all users.
  */
 export const getUniversalTestPermissions = async () => {
-  if (process.env.USE_MOCK_TARS_DATA === 'true') {
-    info('Getting mock universal permissions');
-    return (await getMockUniversalPermissions());
+  try {
+    let queryResult: any[];
+    if (process.env.USE_MOCK_TARS_DATA === 'true') {
+      info('Getting mock universal permissions');
+      queryResult = await getMockUniversalPermissions();
+    } else {
+      const connection = getTARSConnection();
+      queryResult = await query(connection, UniversalPermissionRecordSql());
+    }
+    return queryResult.map(record => mapUniversalPermissionRecord(record));
+  } catch (err) {
+    error('Error getting universal test permissions', err);
   }
-  const connection = getTARSConnection();
-  const queryResult = await query(connection, UniversalPermissionRecordSql());
-  return queryResult.map(record => mapUniversalPermissionRecord(record));
 };
 
 const mapUniversalPermissionRecord = (record: UniversalPermissionRecord): TestPermissionPeriod => {
