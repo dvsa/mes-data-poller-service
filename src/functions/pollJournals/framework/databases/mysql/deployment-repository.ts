@@ -28,7 +28,7 @@ Promise<ExaminerDeployment[]> => {
   const windowStartString = windowStart.format(sqlDateFormat);
   const windowEndString = windowEnd.format(sqlDateFormat);
 
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return getMockDeployments(examinerIds, new Date(windowStartString), new Date(windowEndString));
   }
 

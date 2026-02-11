@@ -43,7 +43,7 @@ describe('pollJournals handler', () => {
   it('should bootstrap configuration, transferDatasets and return a blank response', async () => {
     const result = await handler(dummyApigwEvent, dummyContext);
 
-    moqConfigBootstrap.verify(x => x(DdbTableTypes.JOURNALS), Times.once());
+    moqConfigBootstrap.verify(x => x(DdbTableTypes.JOURNALS, true), Times.once());
     moqTransferDatasets.verify(x => x(It.isAny()), Times.once());
     moqCreateResponse.verify(x => x(It.isValue({})), Times.once());
     expect(result).toBe(moqResponse.object);

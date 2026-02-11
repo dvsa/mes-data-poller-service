@@ -22,7 +22,7 @@ export const getNonTestActivities = async (
 )
 : Promise<ExaminerNonTestActivity[]> => {
 
-  if(process.env.USE_MOCK_TARS_DATA) {
+  if(process.env.USE_MOCK_TARS_DATA === 'true') {
     return getMockNonTestActivities(examinerIds, startDate, endDate);
   }
 

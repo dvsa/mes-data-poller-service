@@ -2,35 +2,49 @@ import {
   throwIfNotPresent,
   tryFetchRdsAccessToken,
 } from './config-helpers';
-import { ddbTable, DdbTableTypes } from '../../application/utils/ddbTable';
+import {ddbTable, DdbTableTypes} from '../../application/utils/ddbTable';
+import {error} from '@dvsa/mes-microservice-common/application/utils/logger';
 
 let configuration: Config;
 
-export const bootstrapConfig = async (type: DdbTableTypes) => {
+export const bootstrapConfig = async (type: DdbTableTypes, mandateDESDatabaseDetails: boolean = false) => {
+  try {
+    configuration = {
+      s3BucketName: process.env.S3_BUCKET_NAME,
+      isOffline: !!process.env.IS_OFFLINE,
+      dynamodbTableName: ddbTable(type),
+      tarsReplicaDatabaseHostname: throwIfNotPresent(
+        process.env.TARS_REPLICA_HOST_NAME,
+        'tarsReplicateDatabaseHostname',
+      ),
+      tarsReplicaDatabaseName: throwIfNotPresent(
+        process.env.TARS_REPLICA_DB_NAME,
+        'tarsReplicaDatabaseName',
+      ),
+      tarsReplicaDatabaseUsername: throwIfNotPresent(
+        process.env.TARS_REPLICA_DB_USERNAME,
+        'tarsReplicaDatabaseUsername',
+      ),
+      tarsReplicaDatabasePassword: await tryFetchRdsAccessToken(
+        process.env.TARS_REPLICA_ENDPOINT,
+        process.env.TARS_REPLICA_DB_USERNAME,
+        'SECRET_DB_PASSWORD_KEY',
+        'tarsReplicateDatabaseHostname',
+        'tarsReplicaDatabaseUsername',
+      ),
+      timeTravelDate: process.env.TIME_TRAVEL_DATE,
+    };
+    if (mandateDESDatabaseDetails) {
+      await bootstrapDESDatabaseConfig();
+    }
+  } catch (err) {
+    error('error setting up config', err);
+  }
+};
+
+const bootstrapDESDatabaseConfig = async () => {
   configuration = {
-    s3BucketName: process.env.S3_BUCKET_NAME,
-    isOffline: !!process.env.IS_OFFLINE,
-    dynamodbTableName: ddbTable(type),
-    tarsReplicaDatabaseHostname: throwIfNotPresent(
-      process.env.TARS_REPLICA_HOST_NAME,
-      'tarsReplicateDatabaseHostname',
-    ),
-    tarsReplicaDatabaseName: throwIfNotPresent(
-      process.env.TARS_REPLICA_DB_NAME,
-      'tarsReplicaDatabaseName',
-    ),
-    tarsReplicaDatabaseUsername: throwIfNotPresent(
-      process.env.TARS_REPLICA_DB_USERNAME,
-      'tarsReplicaDatabaseUsername',
-    ),
-    tarsReplicaDatabasePassword: await tryFetchRdsAccessToken(
-      process.env.TARS_REPLICA_ENDPOINT,
-      process.env.TARS_REPLICA_DB_USERNAME,
-      'SECRET_DB_PASSWORD_KEY',
-      'tarsReplicateDatabaseHostname',
-      'tarsReplicaDatabaseUsername'
-    ),
-    timeTravelDate: process.env.TIME_TRAVEL_DATE,
+    ...configuration,
     desDatabaseHostname: throwIfNotPresent(
       process.env.DES_DATABASE_HOSTNAME,
       'desDatabaseHostname',
@@ -81,10 +95,10 @@ export type Config = {
   tarsReplicaDatabaseUsername: string;
   tarsReplicaDatabasePassword: string;
   timeTravelDate: string;
-  desDatabaseHostname: string;
-  desDatabaseName: string;
-  desDatabaseUsername: string;
-  desDatabasePassword: string;
+  desDatabaseHostname?: string;
+  desDatabaseName?: string;
+  desDatabaseUsername?: string;
+  desDatabasePassword?: string;
 };
 
 export const config = (): Config => configuration;

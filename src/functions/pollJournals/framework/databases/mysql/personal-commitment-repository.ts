@@ -21,7 +21,7 @@ export const getPersonalCommitments = async (
   examinerIds: number[]
 ):
 Promise<ExaminerPersonalCommitment[]> => {
-  if (process.env.USE_MOCK_TARS_DATA) {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return getMockPersonalCommitments(examinerIds);
   }
   const windowStart = moment(startDate);
