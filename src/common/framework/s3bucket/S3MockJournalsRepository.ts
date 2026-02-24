@@ -1,13 +1,13 @@
-import {error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
-import {GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException} from '@aws-sdk/client-s3';
-import {addDays, subDays, format} from 'date-fns';
-import {config} from '../config/config';
+import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
+import { addDays, subDays, format } from 'date-fns';
+import { config } from '../config/config';
 import {
   UniversalPermissionRecord,
 } from '../../../functions/pollUsers/framework/repositories/get-universal-permissions';
-import {ExaminerQueryRecord} from '../../application/models/examiner-details';
-import {ExaminerRecord} from '../../../functions/pollJournals/domain/examiner-record';
-import {TestCentreRow} from '../../application/models/test-centre-journal';
+import { ExaminerQueryRecord } from '../../application/models/examiner-details';
+import { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
+import { TestCentreRow } from '../../application/models/test-centre-journal';
 
 /**
  * Creates a client to interact with an S3 bucket
