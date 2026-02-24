@@ -8,6 +8,9 @@ import {
 import { ExaminerQueryRecord } from '../../application/models/examiner-details';
 import { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
 import { TestCentreRow } from '../../application/models/test-centre-journal';
+import {
+  DelegatedTestSlotRow,
+} from '../../../functions/pollDelegatedBookings/framework/repo/mysql/delegated-examiner-bookings-repository';
 
 /**
  * Creates a client to interact with an S3 bucket
@@ -102,6 +105,15 @@ export const getMockActiveExaminers = async (): Promise<ExaminerQueryRecord[] | 
     });
   }
   return null;
+};
+
+export const getMockDelegatedBookings = async (): Promise<DelegatedTestSlotRow[] | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: 'delegated-bookings.json',
+  };
+  info('params established', params);
+  return replaceTodayPlaceholders(await getDataFromBucket(params));
 };
 
 export const getMockTestCentreExaminers = async (): Promise<TestCentreRow[] | null> => {
