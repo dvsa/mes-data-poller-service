@@ -1,18 +1,35 @@
-import { getConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
+import {getConnectionPool, getTARSConnection, poolQuery, query} from '../../../../../common/framework/mysql/database';
 import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
 import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import * as mysql from 'mysql2';
 import { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
+import {error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
+import {
+  getMockTestCentreExaminers,
+  getMockUniversalPermissions,
+} from '../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import {UniversalPermissionRecordSql} from '../../../../pollUsers/framework/databases/mysql/universal-permissions';
 
 export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
-  const connection = getConnectionPool('TARS');
-
-  await poolQuery(connection, 'SET SESSION group_concat_max_len = 65000');
-  const queryResult: TestCentreRow[] = await poolQuery(
-    connection,
-    getTestCentreQuery()
-  );
-  return buildTestCentreRowsFromQueryResult(queryResult);
+  try {
+    let queryResult: TestCentreRow[] = [];
+    if (process.env.USE_MOCK_TARS_DATA === 'true') {
+      info('Getting mock universal permissions');
+      queryResult = await getMockTestCentreExaminers();
+      info('got permissions', queryResult);
+    } else {
+      const connection = getConnectionPool('TARS');
+      await poolQuery(connection, 'SET SESSION group_concat_max_len = 65000');
+      queryResult = await poolQuery(
+        connection,
+        getTestCentreQuery()
+      );
+    }
+    return buildTestCentreRowsFromQueryResult(queryResult);
+  } catch (err) {
+    error('Error getting active test centre examiners', err);
+    return [];
+  }
 };
 
 const getTestCentreQuery = (): string => {
