@@ -7,6 +7,7 @@ import {
 } from '../../../functions/pollUsers/framework/repositories/get-universal-permissions';
 import { ExaminerQueryRecord } from '../../application/models/examiner-details';
 import { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
+import { TestCentreRow } from '../../application/models/test-centre-journal';
 
 /**
  * Creates a client to interact with an S3 bucket
@@ -101,6 +102,15 @@ export const getMockActiveExaminers = async (): Promise<ExaminerQueryRecord[] | 
     });
   }
   return null;
+};
+
+export const getMockTestCentreExaminers = async (): Promise<TestCentreRow[] | null> => {
+  const params = {
+    Bucket: config().s3BucketName,
+    Key: 'test-centre-examiners.json',
+  };
+  info('params established', params);
+  return await getDataFromBucket(params);
 };
 
 /**
