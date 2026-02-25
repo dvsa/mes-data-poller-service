@@ -2,6 +2,8 @@ import { getTARSConnection, query } from '../../../../../common/framework/mysql/
 import { buildDelegatedBookingsFromQueryResult } from './delegated-examiner-bookings-row-mapper';
 import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 import { VehicleTypeCode } from '@dvsa/mes-journal-schema';
+import { getMockDelegatedBookings } from '../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import { error } from '@dvsa/mes-microservice-common/application/utils/logger';
 
 export interface DelegatedTestSlotRow {
   app_id: number;
@@ -27,11 +29,16 @@ export interface DelegatedTestSlotRow {
 
 export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBookingDetail[]> => {
 
-  const connection = getTARSConnection();
+  try {
+    let queryResult: DelegatedTestSlotRow[];
 
-  const queryResult: DelegatedTestSlotRow[] = await query(
-    connection,
-    `SELECT ps.slot_id
+    if (process.env.USE_MOCK_TARS_DATA === 'true') {
+      queryResult = await getMockDelegatedBookings();
+    } else {
+      const connection = getTARSConnection();
+      queryResult = await query(
+        connection,
+        `SELECT ps.slot_id
      , ps.start_time
      , bk.app_id
      , bk.booking_id
@@ -72,7 +79,12 @@ export const getActiveDelegatedExaminerBookings = async (): Promise<DelegatedBoo
   JOIN tarsreplica.TEST_CENTRE_NAME tcn
     ON tcn.tc_id = tc.tc_id
 WHERE ex.grade_code = 'DELE'`,
-  );
+      );
+    }
 
-  return buildDelegatedBookingsFromQueryResult(queryResult);
+    return buildDelegatedBookingsFromQueryResult(queryResult);
+  } catch (err) {
+    error('Error retrieving active delegated examiner bookings', err);
+    return [];
+  }
 };
