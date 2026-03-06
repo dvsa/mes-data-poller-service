@@ -1,20 +1,20 @@
 import { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
-import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
 
 export const getMockPersonalCommitments = async (staffNumbers: number[]): Promise<ExaminerPersonalCommitment[]> => {
   let slots: ExaminerPersonalCommitment[] = [];
+  debug('calling mock personalCommitment from s3');
   for (const staffNumber of staffNumbers) {
     {
-      info('calling mock personalCommitment from s3', staffNumber.toString());
       const mockJournal: ExaminerPersonalCommitment[] = await getMockJournalData(
         staffNumber.toString(), 'personalCommitments'
       );
-      info('called mock personalCommitment from s3', staffNumber.toString(), mockJournal);
       if (mockJournal) {
         slots = slots.concat(mockJournal);
       }
     }
   }
+  debug('called mock personalCommitment from s3', slots);
   return slots;
 };

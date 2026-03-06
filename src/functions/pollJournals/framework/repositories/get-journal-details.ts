@@ -34,7 +34,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
   const journalEndDate: Date = getJournalEndDate() || nextWorkingDay;
 
   info(`Loading journals for ${examiners.length} examiners from ${moment(journalStartDate).format('DD-MM-YYYY')}` +
-    ` to ${moment(journalEndDate).format('DD-MM-YYYY')}...`);
+    ` to ${moment(journalEndDate).format('DD-MM-YYYY')}`);
 
   const [
     personalCommitments,
@@ -47,7 +47,7 @@ export const getJournalDetails = async (startTime: Date, startDate: Date, journa
     getNonTestActivities(connectionPool, journalStartDate, journalEndDate, examinerIds),
     getAdvanceTestSlots(connectionPool, startDate, journalEndDate, 14, examinerIds), // 14 days range
     getDeployments(connectionPool, startDate, 6, examinerIds), // 6 months range
-    process.env.GET_DSP_BOOKINGS ?
+    process.env.GET_DSP_BOOKINGS === 'true' ?
       getDSPTestSlots(getConnectionPool('DSP'), examiners, journalStartDate, journalEndDate)
       : [],
   ]);

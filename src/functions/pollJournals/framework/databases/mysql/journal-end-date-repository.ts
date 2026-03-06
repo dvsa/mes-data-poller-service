@@ -22,7 +22,7 @@ export const getNextWorkingDay = async (connectionPool: mysql.Pool, startDate: D
   const sqlYearFormat = 'YYYY-MM-DD';
   const windowStart = moment(startDate).format(sqlYearFormat);
 
-  info(`running journal end date query starting on ${windowStart}...`);
+  info(`running journal end date query starting on ${windowStart}`);
   const res: JournalEndDateRow[] = await poolQuery(
     connectionPool,
     mysql.format(

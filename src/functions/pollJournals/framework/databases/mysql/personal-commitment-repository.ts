@@ -30,7 +30,7 @@ Promise<ExaminerPersonalCommitment[]> => {
   const windowStartString = windowStart.format(sqlDateTimeFormat);
   const windowEndString = windowEnd.format(sqlDateTimeFormat);
 
-  info(`Running query for personal commitments from ${windowStartString} to ${windowEndString}...`);
+  info(`Running query for personal commitments from ${windowStartString} to ${windowEndString}`);
   const start = new Date();
   const res: PersonalCommitmentRow[] = await poolQuery(
     connectionPool,
