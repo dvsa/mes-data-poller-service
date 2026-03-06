@@ -1,4 +1,4 @@
-import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { debug, error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
 import { addDays, subDays, format } from 'date-fns';
 import { config } from '../config/config';
@@ -121,7 +121,7 @@ export const getMockTestCentreExaminers = async (): Promise<TestCentreRow[] | nu
     Bucket: config().s3BucketName,
     Key: 'test-centre-examiners.json',
   };
-  info('params established', params);
+  debug('params established', params);
   return await getDataFromBucket(params);
 };
 
@@ -133,7 +133,7 @@ export const getMockUserData = async (): Promise<ExaminerRecord[] | null> => {
     Bucket: config().s3BucketName,
     Key: 'users.json',
   };
-  info('params established', params);
+  debug('params established', params);
   return await getDataFromBucket(params);
 };
 
@@ -143,17 +143,17 @@ export const getMockUserData = async (): Promise<ExaminerRecord[] | null> => {
  */
 export const getDataFromBucket = async (params: GetObjectCommandInput): Promise<any | null> => {
   try {
-    info('Getting mock journal from s3', params);
+    debug('Getting mock journal from s3', params);
     const client = createS3Client();
     const response = await client.send(new GetObjectCommand(params));
     if (response?.Body) {
-      info('got response for', params);
+      debug('got response for', params);
       const stringResponse = await response.Body.transformToString();
       if (stringResponse) {
         return JSON.parse(stringResponse);
       }
     }
-    info('no valid response for', params);
+    debug('no valid response for', params);
     return null;
   } catch (caught) {
     if (caught instanceof NoSuchKey) {

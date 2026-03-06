@@ -27,14 +27,14 @@ export const getAdvanceTestSlots = async (
   const windowEnd = moment(startDate).add({days: (daysRange - 1)}).format(sqlYearFormat);
 
   if (process.env.USE_MOCK_TARS_DATA === 'true') {
-    info(`running advanced test mock data from ${windowStart} to ${windowEnd}...`);
+    info(`running advanced test mock data from ${windowStart} to ${windowEnd}`);
     return getMockAdvancedTestSlots(
       examinerIds,
       new Date(windowEnd),
       new Date(windowStart));
   }
 
-  info(`running advanced test slots query from ${windowStart} to ${windowEnd}...`);
+  info(`running advanced test slots query from ${windowStart} to ${windowEnd}`);
   const start = new Date();
   const res = await poolQuery(
     connectionPool,
