@@ -1,11 +1,10 @@
 import * as moment from 'moment';
-import { transferDatasets } from '../transfer-datasets';
-import * as journalDetailsRepo from '../../framework/repositories/get-journal-details';
 import * as config from '../../../../common/framework/config/config';
+import * as journalDetailsRepo from '../../framework/repositories/get-journal-details';
+import { transferDatasets } from '../transfer-datasets';
 
 describe('transferDatasets', () => {
   let mockGetJournalDetails: jasmine.Spy;
-  let mockGetInactiveExaminers: jasmine.Spy;
   let mockConfig: jasmine.Spy;
 
   beforeEach(() => {

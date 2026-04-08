@@ -16,5 +16,4 @@ describe('DateTime', () => {
     expect(today.daysDiff(new Date(tomorrow.format('YYYY-MM-DD')))).toBe(1);
     expect(today.daysDiff(new Date(yesterday.format('YYYY-MM-DD')))).toBe(-1);
   });
-
 });

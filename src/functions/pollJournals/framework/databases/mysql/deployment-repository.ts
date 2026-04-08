@@ -1,10 +1,10 @@
-import * as mysql from 'mysql2';
-import * as moment from 'moment';
-import { DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
-import { poolQuery } from '../../../../../common/framework/mysql/database';
 import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerDeployment } from '../../../domain/examiner-deployment';
+import * as moment from 'moment';
+import * as mysql from 'mysql2';
+import { poolQuery } from '../../../../../common/framework/mysql/database';
+import type { ExaminerDeployment } from '../../../domain/examiner-deployment';
 import { getMockDeployments } from './__mocks__/deployments.mock';
+import { type DeploymentRow, mapRow } from './row-mappers/deployment-row-mapper';
 
 /**
  * Get all deployments, for the specified time window.
@@ -19,11 +19,9 @@ export const getDeployments = async (
   startDate: Date,
   durationMonths: number,
   examinerIds: number[]
-):
-Promise<ExaminerDeployment[]> => {
-
+): Promise<ExaminerDeployment[]> => {
   const windowStart = moment(startDate);
-  const windowEnd = windowStart.clone().add({months: durationMonths}).subtract({days: 1});
+  const windowEnd = windowStart.clone().add({ months: durationMonths }).subtract({ days: 1 });
   const sqlDateFormat = 'YYYY-MM-DD';
   const windowStartString = windowStart.format(sqlDateFormat);
   const windowEndString = windowEnd.format(sqlDateFormat);
@@ -64,7 +62,7 @@ Promise<ExaminerDeployment[]> => {
               > ?
               )
       `,
-      [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString],
+      [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString]
     )
   );
   const results = res.map(mapRow);

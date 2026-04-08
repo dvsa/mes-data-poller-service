@@ -1,8 +1,7 @@
 import * as mysql from 'mysql2';
 
 export const UniversalPermissionRecordSql = (): string => {
-  const template =
-    `
+  const template = `
         SELECT test_category_ref,
                with_effect_from,
                with_effect_to

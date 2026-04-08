@@ -1,4 +1,4 @@
-import { DelegatedTestSlotRow } from '../delegated-examiner-bookings-repository';
+import type { DelegatedTestSlotRow } from '../delegated-examiner-bookings-repository';
 
 export const mockDelegatedBookingRows: DelegatedTestSlotRow[] = [
   {

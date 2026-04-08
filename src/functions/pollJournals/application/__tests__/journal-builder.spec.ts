@@ -1,7 +1,8 @@
-import { buildJournals } from '../journal-builder';
-import { AllDatasets } from '../../domain/all-datasets';
+import { It, Mock, Times } from 'typemoq';
 import * as journalCompressor from '../../application/journal-compressor';
-import { Mock, It, Times } from 'typemoq';
+import type { AllDatasets } from '../../domain/all-datasets';
+import { buildJournals } from '../journal-builder';
+
 const examiners = [
   {
     individual_id: 111,
@@ -21,7 +22,7 @@ describe('buildJournals', () => {
 
     spyOn(journalCompressor, 'compressJournal').and.callFake(moqCompressJournal.object);
 
-    moqCompressJournal.setup(x => x(It.isAny())).returns(() => Buffer.from('firsthash'));
+    moqCompressJournal.setup((x) => x(It.isAny())).returns(() => Buffer.from('firsthash'));
   });
 
   it('should include a journal for every examiner', () => {
@@ -58,13 +59,13 @@ describe('buildJournals', () => {
       advanceTestSlots: [{ slotDetail: { slotId: 666 } }],
       deployments: [{ deploymentId: 555 }],
     };
-    moqCompressJournal.verify(x => x(It.isValue(journalToCompress)), Times.once());
+    moqCompressJournal.verify((x) => x(It.isValue(journalToCompress)), Times.once());
     expect(result.length).toBe(2);
     expect(result[0].journal).toEqual(Buffer.from('firsthash'));
   });
 
   it('should merge datasets including multiple examiners into the journal for each', () => {
-    moqCompressJournal.setup(x => x(It.isAny())).returns(() => Buffer.from('secondhash'));
+    moqCompressJournal.setup((x) => x(It.isAny())).returns(() => Buffer.from('secondhash'));
     const datasets: AllDatasets = {
       testSlots: [
         { examinerId: 111, testSlot: { slotDetail: { slotId: 991 } } },
@@ -106,8 +107,8 @@ describe('buildJournals', () => {
       advanceTestSlots: [{ slotDetail: { slotId: 662 } }],
       deployments: [{ deploymentId: 552 }],
     };
-    moqCompressJournal.verify(x => x(It.isValue(firstJournalToCompress)), Times.once());
-    moqCompressJournal.verify(x => x(It.isValue(secondJournalToCompress)), Times.once());
+    moqCompressJournal.verify((x) => x(It.isValue(firstJournalToCompress)), Times.once());
+    moqCompressJournal.verify((x) => x(It.isValue(secondJournalToCompress)), Times.once());
     expect(result.length).toBe(2);
     expect(result[0].journal).toEqual(Buffer.from('firsthash'));
     expect(result[1].journal).toEqual(Buffer.from('secondhash'));

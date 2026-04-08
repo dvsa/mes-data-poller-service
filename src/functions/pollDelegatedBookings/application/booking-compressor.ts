@@ -1,5 +1,5 @@
-import { gzipSync, gunzipSync } from 'zlib';
-import { DelegatedExaminerTestSlot } from '../../pollJournals/domain/examiner-test-slot';
+import { gunzipSync, gzipSync } from 'zlib';
+import type { DelegatedExaminerTestSlot } from '../../pollJournals/domain/examiner-test-slot';
 
 export const compressDelegatedBooking = (examinerBookingDetail: DelegatedExaminerTestSlot): Buffer => {
   try {

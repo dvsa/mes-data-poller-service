@@ -1,37 +1,37 @@
-import { groupBy } from 'lodash';
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
-import { JournalRecord } from '../domain/journal-record';
-import * as crypto from 'crypto';
-import { ExaminerNonTestActivity } from '../domain/examiner-non-test-activity';
-import { ExaminerAdvanceTestSlot } from '../domain/examiner-advance-test-slot';
-import { ExaminerDeployment } from '../domain/examiner-deployment';
-import { ExaminerTestSlot } from '../domain/examiner-test-slot';
-import { ExaminerPersonalCommitment } from '../domain/examiner-personal-commitment';
-import { AllDatasets } from '../domain/all-datasets';
-import { compressJournal } from './journal-compressor';
-import { ExaminerRecord } from '../domain/examiner-record';
+import type { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
+import * as crypto from 'crypto';
+import { groupBy } from 'lodash';
+import type { AllDatasets } from '../domain/all-datasets';
+import type { ExaminerAdvanceTestSlot } from '../domain/examiner-advance-test-slot';
+import type { ExaminerDeployment } from '../domain/examiner-deployment';
+import type { ExaminerNonTestActivity } from '../domain/examiner-non-test-activity';
+import type { ExaminerPersonalCommitment } from '../domain/examiner-personal-commitment';
+import type { ExaminerRecord } from '../domain/examiner-record';
+import type { ExaminerTestSlot } from '../domain/examiner-test-slot';
+import type { JournalRecord } from '../domain/journal-record';
+import { compressJournal } from './journal-compressor';
 
 export const buildJournals = (examiners: ExaminerRecord[], datasets: AllDatasets): JournalRecord[] => {
   const testSlotsByExaminer: { [examinerId: number]: ExaminerTestSlot[] } = groupBy(
     datasets.testSlots,
-    (test: ExaminerTestSlot) => test.examinerId,
+    (test: ExaminerTestSlot) => test.examinerId
   );
-  const advanceTestsByExaminer: { [examinerId: number]: ExaminerAdvanceTestSlot[] } = groupBy(
-    datasets.advanceTestSlots,
-    (ats: ExaminerAdvanceTestSlot) => ats.examinerId,
-  );
+  const advanceTestsByExaminer: {
+    [examinerId: number]: ExaminerAdvanceTestSlot[];
+  } = groupBy(datasets.advanceTestSlots, (ats: ExaminerAdvanceTestSlot) => ats.examinerId);
   const deploymentsByExaminer: { [examinerId: number]: ExaminerDeployment[] } = groupBy(
     datasets.deployments,
-    (deployment: ExaminerDeployment) => deployment.examinerId,
+    (deployment: ExaminerDeployment) => deployment.examinerId
   );
-  const nonTestActByExaminer: { [examinerId: number]: ExaminerNonTestActivity[] } = groupBy(
-    datasets.nonTestActivities,
-    (nonTestActivity: ExaminerNonTestActivity) => nonTestActivity.examinerId,
-  );
-  const commitmentsByExaminer: { [examinerId: number]: ExaminerPersonalCommitment[] } = groupBy(
+  const nonTestActByExaminer: {
+    [examinerId: number]: ExaminerNonTestActivity[];
+  } = groupBy(datasets.nonTestActivities, (nonTestActivity: ExaminerNonTestActivity) => nonTestActivity.examinerId);
+  const commitmentsByExaminer: {
+    [examinerId: number]: ExaminerPersonalCommitment[];
+  } = groupBy(
     datasets.personalCommitments,
-    (personalCommitment: ExaminerPersonalCommitment) => personalCommitment.examinerId,
+    (personalCommitment: ExaminerPersonalCommitment) => personalCommitment.examinerId
   );
 
   const journals: (JournalRecord | null)[] = examiners.map((examiner) => {
@@ -69,36 +69,37 @@ export const buildJournals = (examiners: ExaminerRecord[], datasets: AllDatasets
   return filteredJournals;
 };
 
-const enrichJournalWithDataset = (individualId: string) => (function<D> (
-  journal: ExaminerWorkSchedule,
-  dataset: {
-    [examinerId: string]: D[];
-  },
-  datasetKey: keyof D,
-  journalKey: keyof ExaminerWorkSchedule
-): ExaminerWorkSchedule {
-  let enrichedJournal = journal;
-  if (dataset[individualId]) {
-    enrichedJournal = {
-      ...journal,
-      [journalKey]: dataset[individualId].map(ds => ds[datasetKey]),
-    };
-  }
-  return enrichedJournal;
-});
+const enrichJournalWithDataset =
+  (individualId: string) =>
+  <D>(
+    journal: ExaminerWorkSchedule,
+    dataset: {
+      [examinerId: string]: D[];
+    },
+    datasetKey: keyof D,
+    journalKey: keyof ExaminerWorkSchedule
+  ): ExaminerWorkSchedule => {
+    let enrichedJournal = journal;
+    if (dataset[individualId]) {
+      enrichedJournal = {
+        ...journal,
+        [journalKey]: dataset[individualId].map((ds) => ds[datasetKey]),
+      };
+    }
+    return enrichedJournal;
+  };
 
 const filterNullAndDuplicateJournals = (journalRecords: (JournalRecord | null)[]): JournalRecord[] => {
-  const nonNullJournals = journalRecords.filter(record => record !== null);
-  const journalsByStaffNumber = groupBy(nonNullJournals, record => record.staffNumber);
+  const nonNullJournals = journalRecords.filter((record) => record !== null);
+  const journalsByStaffNumber = groupBy(nonNullJournals, (record) => record.staffNumber);
 
   const staffNumbersWithMultipleJournals = Object.values(journalsByStaffNumber)
-    .filter(journalsForStaffNumber => journalsForStaffNumber.length > 1)
-    .map(duplicateJournals => duplicateJournals[0].staffNumber);
+    .filter((journalsForStaffNumber) => journalsForStaffNumber.length > 1)
+    .map((duplicateJournals) => duplicateJournals[0].staffNumber);
 
   if (staffNumbersWithMultipleJournals.length > 0) {
     warn('Omitting journals for duplicate staff numbers ', staffNumbersWithMultipleJournals.join(','));
   }
 
-  return nonNullJournals
-    .filter(record => !staffNumbersWithMultipleJournals.includes(record.staffNumber));
+  return nonNullJournals.filter((record) => !staffNumbersWithMultipleJournals.includes(record.staffNumber));
 };

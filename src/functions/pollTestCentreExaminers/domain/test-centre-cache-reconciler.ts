@@ -7,13 +7,13 @@ import {
 
 export const reconcileActiveAndCachedTestCentreRows = async (
   activeTestCentreRows: TestCentreDetail[],
-  cachedTestCentreRows: TestCentreDetail[],
+  cachedTestCentreRows: TestCentreDetail[]
 ): Promise<void> => {
-
   // determine staffNumbers that are no longer active
-  const cachedTestCentresEligibleForDeletion: string[] =
-    extractCachedTestCentresForDeletion(cachedTestCentreRows, activeTestCentreRows)
-      .map((testCentre: TestCentreDetail) => testCentre.staffNumber);
+  const cachedTestCentresEligibleForDeletion: string[] = extractCachedTestCentresForDeletion(
+    cachedTestCentreRows,
+    activeTestCentreRows
+  ).map((testCentre: TestCentreDetail) => testCentre.staffNumber);
 
   await unCacheTestCentreExaminers(cachedTestCentresEligibleForDeletion);
 
@@ -27,30 +27,27 @@ export const reconcileActiveAndCachedTestCentreRows = async (
 
 const extractCachedTestCentresForDeletion = (
   cachedTestCentreRows: TestCentreDetail[],
-  activeTestCentreRows: TestCentreDetail[],
+  activeTestCentreRows: TestCentreDetail[]
 ): TestCentreDetail[] => {
   const activeStaffNumbers: string[] = activeTestCentreRows.map((row: TestCentreDetail) => row.staffNumber);
 
-  return cachedTestCentreRows
-    .filter((row: TestCentreDetail) => !activeStaffNumbers.includes(row.staffNumber));
+  return cachedTestCentreRows.filter((row: TestCentreDetail) => !activeStaffNumbers.includes(row.staffNumber));
 };
 
 export const getUnChangedRows = (
   activeTestCentreRows: TestCentreDetail[],
-  cachedTestCentreRows: TestCentreDetail[],
+  cachedTestCentreRows: TestCentreDetail[]
 ): TestCentreDetail[] => {
-
   return activeTestCentreRows.filter((row: TestCentreDetail) => {
     const cachedRow = cachedTestCentreRows.find((t: TestCentreDetail) => t.staffNumber === row.staffNumber);
-    return isEqual(row, new TestCentreDetail(
-      get(cachedRow, 'staffNumber'),
-      get(cachedRow, 'examiners'),
-      get(cachedRow, 'testCentreIDs'),
-    ));
+    return isEqual(
+      row,
+      new TestCentreDetail(get(cachedRow, 'staffNumber'), get(cachedRow, 'examiners'), get(cachedRow, 'testCentreIDs'))
+    );
   });
 };
 
 const removeUnchangedFromUpdateList = (
   activeTestCentreRows: TestCentreDetail[],
-  unchangedTestCentres: TestCentreDetail[],
+  unchangedTestCentres: TestCentreDetail[]
 ): TestCentreDetail[] => differenceBy(activeTestCentreRows, unchangedTestCentres, 'staffNumber');

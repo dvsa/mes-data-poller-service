@@ -1,4 +1,4 @@
-import {Signer, SignerConfig} from '@aws-sdk/rds-signer';
+import { Signer, type SignerConfig } from '@aws-sdk/rds-signer';
 
 export const defaultIfNotPresent = (value: string | null | undefined, defaultValue: string) => {
   if (!value || value.trim().length === 0) {
@@ -34,7 +34,7 @@ export const tryFetchRdsAccessToken = async (
   username: string,
   fallbackEnvvar: string,
   hostNameValue: string,
-  userNameValue: string,
+  userNameValue: string
 ): Promise<string> => {
   if (!iamRdsConfigValid(hostname, username)) {
     const envvar = process.env[fallbackEnvvar];

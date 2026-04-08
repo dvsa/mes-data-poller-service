@@ -1,4 +1,4 @@
-import { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
+import type { ExaminerPersonalCommitment } from '../../../../domain/examiner-personal-commitment';
 
 export interface PersonalCommitmentRow {
   individual_id: number;

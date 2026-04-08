@@ -1,4 +1,4 @@
-import { VehicleGearbox, Initiator, ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
+import type { ExaminerWorkSchedule, Initiator, VehicleGearbox } from '@dvsa/mes-journal-schema';
 
 export default {
   journal: {
@@ -35,9 +35,7 @@ export default {
             primaryTelephone: '01234 567890',
             secondaryTelephone: '04321 098765',
           },
-          previousCancellation: [
-            'Act of nature',
-          ] as Initiator[],
+          previousCancellation: ['Act of nature'] as Initiator[],
         },
         slotDetail: {
           duration: 57,

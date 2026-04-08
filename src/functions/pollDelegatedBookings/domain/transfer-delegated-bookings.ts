@@ -1,9 +1,9 @@
-import {debug, info} from '@dvsa/mes-microservice-common/application/utils/logger';
-import { DelegatedBookingDetail } from '../../../common/application/models/delegated-booking-details';
+import { debug, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import type { DelegatedBookingDetail } from '../../../common/application/models/delegated-booking-details';
+import { DateTime } from '../../../common/application/utils/date-time';
+import { getCachedDelegatedExaminerBookings } from '../framework/repo/dynamodb/cached-delegated-bookings-repository';
 import { getActiveDelegatedExaminerBookings } from '../framework/repo/mysql/delegated-examiner-bookings-repository';
 import { reconcileActiveAndCachedDelegatedBookings } from './delegated-bookings-cache-reconciler';
-import { getCachedDelegatedExaminerBookings } from '../framework/repo/dynamodb/cached-delegated-bookings-repository';
-import { DateTime } from '../../../common/application/utils/date-time';
 
 export const transferDelegatedBookings = async (): Promise<void> => {
   const activeDelegatedBookings: DelegatedBookingDetail[] = await getActiveDelegatedExaminerBookings();
@@ -13,9 +13,5 @@ export const transferDelegatedBookings = async (): Promise<void> => {
   info(`Number of cached delegated bookings: ${cachedDelegatedBookings.length}`);
 
   debug('Reconciling active and cached bookings');
-  await reconcileActiveAndCachedDelegatedBookings(
-    activeDelegatedBookings,
-    cachedDelegatedBookings,
-    new DateTime(),
-  );
+  await reconcileActiveAndCachedDelegatedBookings(activeDelegatedBookings, cachedDelegatedBookings, new DateTime());
 };

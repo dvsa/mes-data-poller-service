@@ -1,7 +1,7 @@
-import { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
 import { isWithinInterval } from 'date-fns';
+import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import type { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 
 export const getMockNonTestActivities = async (
   staffNumbers: number[],
@@ -14,7 +14,8 @@ export const getMockNonTestActivities = async (
   for (const staffNumber of staffNumbers) {
     {
       let mockJournal: ExaminerNonTestActivity[] = await getMockJournalData(
-        staffNumber.toString(), 'nonTestActivities'
+        staffNumber.toString(),
+        'nonTestActivities'
       );
       if (mockJournal) {
         // Remove any slots outside the date range
@@ -32,4 +33,3 @@ export const getMockNonTestActivities = async (
   debug('called mock non-tests from s3', slots);
   return slots;
 };
-

@@ -1,10 +1,6 @@
-import Response from '../api/Response';
+import type Response from '../api/Response';
 
-export default (
-  body: {},
-  statusCode = 200,
-  reqHeaders: { [id: string]: string } = {},
-): Response => {
+export default (body: {}, statusCode = 200, reqHeaders: { [id: string]: string } = {}): Response => {
   const accessControlAllowOriginHeader = {
     'Access-Control-Allow-Origin': '*', // Required for CORS support to work
   };

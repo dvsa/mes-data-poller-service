@@ -1,4 +1,4 @@
-import { formatDateToStartTime, extractTimeFromDateTime, extractDateFromDateTime } from '../formatters/date-formatter';
+import { extractDateFromDateTime, extractTimeFromDateTime, formatDateToStartTime } from '../formatters/date-formatter';
 
 describe('dateFormatter', () => {
   describe('formatDateToStartTime', () => {

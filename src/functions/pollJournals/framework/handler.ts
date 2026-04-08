@@ -1,12 +1,12 @@
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
-import createResponse from '../../../common/application/utils/createResponse';
-import Response from '../../../common/application/api/Response';
-import { transferDatasets } from '../application/transfer-datasets';
 import { bootstrapLogging, error } from '@dvsa/mes-microservice-common/application/utils/logger';
+import type { APIGatewayProxyEvent, Context } from 'aws-lambda';
+import type Response from '../../../common/application/api/Response';
+import createResponse from '../../../common/application/utils/createResponse';
 import { DdbTableTypes } from '../../../common/application/utils/ddbTable';
 import { bootstrapConfig } from '../../../common/framework/config/config';
+import { transferDatasets } from '../application/transfer-datasets';
 
-export async function handler(event: APIGatewayProxyEvent, fnCtx: Context): Promise<Response> {
+export async function handler(event: APIGatewayProxyEvent, _fnCtx: Context): Promise<Response> {
   try {
     // cache the Lambda function start time
     const startTime = new Date();

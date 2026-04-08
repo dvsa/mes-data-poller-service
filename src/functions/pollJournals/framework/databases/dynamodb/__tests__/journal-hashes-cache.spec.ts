@@ -1,9 +1,9 @@
+import type { JournalRecord } from '../../../../domain/journal-record';
 import { JournalHashesCache } from '../journal-hashes-cache';
-import { JournalRecord } from '../../../../domain/journal-record';
+
 import moment = require('moment');
 
 describe('JournalHashesCache', () => {
-
   const pollerFrequency = 60;
   const startTime = moment('2019-01-01 10:30:00.000');
   const tooEarly = startTime.clone().add({ seconds: pollerFrequency / 2 }); // before 20% leniency

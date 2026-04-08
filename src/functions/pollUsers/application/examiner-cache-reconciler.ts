@@ -1,33 +1,35 @@
-import { StaffDetail, TestPermissionPeriod } from '../../../common/application/models/staff-details';
-import { isEqual, groupBy } from 'lodash';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { groupBy, isEqual } from 'lodash';
+import type { StaffDetail, TestPermissionPeriod } from '../../../common/application/models/staff-details';
 import { cacheStaffDetails, uncacheStaffNumbers } from '../framework/databases/dynamodb/cached-examiner-repository';
 
 export const reconcileActiveAndCachedExaminers = async (
   activeStaffDetails: StaffDetail[],
-  cachedStaffDetails: StaffDetail[],
+  cachedStaffDetails: StaffDetail[]
 ) => {
-  const activeStaffNumbers = activeStaffDetails.map(staffDetail => staffDetail.staffNumber);
-  const cachedStaffNumbers = cachedStaffDetails.map(staffDetail => staffDetail.staffNumber);
+  const activeStaffNumbers = activeStaffDetails.map((staffDetail) => staffDetail.staffNumber);
+  const cachedStaffNumbers = cachedStaffDetails.map((staffDetail) => staffDetail.staffNumber);
 
   const staffDetailsToCache = selectStaffDetailsToCache(activeStaffDetails, cachedStaffDetails);
   await cacheStaffDetails(staffDetailsToCache);
 
-  const staffNumbersToUncache = cachedStaffNumbers.filter(staffNumber => !activeStaffNumbers.includes(staffNumber));
+  const staffNumbersToUncache = cachedStaffNumbers.filter((staffNumber) => !activeStaffNumbers.includes(staffNumber));
   await uncacheStaffNumbers(staffNumbersToUncache);
 };
 
 const selectStaffDetailsToCache = (
   activeStaffDetails: StaffDetail[],
-  cachedStaffDetails: StaffDetail[],
+  cachedStaffDetails: StaffDetail[]
 ): StaffDetail[] => {
-  return filterDuplicateUsers(activeStaffDetails)
-    .filter(activeStaffDetail => staffDetailEligibleForCache(activeStaffDetail, cachedStaffDetails));
+  return filterDuplicateUsers(activeStaffDetails).filter((activeStaffDetail) =>
+    staffDetailEligibleForCache(activeStaffDetail, cachedStaffDetails)
+  );
 };
 
 const staffDetailEligibleForCache = (staffDetail: StaffDetail, cachedStaffDetails: StaffDetail[]): boolean => {
-  const oldStaffDetailForExaminer = cachedStaffDetails
-    .find(cachedStaffDetail => cachedStaffDetail.staffNumber === staffDetail.staffNumber);
+  const oldStaffDetailForExaminer = cachedStaffDetails.find(
+    (cachedStaffDetail) => cachedStaffDetail.staffNumber === staffDetail.staffNumber
+  );
 
   // Examiner not in cache already, allow through filter
   if (!oldStaffDetailForExaminer) {
@@ -39,27 +41,26 @@ const staffDetailEligibleForCache = (staffDetail: StaffDetail, cachedStaffDetail
 };
 
 const staffDetailIsEqual = (sd1: StaffDetail, sd2: StaffDetail): boolean => {
-  return sd1.staffNumber === sd2.staffNumber
-    && sd1.role === sd2.role
-    && testPermissionPeriodsMatch(sd1.testPermissionPeriods, sd2.testPermissionPeriods);
+  return (
+    sd1.staffNumber === sd2.staffNumber &&
+    sd1.role === sd2.role &&
+    testPermissionPeriodsMatch(sd1.testPermissionPeriods, sd2.testPermissionPeriods)
+  );
 };
 
-const testPermissionPeriodsMatch = (
-  tp1: TestPermissionPeriod[],
-  tp2: TestPermissionPeriod[],
-): boolean => isEqual(tp1, tp2);
+const testPermissionPeriodsMatch = (tp1: TestPermissionPeriod[], tp2: TestPermissionPeriod[]): boolean =>
+  isEqual(tp1, tp2);
 
 const filterDuplicateUsers = (staffDetails: StaffDetail[]): StaffDetail[] => {
-  const usersByStaffNumber = groupBy(staffDetails, record => record.staffNumber);
+  const usersByStaffNumber = groupBy(staffDetails, (record) => record.staffNumber);
 
   const staffNumbersWithDuplicateRecords = Object.values(usersByStaffNumber)
-    .filter(detailsByStaffNumber => detailsByStaffNumber.length > 1)
-    .map(duplicateStaffNumbers => duplicateStaffNumbers[0].staffNumber);
+    .filter((detailsByStaffNumber) => detailsByStaffNumber.length > 1)
+    .map((duplicateStaffNumbers) => duplicateStaffNumbers[0].staffNumber);
 
   if (staffNumbersWithDuplicateRecords.length > 0) {
     warn('Omitting users with duplicate staff numbers ', staffNumbersWithDuplicateRecords.join(','));
   }
 
-  return staffDetails
-    .filter(record => !staffNumbersWithDuplicateRecords.includes(record.staffNumber));
+  return staffDetails.filter((record) => !staffNumbersWithDuplicateRecords.includes(record.staffNumber));
 };

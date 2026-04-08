@@ -1,8 +1,8 @@
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { getCachedExaminers } from '../framework/databases/dynamodb/cached-examiner-repository';
+import { getActiveExaminers } from '../framework/repositories/get-active-examiners';
 import { getUniversalTestPermissions } from '../framework/repositories/get-universal-permissions';
 import { reconcileActiveAndCachedExaminers } from './examiner-cache-reconciler';
-import { getActiveExaminers } from '../framework/repositories/get-active-examiners';
 
 export const transferUsers = async () => {
   const universalTestPermissions = await getUniversalTestPermissions();

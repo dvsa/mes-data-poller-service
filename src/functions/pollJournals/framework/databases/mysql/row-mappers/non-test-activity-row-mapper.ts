@@ -1,5 +1,5 @@
-import { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 import { formatDateToStartTime } from '../../../../application/formatters/date-formatter';
+import type { ExaminerNonTestActivity } from '../../../../domain/examiner-non-test-activity';
 
 export interface NonTestActivityRow {
   individual_id: number;

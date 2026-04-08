@@ -1,9 +1,9 @@
-import * as mysql from 'mysql2';
+import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
+import * as mysql from 'mysql2';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
-import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerRecord } from '../../../domain/examiner-record';
 import { getMockUserData } from '../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import type { ExaminerRecord } from '../../../domain/examiner-record';
 
 /**
  * Get all active examiners, for the specified time window.
@@ -30,7 +30,7 @@ export const getExaminers = async (connectionPool: mysql.Pool, startDate: Date):
     where IFNULL(e.grade_code, 'ZZZ') <> 'DELE'
     and IFNULL(es.end_date, '4000-01-01') >= ?
     `,
-      [windowStart],
+      [windowStart]
     )
   );
   const end = new Date();

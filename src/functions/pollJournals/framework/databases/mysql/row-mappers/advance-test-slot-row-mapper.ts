@@ -1,5 +1,5 @@
-import { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 import { formatDateToStartTime } from '../../../../application/formatters/date-formatter';
+import type { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 
 export interface AdvanceTestSlotRow {
   individual_id: number;

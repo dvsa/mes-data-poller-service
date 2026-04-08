@@ -1,4 +1,4 @@
-import { ExaminerDeployment } from '../../../../domain/examiner-deployment';
+import type { ExaminerDeployment } from '../../../../domain/examiner-deployment';
 
 export interface DeploymentRow {
   deployment_id: number;

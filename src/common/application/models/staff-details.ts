@@ -3,11 +3,7 @@ export class StaffDetail {
   role: string;
   testPermissionPeriods: TestPermissionPeriod[];
 
-  constructor(
-    staffNumber: string,
-    role: string,
-    testPermissionPeriods: TestPermissionPeriod[] = [],
-  ) {
+  constructor(staffNumber: string, role: string, testPermissionPeriods: TestPermissionPeriod[] = []) {
     this.staffNumber = staffNumber;
     this.role = role;
     this.testPermissionPeriods = testPermissionPeriods;

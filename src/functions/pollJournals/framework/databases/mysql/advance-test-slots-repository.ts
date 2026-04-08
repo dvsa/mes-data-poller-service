@@ -1,10 +1,10 @@
-import * as mysql from 'mysql2';
+import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
-import { AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-mapper';
+import * as mysql from 'mysql2';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
-import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
+import type { ExaminerAdvanceTestSlot } from '../../../domain/examiner-advance-test-slot';
 import { getMockAdvancedTestSlots } from './__mocks__/advance-test-slot.mock';
+import { type AdvanceTestSlotRow, mapRow } from './row-mappers/advance-test-slot-row-mapper';
 
 /**
  * Get all test slots in the advanced time window.
@@ -23,15 +23,14 @@ export const getAdvanceTestSlots = async (
   examinerIds: number[]
 ): Promise<ExaminerAdvanceTestSlot[]> => {
   const sqlYearFormat = 'YYYY-MM-DD';
-  const windowStart = moment(nextWorkingDay).add({days: 1}).format(sqlYearFormat);
-  const windowEnd = moment(startDate).add({days: (daysRange - 1)}).format(sqlYearFormat);
+  const windowStart = moment(nextWorkingDay).add({ days: 1 }).format(sqlYearFormat);
+  const windowEnd = moment(startDate)
+    .add({ days: daysRange - 1 })
+    .format(sqlYearFormat);
 
   if (process.env.USE_MOCK_TARS_DATA === 'true') {
     info(`running advanced test mock data from ${windowStart} to ${windowEnd}`);
-    return getMockAdvancedTestSlots(
-      examinerIds,
-      new Date(windowEnd),
-      new Date(windowStart));
+    return getMockAdvancedTestSlots(examinerIds, new Date(windowEnd), new Date(windowStart));
   }
 
   info(`running advanced test slots query from ${windowStart} to ${windowEnd}`);
@@ -55,8 +54,8 @@ export const getAdvanceTestSlots = async (
           where w.programme_date between ? and ?
             and w.examiner_end_date > ?
       `,
-      [windowStart, windowEnd, windowStart],
-    ),
+      [windowStart, windowEnd, windowStart]
+    )
   );
   const results = (res as AdvanceTestSlotRow[]).map(mapRow);
   const end = new Date();

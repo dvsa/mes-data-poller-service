@@ -9,16 +9,14 @@ describe('PersonalCommitment Row Mapper', () => {
       non_test_activity_code: 'pcom',
       reason_desc: 'reason',
     });
-    expect(result).toEqual(
-      {
-        examinerId: 1,
-        personalCommitment: {
-          activityCode: 'pcom',
-          activityDescription: 'reason',
-          commitmentId: 2,
-          slotId: 3,
-        },
+    expect(result).toEqual({
+      examinerId: 1,
+      personalCommitment: {
+        activityCode: 'pcom',
+        activityDescription: 'reason',
+        commitmentId: 2,
+        slotId: 3,
       },
-    );
+    });
   });
 });

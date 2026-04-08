@@ -1,10 +1,10 @@
-import { getConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
-import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
-import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
-import * as mysql from 'mysql2';
-import { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
 import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import * as mysql from 'mysql2';
+import type { TestCentreDetail } from '../../../../../common/application/models/test-centre';
+import type { TestCentreRow } from '../../../../../common/application/models/test-centre-journal';
+import { getConnectionPool, poolQuery } from '../../../../../common/framework/mysql/database';
 import { getMockTestCentreExaminers } from '../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import { buildTestCentreRowsFromQueryResult } from './test-centre-row-mapper';
 
 export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   try {
@@ -16,10 +16,7 @@ export const getActiveTestCentreExaminers = async (): Promise<TestCentreDetail[]
     } else {
       const connection = getConnectionPool('TARS');
       await poolQuery(connection, 'SET SESSION group_concat_max_len = 65000');
-      queryResult = await poolQuery(
-        connection,
-        getTestCentreQuery(),
-      );
+      queryResult = await poolQuery(connection, getTestCentreQuery());
     }
     return buildTestCentreRowsFromQueryResult(queryResult);
   } catch (err) {

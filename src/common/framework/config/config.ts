@@ -1,9 +1,6 @@
-import {
-  throwIfNotPresent,
-  tryFetchRdsAccessToken,
-} from './config-helpers';
-import {ddbTable, DdbTableTypes} from '../../application/utils/ddbTable';
-import {error} from '@dvsa/mes-microservice-common/application/utils/logger';
+import { error } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { DdbTableTypes, ddbTable } from '../../application/utils/ddbTable';
+import { throwIfNotPresent, tryFetchRdsAccessToken } from './config-helpers';
 
 let configuration: Config;
 
@@ -15,22 +12,19 @@ export const bootstrapConfig = async (type: DdbTableTypes, mandateDESDatabaseDet
       dynamodbTableName: ddbTable(type),
       tarsReplicaDatabaseHostname: throwIfNotPresent(
         process.env.TARS_REPLICA_HOST_NAME,
-        'tarsReplicateDatabaseHostname',
+        'tarsReplicateDatabaseHostname'
       ),
-      tarsReplicaDatabaseName: throwIfNotPresent(
-        process.env.TARS_REPLICA_DB_NAME,
-        'tarsReplicaDatabaseName',
-      ),
+      tarsReplicaDatabaseName: throwIfNotPresent(process.env.TARS_REPLICA_DB_NAME, 'tarsReplicaDatabaseName'),
       tarsReplicaDatabaseUsername: throwIfNotPresent(
         process.env.TARS_REPLICA_DB_USERNAME,
-        'tarsReplicaDatabaseUsername',
+        'tarsReplicaDatabaseUsername'
       ),
       tarsReplicaDatabasePassword: await tryFetchRdsAccessToken(
         process.env.TARS_REPLICA_ENDPOINT,
         process.env.TARS_REPLICA_DB_USERNAME,
         'SECRET_DB_PASSWORD_KEY',
         'tarsReplicateDatabaseHostname',
-        'tarsReplicaDatabaseUsername',
+        'tarsReplicaDatabaseUsername'
       ),
       timeTravelDate: process.env.TIME_TRAVEL_DATE,
     };
@@ -45,31 +39,23 @@ export const bootstrapConfig = async (type: DdbTableTypes, mandateDESDatabaseDet
 const bootstrapDESDatabaseConfig = async () => {
   configuration = {
     ...configuration,
-    desDatabaseHostname: throwIfNotPresent(
-      process.env.DES_DATABASE_HOSTNAME,
-      'desDatabaseHostname',
-    ),
-    desDatabaseName: throwIfNotPresent(
-      process.env.DES_DATABASE_NAME,
-      'desDatabaseName',
-    ),
-    desDatabaseUsername: throwIfNotPresent(
-      process.env.DES_DATABASE_USERNAME,
-      'desDatabaseUsername',
-    ),
-    desDatabasePassword: (process.env.IS_OFFLINE === 'true')
-      ? process.env.DES_DATABASE_PASSWORD
-      : await tryFetchRdsAccessToken(
-        process.env.DES_DATABASE_ENDPOINT || '',
-        process.env.DES_DATABASE_USERNAME || '',
-        'SECRET_DB_PASSWORD_KEY',
-        'mesDatabaseHostname',
-        'mesDatabaseUsername'
-      ),
+    desDatabaseHostname: throwIfNotPresent(process.env.DES_DATABASE_HOSTNAME, 'desDatabaseHostname'),
+    desDatabaseName: throwIfNotPresent(process.env.DES_DATABASE_NAME, 'desDatabaseName'),
+    desDatabaseUsername: throwIfNotPresent(process.env.DES_DATABASE_USERNAME, 'desDatabaseUsername'),
+    desDatabasePassword:
+      process.env.IS_OFFLINE === 'true'
+        ? process.env.DES_DATABASE_PASSWORD
+        : await tryFetchRdsAccessToken(
+            process.env.DES_DATABASE_ENDPOINT || '',
+            process.env.DES_DATABASE_USERNAME || '',
+            'SECRET_DB_PASSWORD_KEY',
+            'mesDatabaseHostname',
+            'mesDatabaseUsername'
+          ),
   };
 };
 
-export const bootstrapReapJournalsConfig = async (type: DdbTableTypes) => {
+export const bootstrapReapJournalsConfig = async (_type: DdbTableTypes) => {
   configuration = {
     isOffline: !!process.env.IS_OFFLINE,
     dynamodbTableName: ddbTable(DdbTableTypes.JOURNALS),

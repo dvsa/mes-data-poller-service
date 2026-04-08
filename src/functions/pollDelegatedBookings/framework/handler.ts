@@ -1,11 +1,10 @@
 import { bootstrapLogging, error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { APIGatewayProxyEvent } from 'aws-lambda';
-
-import Response from '../../../common/application/api/Response';
-import createResponse from '../../../common/application/utils/createResponse';
+import type { APIGatewayProxyEvent } from 'aws-lambda';
 import { HttpStatus } from '../../../common/application/api/HttpStatus';
-import { bootstrapConfig } from '../../../common/framework/config/config';
+import type Response from '../../../common/application/api/Response';
+import createResponse from '../../../common/application/utils/createResponse';
 import { DdbTableTypes } from '../../../common/application/utils/ddbTable';
+import { bootstrapConfig } from '../../../common/framework/config/config';
 import { transferDelegatedBookings } from '../domain/transfer-delegated-bookings';
 
 export async function handler(event: APIGatewayProxyEvent): Promise<Response> {

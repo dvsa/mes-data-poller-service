@@ -1,5 +1,5 @@
-import * as mysql from 'mysql2';
 import * as moment from 'moment';
+import * as mysql from 'mysql2';
 
 export const ActiveExaminersSql = (): string => {
   const template = `
@@ -19,7 +19,7 @@ export const ActiveExaminersSql = (): string => {
           IFNULL(e.grade_code, 'ZZZ') <> 'DELE'
         AND IFNULL(es.end_date, '4000-01-01') >= ?`;
 
-  const args =     [moment().format('YYYY-MM-DD')];
+  const args = [moment().format('YYYY-MM-DD')];
 
   return mysql.format(template, args);
 };

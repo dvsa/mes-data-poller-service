@@ -1,11 +1,8 @@
-import { UniversalPermissionRecordSql } from '../databases/mysql/universal-permissions';
-import { TestPermissionPeriod } from '../../../../common/application/models/staff-details';
-import { getTARSConnection, query } from '../../../../common/framework/mysql/database';
-import {
-  getMockUniversalPermissions,
-} from '../../../../common/framework/s3bucket/S3MockJournalsRepository';
 import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
-
+import type { TestPermissionPeriod } from '../../../../common/application/models/staff-details';
+import { getTARSConnection, query } from '../../../../common/framework/mysql/database';
+import { getMockUniversalPermissions } from '../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import { UniversalPermissionRecordSql } from '../databases/mysql/universal-permissions';
 
 export interface UniversalPermissionRecord {
   test_category_ref: string;
@@ -26,19 +23,17 @@ export const getUniversalTestPermissions = async () => {
       const connection = getTARSConnection();
       queryResult = await query(connection, UniversalPermissionRecordSql());
     }
-    return queryResult.map(record => mapUniversalPermissionRecord(record));
+    return queryResult.map((record) => mapUniversalPermissionRecord(record));
   } catch (err) {
     error('Error getting universal test permissions', err);
   }
 };
 
 const mapUniversalPermissionRecord = (record: UniversalPermissionRecord): TestPermissionPeriod => {
-  const formatDate = (date: Date) => date === null ? null : date.toISOString().split('T')[0];
+  const formatDate = (date: Date) => (date === null ? null : date.toISOString().split('T')[0]);
   return {
     testCategory: record.test_category_ref,
     from: formatDate(record.with_effect_from),
     to: formatDate(record.with_effect_to),
   };
 };
-
-
