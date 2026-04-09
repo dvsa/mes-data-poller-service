@@ -1,12 +1,12 @@
-import { mockClient } from 'aws-sdk-client-mock';
-import * as moment from 'moment';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { BatchWriteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import * as JournalRepository from '../journal-repository';
+import { mockClient } from 'aws-sdk-client-mock';
+import * as moment from 'moment';
 import { dummyConfig } from '../../../../../../common/framework/config/__mocks__/config';
 import * as config from '../../../../../../common/framework/config/config';
-import { JournalRecord } from '../../../../domain/journal-record';
 import * as DynamoClient from '../../../../../../common/framework/dynanmodb/dynamo-client';
+import type { JournalRecord } from '../../../../domain/journal-record';
+import * as JournalRepository from '../journal-repository';
 
 describe('JournalRepository', () => {
   const startTime = moment('2019-01-01 10:30:00.000');
@@ -30,7 +30,7 @@ describe('JournalRepository', () => {
 
       dynamoDbMock.on(ScanCommand).callsFake((params) => {
         if (!params.ExclusiveStartKey) {
-          return  {
+          return {
             Items: [hash1, hash2],
             LastEvaluatedKey: hash2.staffNumber,
           };
@@ -68,7 +68,9 @@ describe('JournalRepository', () => {
 
   describe('saveJournals', () => {
     beforeEach(() => {
-      spyOn(JournalRepository, 'sleep').and.callFake(() => { return Promise.resolve(); });
+      spyOn(JournalRepository, 'sleep').and.callFake(() => {
+        return Promise.resolve();
+      });
       spyOn(JournalRepository.journalHashesCache, 'update');
     });
 
@@ -83,8 +85,10 @@ describe('JournalRepository', () => {
     });
 
     it('should write a single batch and update the cache', async () => {
-      const { journals, hashes } = generateDummyJournals(10); // less than batch size
-      spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
+      const { journals } = generateDummyJournals(10); // less than batch size
+      spyOn(JournalRepository, 'now').and.callFake(() => {
+        return sufficientTime;
+      });
 
       dynamoDbMock.on(BatchWriteCommand).resolves({
         UnprocessedItems: {},
@@ -102,8 +106,10 @@ describe('JournalRepository', () => {
     });
 
     it('should write multiple batches and update the cache', async () => {
-      const { journals, hashes } = generateDummyJournals(60); // should batch as 25, 25, 10 items
-      spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
+      const { journals } = generateDummyJournals(60); // should batch as 25, 25, 10 items
+      spyOn(JournalRepository, 'now').and.callFake(() => {
+        return sufficientTime;
+      });
 
       dynamoDbMock.on(BatchWriteCommand).resolves({
         UnprocessedItems: {},
@@ -122,11 +128,16 @@ describe('JournalRepository', () => {
 
     it('should exclude any failed writes from the cache', async () => {
       const { journals, hashes } = generateDummyJournals(10); // less than batch size
-      const expectedHashes = hashes.filter((hash) => { hash.staffNumber === '2000'; }); // examiner 2000 failed
-      spyOn(JournalRepository, 'now').and.callFake(() => { return sufficientTime; });
+      const expectedHashes = hashes.filter((hash) => {
+        hash.staffNumber === '2000';
+      }); // examiner 2000 failed
+      spyOn(JournalRepository, 'now').and.callFake(() => {
+        return sufficientTime;
+      });
 
       dynamoDbMock.on(BatchWriteCommand).resolves({
-        UnprocessedItems: { // examiner 2000 failed...
+        UnprocessedItems: {
+          // examiner 2000 failed...
           journals: [
             {
               PutRequest: {
@@ -157,7 +168,7 @@ describe('JournalRepository', () => {
     });
 
     it('abort if run out of time', async () => {
-      const { journals, hashes } = generateDummyJournals(10); // less than batch size
+      const { journals } = generateDummyJournals(10); // less than batch size
       const ddbSpy = jasmine.createSpy();
       spyOn(DynamoClient, 'getDynamoClient').and.returnValue(ddbSpy as any);
       spyOn(JournalRepository, 'now').and.returnValue(outOfTime);

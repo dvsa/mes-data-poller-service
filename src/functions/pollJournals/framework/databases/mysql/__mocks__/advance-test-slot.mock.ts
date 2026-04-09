@@ -1,7 +1,7 @@
-import { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
 import { isWithinInterval } from 'date-fns';
+import { getMockJournalData } from '../../../../../../common/framework/s3bucket/S3MockJournalsRepository';
+import type { ExaminerAdvanceTestSlot } from '../../../../domain/examiner-advance-test-slot';
 
 export const getMockAdvancedTestSlots = async (
   staffNumbers: number[],
@@ -12,9 +12,7 @@ export const getMockAdvancedTestSlots = async (
   debug('calling mock advancedTestSlots from s3');
   for (const staffNumber of staffNumbers) {
     {
-      let mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(
-        staffNumber.toString(), 'advanceTestSlots'
-      );
+      let mockJournal: ExaminerAdvanceTestSlot[] = await getMockJournalData(staffNumber.toString(), 'advanceTestSlots');
       if (mockJournal) {
         // Remove any slots outside the date range
         mockJournal = mockJournal.filter((test: ExaminerAdvanceTestSlot) => {

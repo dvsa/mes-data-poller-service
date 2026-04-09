@@ -3,8 +3,6 @@ import { config } from '../../../common/framework/config/config';
 import { getJournalDetails } from '../framework/repositories/get-journal-details';
 
 export const transferDatasets = async (startTime: Date): Promise<void> => {
-
-
   let startDate: Date;
 
   if (config().timeTravelDate != null) {

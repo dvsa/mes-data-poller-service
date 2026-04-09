@@ -1,7 +1,7 @@
-import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config } from '../../../../../common/framework/config/config';
-import { TestCentreDetail } from '../../../../../common/application/models/test-centre';
 import { DeleteCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
+import { customMetric, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
+import type { TestCentreDetail } from '../../../../../common/application/models/test-centre';
+import { config } from '../../../../../common/framework/config/config';
 import { fullScan, getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
@@ -14,7 +14,9 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
   const tableName = config().dynamodbTableName;
 
   if (process.env.SKIP_DYNAMO_WRITE === 'true') {
-    debug('updateTestCentreExaminers - Skipping DynamoDB put', { testCentreCount: testCentres.length });
+    debug('updateTestCentreExaminers - Skipping DynamoDB put', {
+      testCentreCount: testCentres.length,
+    });
     return;
   }
 
@@ -40,7 +42,9 @@ export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promis
   const tableName: string = config().dynamodbTableName;
 
   if (process.env.SKIP_DYNAMO_WRITE === 'true') {
-    debug('unCacheTestCentreExaminers - Skipping DynamoDB delete', { staffCount: staffNumbers.length });
+    debug('unCacheTestCentreExaminers - Skipping DynamoDB delete', {
+      staffCount: staffNumbers.length,
+    });
     return;
   }
 

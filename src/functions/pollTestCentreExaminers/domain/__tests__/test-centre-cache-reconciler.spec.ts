@@ -1,7 +1,7 @@
-import { Mock, It, Times } from 'typemoq';
-import { reconcileActiveAndCachedTestCentreRows } from '../test-centre-cache-reconciler';
-import * as cachedTestCentreRepository from '../../framework/repo/dynamodb/cached-test-centre-repository';
+import { It, Mock, Times } from 'typemoq';
 import { TestCentreDetail } from '../../../../common/application/models/test-centre';
+import * as cachedTestCentreRepository from '../../framework/repo/dynamodb/cached-test-centre-repository';
+import { reconcileActiveAndCachedTestCentreRows } from '../test-centre-cache-reconciler';
 
 describe('Test centre cache reconciler', () => {
   const moqCacheTestCentres = Mock.ofInstance(cachedTestCentreRepository.updateTestCentreExaminers);
@@ -24,28 +24,21 @@ describe('Test centre cache reconciler', () => {
       ];
       const cachedTestCentres = [];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
-      moqCacheTestCentres.verify(x => x(It.isValue(activeTestCentres)), Times.once());
+      moqCacheTestCentres.verify((x) => x(It.isValue(activeTestCentres)), Times.once());
     });
     it('should determine the non-active test rows and pass them to unCache function', async () => {
-      const activeTestCentres = [
-        new TestCentreDetail('123', [], []),
-      ];
-      const cachedTestCentres = [
-        new TestCentreDetail('456', [], []),
-        new TestCentreDetail('789', [], []),
-      ];
+      const activeTestCentres = [new TestCentreDetail('123', [], [])];
+      const cachedTestCentres = [new TestCentreDetail('456', [], []), new TestCentreDetail('789', [], [])];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
-      moqCacheTestCentres.verify(x => x(It.isValue(activeTestCentres)), Times.once());
-      moqUncacheTestCentres.verify(x => x(It.isValue(['456', '789'])), Times.once());
+      moqCacheTestCentres.verify((x) => x(It.isValue(activeTestCentres)), Times.once());
+      moqUncacheTestCentres.verify((x) => x(It.isValue(['456', '789'])), Times.once());
     });
     it('should not unCache row if table is empty', async () => {
-      const activeTestCentres = [
-        new TestCentreDetail('123', [], []),
-      ];
+      const activeTestCentres = [new TestCentreDetail('123', [], [])];
       const cachedTestCentres = [];
       await reconcileActiveAndCachedTestCentreRows(activeTestCentres, cachedTestCentres);
-      moqCacheTestCentres.verify(x => x(It.isValue(activeTestCentres)), Times.once());
-      moqUncacheTestCentres.verify(x => x(It.isValue([])), Times.once());
+      moqCacheTestCentres.verify((x) => x(It.isValue(activeTestCentres)), Times.once());
+      moqUncacheTestCentres.verify((x) => x(It.isValue([])), Times.once());
     });
   });
 });

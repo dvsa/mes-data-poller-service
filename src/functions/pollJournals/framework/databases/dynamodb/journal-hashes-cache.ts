@@ -1,5 +1,7 @@
-import { JournalRecord } from '../../../domain/journal-record';
+import type { JournalRecord } from '../../../domain/journal-record';
+
 import moment = require('moment');
+
 import { debug } from '@dvsa/mes-microservice-common/application/utils/logger';
 
 /**
@@ -27,7 +29,7 @@ export class JournalHashesCache {
    */
   clearAndPopulate(hashes: Partial<JournalRecord>[], startTime: Date) {
     this.hashes.clear();
-    hashes.forEach(journalHash => this.hashes.set(journalHash.staffNumber, journalHash));
+    hashes.forEach((journalHash) => this.hashes.set(journalHash.staffNumber, journalHash));
     this.previousStartTime = startTime;
   }
 
@@ -45,7 +47,7 @@ export class JournalHashesCache {
    * @param updatedHashes The updated data
    */
   update(updatedStartTime: Date, updatedHashes: Partial<JournalRecord>[]) {
-    updatedHashes.forEach(journalHash => this.hashes.set(journalHash.staffNumber, journalHash));
+    updatedHashes.forEach((journalHash) => this.hashes.set(journalHash.staffNumber, journalHash));
     this.previousStartTime = updatedStartTime;
   }
 
@@ -68,7 +70,7 @@ export class JournalHashesCache {
       const maxDifference = this.pollerFrequency * 1.2;
       const minDifference = this.pollerFrequency * 0.8;
 
-      return (timeDifference <= maxDifference) && (timeDifference >= minDifference);
+      return timeDifference <= maxDifference && timeDifference >= minDifference;
     }
     return false;
   }

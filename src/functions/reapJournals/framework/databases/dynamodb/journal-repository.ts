@@ -1,10 +1,7 @@
-import {
-  DeleteCommand,
-  ScanCommand,
-} from '@aws-sdk/lib-dynamodb';
-import { warn, info } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { config } from '../../../../../common/framework/config/config';
+import { DeleteCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { info, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
+import { config } from '../../../../../common/framework/config/config';
 import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
 
 /**
@@ -30,8 +27,8 @@ export const identifyInactiveJournals = async (): Promise<string[]> => {
 
   do {
     const result = await ddb.send(new ScanCommand({ ...params, ExclusiveStartKey: lastEvaluatedKey }));
-    const dynamoStaffNumbers = result.Items?.filter((item) => item.lastUpdatedAt < threeMonthsAgo)
-      .map((item) => item.staffNumber) || [];
+    const dynamoStaffNumbers =
+      result.Items?.filter((item) => item.lastUpdatedAt < threeMonthsAgo).map((item) => item.staffNumber) || [];
     inactiveStaffNumbers = [...inactiveStaffNumbers, ...dynamoStaffNumbers];
     lastEvaluatedKey = result.LastEvaluatedKey;
   } while (lastEvaluatedKey);
@@ -59,7 +56,7 @@ export const removeInactiveJournals = async (inactiveStaffNumbers: string[]): Pr
         new DeleteCommand({
           TableName: tableName,
           Key: { staffNumber },
-        }),
+        })
       );
       info(`Removed journal for staff number: ${staffNumber}`);
     } catch (error) {

@@ -1,22 +1,17 @@
-import * as mysql from 'mysql2';
-import { config } from '../config/config';
-import { certificate } from '../../certs/ssl_profiles';
 import { error } from '@dvsa/mes-microservice-common/application/utils/logger';
+import * as mysql from 'mysql2';
+import { certificate } from '../../certs/ssl_profiles';
+import { config } from '../config/config';
 
 /**
  * Execute a single query and close connection
  * @param connection
  * @param sql
  */
-export const query = async (
-  connection: mysql.Connection,
-  sql: string
-): Promise<any> => {
-  let queryResult;
+export const query = async (connection: mysql.Connection, sql: string): Promise<any> => {
+  let queryResult: any;
   try {
-    const [rows] = await connection.promise().query(
-      sql,
-    );
+    const [rows] = await connection.promise().query(sql);
     queryResult = rows;
   } catch (err) {
     error('Error during query', err);
@@ -26,7 +21,6 @@ export const query = async (
   }
   return queryResult;
 };
-
 
 /**
  * Establish a connection to a database to facilitate a single query
@@ -51,15 +45,10 @@ export const getTARSConnection = (): mysql.Connection => {
   }
 };
 
-export const poolQuery = async (
-  connection: mysql.Pool,
-  sql: string
-): Promise<any> => {
-  let queryResult;
+export const poolQuery = async (connection: mysql.Pool, sql: string): Promise<any> => {
+  let queryResult: any;
   try {
-    const [rows] = await connection.promise().query(
-      sql,
-    );
+    const [rows] = await connection.promise().query(sql);
     queryResult = rows;
   } catch (err) {
     error('Error during pool query', err);
@@ -68,7 +57,7 @@ export const poolQuery = async (
   return queryResult;
 };
 
-export const getConnectionPool = (connectionMode: 'TARS'|'DSP'): mysql.Pool => {
+export const getConnectionPool = (connectionMode: 'TARS' | 'DSP'): mysql.Pool => {
   try {
     const configuration = config();
 
@@ -78,18 +67,18 @@ export const getConnectionPool = (connectionMode: 'TARS'|'DSP'): mysql.Pool => {
     let databasePassword: string = '';
 
     switch (connectionMode) {
-    case 'TARS':
-      hostName = configuration.tarsReplicaDatabaseHostname;
-      databaseName = configuration.tarsReplicaDatabaseName;
-      databaseUserName = configuration.tarsReplicaDatabaseUsername;
-      databasePassword = configuration.tarsReplicaDatabasePassword;
-      break;
-    case 'DSP':
-      hostName = configuration.desDatabaseHostname;
-      databaseName = configuration.desDatabaseName;
-      databaseUserName = configuration.desDatabaseUsername;
-      databasePassword = configuration.desDatabasePassword;
-      break;
+      case 'TARS':
+        hostName = configuration.tarsReplicaDatabaseHostname;
+        databaseName = configuration.tarsReplicaDatabaseName;
+        databaseUserName = configuration.tarsReplicaDatabaseUsername;
+        databasePassword = configuration.tarsReplicaDatabasePassword;
+        break;
+      case 'DSP':
+        hostName = configuration.desDatabaseHostname;
+        databaseName = configuration.desDatabaseName;
+        databaseUserName = configuration.desDatabaseUsername;
+        databasePassword = configuration.desDatabasePassword;
+        break;
     }
 
     return mysql.createPool({

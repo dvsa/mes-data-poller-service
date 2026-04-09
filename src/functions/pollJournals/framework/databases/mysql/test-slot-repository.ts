@@ -1,10 +1,10 @@
-import * as mysql from 'mysql2';
+import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
-import { mapRow } from './row-mappers/test-slot-row-mapper';
+import * as mysql from 'mysql2';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
-import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
+import type { ExaminerTestSlot } from '../../../domain/examiner-test-slot';
 import { getMockTestSlots } from './__mocks__/test-slot.mock';
+import { mapRow } from './row-mappers/test-slot-row-mapper';
 
 /**
  * Get all detailed test slots, for the specified time window.
@@ -20,7 +20,7 @@ export const getTestSlots = async (
   examinerIds: number[],
   journalStartDate: Date,
   endDate: Date,
-  testSlotRun?: number,
+  testSlotRun?: number
 ): Promise<ExaminerTestSlot[]> => {
   if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return await getMockTestSlots(examinerIds, journalStartDate, endDate);
@@ -33,9 +33,7 @@ export const getTestSlots = async (
   const start = new Date();
   const res = await poolQuery(
     connectionPool,
-    mysql.format(
-      getQuery(examinerIds),
-      [windowStart, windowEnd, windowStart]),
+    mysql.format(getQuery(examinerIds), [windowStart, windowEnd, windowStart])
   );
   const results = res.map(mapRow);
   const end = new Date();

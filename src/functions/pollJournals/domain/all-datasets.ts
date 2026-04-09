@@ -1,8 +1,8 @@
-import { ExaminerTestSlot } from './examiner-test-slot';
-import { ExaminerPersonalCommitment } from './examiner-personal-commitment';
-import { ExaminerNonTestActivity } from './examiner-non-test-activity';
-import { ExaminerAdvanceTestSlot } from './examiner-advance-test-slot';
-import { ExaminerDeployment } from './examiner-deployment';
+import type { ExaminerAdvanceTestSlot } from './examiner-advance-test-slot';
+import type { ExaminerDeployment } from './examiner-deployment';
+import type { ExaminerNonTestActivity } from './examiner-non-test-activity';
+import type { ExaminerPersonalCommitment } from './examiner-personal-commitment';
+import type { ExaminerTestSlot } from './examiner-test-slot';
 
 export interface AllDatasets {
   testSlots: ExaminerTestSlot[];

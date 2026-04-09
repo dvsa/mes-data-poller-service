@@ -1,28 +1,28 @@
+import type { AttributeValue } from '@aws-sdk/client-dynamodb';
 import {
   BatchWriteCommand,
-  BatchWriteCommandInput,
+  type BatchWriteCommandInput,
   ScanCommand,
-  ScanCommandInput,
+  type ScanCommandInput,
 } from '@aws-sdk/lib-dynamodb';
-import { AttributeValue } from '@aws-sdk/client-dynamodb';
+import { customMetric, debug, info, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { chunk, get, mean } from 'lodash';
-import { customMetric, warn, info, debug } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { JournalHashesCache } from './journal-hashes-cache';
-import { JournalRecord } from '../../../domain/journal-record';
-import { config } from '../../../../../common/framework/config/config';
 import * as moment from 'moment';
+import { config } from '../../../../../common/framework/config/config';
 import { getDynamoClient } from '../../../../../common/framework/dynanmodb/dynamo-client';
+import type { JournalRecord } from '../../../domain/journal-record';
+import { JournalHashesCache } from './journal-hashes-cache';
 
 /*
-* Amount of time (in milliseconds), to throttle Journal writes over.
-* Slowing down the writes means using less DynamoDB write capcity units (WCU's) per second,
-* reducing the amount of capacity that needs to be provisioned. If we exceed the capacity (plus burst capacity)
-* then some writes will be refused by Dynamo (tracked as unprocessed items).
-*
-* Upon testing in "perf", which has 50 WCUs provisioned, 2083 journals (roughly 4500 WCUs) can be successfully written
-* over 4 seconds if there are no other writes for the previous 5 minutes. Doing it quicker than that (i.e. without any
-* throttling) causes WCU capacity to be exceeded.
-*/
+ * Amount of time (in milliseconds), to throttle Journal writes over.
+ * Slowing down the writes means using less DynamoDB write capcity units (WCU's) per second,
+ * reducing the amount of capacity that needs to be provisioned. If we exceed the capacity (plus burst capacity)
+ * then some writes will be refused by Dynamo (tracked as unprocessed items).
+ *
+ * Upon testing in "perf", which has 50 WCUs provisioned, 2083 journals (roughly 4500 WCUs) can be successfully written
+ * over 4 seconds if there are no other writes for the previous 5 minutes. Doing it quicker than that (i.e. without any
+ * throttling) causes WCU capacity to be exceeded.
+ */
 const totalSaveDuration = 4 * 1000;
 
 /*
@@ -49,8 +49,11 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
     const tableName = config().dynamodbTableName;
     const maxBatchWriteRequests = 25;
     const journalWriteBatches = chunk(journals, maxBatchWriteRequests);
-    const { totalUnprocessedWrites, averageRequestRuntime } =
-      await submitSaveRequests(journalWriteBatches, tableName, startTime);
+    const { totalUnprocessedWrites, averageRequestRuntime } = await submitSaveRequests(
+      journalWriteBatches,
+      tableName,
+      startTime
+    );
 
     info(`AVERAGE REQUEST TOOK ${averageRequestRuntime}ms`);
     info(`END SAVE: ${new Date()}, ${totalUnprocessedWrites} WRITES FAILED`);
@@ -73,8 +76,11 @@ export const saveJournals = async (journals: JournalRecord[], startTime: Date): 
 const submitSaveRequests = async (
   writeBatches: JournalRecord[][],
   tableName: string,
-  startTime: Date,
-): Promise<{ totalUnprocessedWrites: number; averageRequestRuntime: number }> => {
+  startTime: Date
+): Promise<{
+  totalUnprocessedWrites: number;
+  averageRequestRuntime: number;
+}> => {
   const ddb = getDynamoClient();
   let totalUnprocessedWrites = 0;
   let requestRuntimes: number[] = [];
@@ -84,7 +90,9 @@ const submitSaveRequests = async (
   const sleepDuration = totalSaveDuration / writeBatches.length;
 
   if (process.env.SKIP_DYNAMO_WRITE === 'true') {
-    debug('submitSaveRequests - Skipping DynamoDB batch write', { batchCount: writeBatches.length });
+    debug('submitSaveRequests - Skipping DynamoDB batch write', {
+      batchCount: writeBatches.length,
+    });
     return { totalUnprocessedWrites: 0, averageRequestRuntime: 0 };
   }
 
@@ -97,7 +105,7 @@ const submitSaveRequests = async (
 
     const writeInput = {
       RequestItems: {
-        [tableName]: writeBatch.map(journalWrapper => ({
+        [tableName]: writeBatch.map((journalWrapper) => ({
           PutRequest: {
             Item: journalWrapper,
           },
@@ -108,13 +116,11 @@ const submitSaveRequests = async (
 
     const start = process.hrtime();
 
-    const result = await ddb.send(
-      new BatchWriteCommand(writeInput)
-    );
+    const result = await ddb.send(new BatchWriteCommand(writeInput));
 
     const timeTaken = process.hrtime(start);
     totalConsumedCapacity += get(result, 'ConsumedCapacity[0].CapacityUnits', 0);
-    const duration = Math.floor(((timeTaken[0] * 1e9) + timeTaken[1]) / 1e6);
+    const duration = Math.floor((timeTaken[0] * 1e9 + timeTaken[1]) / 1e6);
     requestRuntimes = [...requestRuntimes, duration];
 
     const failedStaffNumbers: string[] = [];
@@ -135,15 +141,17 @@ const submitSaveRequests = async (
       warn(`${unprocessedWriteCount} writes failed/throttled`);
     }
 
-    const writtenHashes = writeBatch.filter((journal) => {
-      // filter out any journals that failed to be written
-      return !failedStaffNumbers.includes(journal.staffNumber);
-    }).map((journal) => {
-      return {
-        staffNumber: journal.staffNumber,
-        hash: journal.hash,
-      } as Partial<JournalRecord>;
-    });
+    const writtenHashes = writeBatch
+      .filter((journal) => {
+        // filter out any journals that failed to be written
+        return !failedStaffNumbers.includes(journal.staffNumber);
+      })
+      .map((journal) => {
+        return {
+          staffNumber: journal.staffNumber,
+          hash: journal.hash,
+        } as Partial<JournalRecord>;
+      });
 
     // cache the journals that were successfully written
     journalHashesCache.update(startTime, writtenHashes);
@@ -182,7 +190,9 @@ export const sleep = (ms: number) => {
 const runOutOfTime = (startTime: Date, sleepDuration: number): boolean => {
   const current = now();
   // allow a couple of seconds leniency and the sleep duration
-  const endOfTime = moment(startTime).add({ seconds: pollerFrequency - 2 }).subtract({ milliseconds: sleepDuration });
+  const endOfTime = moment(startTime)
+    .add({ seconds: pollerFrequency - 2 })
+    .subtract({ milliseconds: sleepDuration });
   return current.isAfter(endOfTime);
 };
 
@@ -225,18 +235,15 @@ export const getStaffNumbersWithHashes = async (startTime: Date): Promise<Partia
   let lastEvaluatedKey: Record<string, AttributeValue> | undefined;
   let totalConsumedCapacity = 0;
   do {
-    const paramsForRequest = lastEvaluatedKey !== undefined ?
-      { ...params, ExclusiveStartKey: lastEvaluatedKey }
-      : { ...params };
+    const paramsForRequest =
+      lastEvaluatedKey !== undefined ? { ...params, ExclusiveStartKey: lastEvaluatedKey } : { ...params };
     const start = process.hrtime();
 
-    const result = await ddb.send(
-      new ScanCommand(paramsForRequest)
-    );
+    const result = await ddb.send(new ScanCommand(paramsForRequest));
 
     const timeTaken = process.hrtime(start);
-    const duration = Math.floor(((timeTaken[0] * 1e9) + timeTaken[1]) / 1e6);
-    scannedItems = [...scannedItems, ...result.Items as Partial<JournalRecord>[]];
+    const duration = Math.floor((timeTaken[0] * 1e9 + timeTaken[1]) / 1e6);
+    scannedItems = [...scannedItems, ...(result.Items as Partial<JournalRecord>[])];
     info(`scan of ${result.Items.length} journal hashes took ${duration} ms`);
     totalConsumedCapacity += get(result, 'ConsumedCapacity.CapacityUnits', 0);
     lastEvaluatedKey = result.LastEvaluatedKey;

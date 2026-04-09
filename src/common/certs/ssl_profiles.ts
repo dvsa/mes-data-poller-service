@@ -127,4 +127,5 @@ d7GDh4fR/OUk0VfjsBUN/gIwZB0bGdXvK38s6AAE/9IT051cz/wMe9GIrX1MnL1T
 1F5OqnXJdiwfZRRTHsRQ/L00
 -----END CERTIFICATE-----
 `,
-  ]};
+  ],
+};

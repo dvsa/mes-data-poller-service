@@ -1,10 +1,10 @@
-import * as mysql from 'mysql2';
+import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
-import { mapRow, NonTestActivityRow } from './row-mappers/non-test-activity-row-mapper';
+import * as mysql from 'mysql2';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
-import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerNonTestActivity } from '../../../domain/examiner-non-test-activity';
+import type { ExaminerNonTestActivity } from '../../../domain/examiner-non-test-activity';
 import { getMockNonTestActivities } from './__mocks__/non-test-activites.mock';
+import { mapRow, type NonTestActivityRow } from './row-mappers/non-test-activity-row-mapper';
 
 /**
  * Get all Non-test activities, within the specified time window.
@@ -19,10 +19,8 @@ export const getNonTestActivities = async (
   startDate: Date,
   endDate: Date,
   examinerIds: number[]
-)
-: Promise<ExaminerNonTestActivity[]> => {
-
-  if(process.env.USE_MOCK_TARS_DATA === 'true') {
+): Promise<ExaminerNonTestActivity[]> => {
+  if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return getMockNonTestActivities(examinerIds, startDate, endDate);
   }
 
@@ -52,7 +50,7 @@ export const getNonTestActivities = async (
           where w.examiner_end_date >= ?
             and w.programme_date between ? and ?
       `,
-      [windowStart, windowStart, windowEnd],
+      [windowStart, windowStart, windowEnd]
     )
   );
   const results = res.map(mapRow);

@@ -1,10 +1,10 @@
-import * as mysql from 'mysql2';
+import { customDurationMetric, info } from '@dvsa/mes-microservice-common/application/utils/logger';
 import * as moment from 'moment';
-import { mapRow, PersonalCommitmentRow } from './row-mappers/personal-commitment-row-mapper';
+import * as mysql from 'mysql2';
 import { poolQuery } from '../../../../../common/framework/mysql/database';
-import { info, customDurationMetric } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
-import {getMockPersonalCommitments} from './__mocks__/personal-commitment.mock';
+import type { ExaminerPersonalCommitment } from '../../../domain/examiner-personal-commitment';
+import { getMockPersonalCommitments } from './__mocks__/personal-commitment.mock';
+import { mapRow, type PersonalCommitmentRow } from './row-mappers/personal-commitment-row-mapper';
 
 /**
  * Get all personal commitments, for the specified time window.
@@ -19,13 +19,12 @@ export const getPersonalCommitments = async (
   startDate: Date,
   durationDays: number,
   examinerIds: number[]
-):
-Promise<ExaminerPersonalCommitment[]> => {
+): Promise<ExaminerPersonalCommitment[]> => {
   if (process.env.USE_MOCK_TARS_DATA === 'true') {
     return getMockPersonalCommitments(examinerIds);
   }
   const windowStart = moment(startDate);
-  const windowEnd = windowStart.clone().add({days: durationDays}).subtract({seconds: 1});
+  const windowEnd = windowStart.clone().add({ days: durationDays }).subtract({ seconds: 1 });
   const sqlDateTimeFormat = 'YYYY-MM-DD HH:mm:ss';
   const windowStartString = windowStart.format(sqlDateTimeFormat);
   const windowEndString = windowEnd.format(sqlDateTimeFormat);
@@ -53,7 +52,7 @@ Promise<ExaminerPersonalCommitment[]> => {
         and IFNULL(es.end_date, '4000-01-01') > ?
     )
       `,
-      [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString],
+      [windowStartString, windowEndString, windowStartString, windowEndString, windowStartString]
     )
   );
   const results = res.map(mapRow);

@@ -1,4 +1,4 @@
-import { DelegatedExaminerTestSlot } from '../../../pollJournals/domain/examiner-test-slot';
+import type { DelegatedExaminerTestSlot } from '../../../pollJournals/domain/examiner-test-slot';
 import { compressDelegatedBooking } from '../booking-compressor';
 
 describe('DelegatedBookingCompressor', () => {

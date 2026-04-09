@@ -1,7 +1,7 @@
-import { buildStaffDetailsFromQueryResult } from '../../../repositories/examiner-record-row';
-import { StaffDetail, TestPermissionPeriod } from '../../../../../../common/application/models/staff-details';
 import { isEqual } from 'lodash';
+import { StaffDetail, type TestPermissionPeriod } from '../../../../../../common/application/models/staff-details';
 import { ExaminerRole } from '../../../../application/constants/examiner-roles';
+import { buildStaffDetailsFromQueryResult } from '../../../repositories/examiner-record-row';
 
 describe('ExmainerRecordRowMapper', () => {
   const examinerRecords = [
@@ -77,12 +77,28 @@ describe('ExmainerRecordRowMapper', () => {
     const result = buildStaffDetailsFromQueryResult(examinerRecords, universalPermissions);
 
     const examiner1PermissionPeriods = result[0].testPermissionPeriods;
-    expect(examiner1PermissionPeriods[0]).toEqual({ testCategory: 'B', from: '2019-07-05', to: '2019-07-12' });
-    expect(examiner1PermissionPeriods[1]).toEqual({ testCategory: 'B', from: '2019-08-01', to: null });
-    expect(examiner1PermissionPeriods[2]).toEqual({ testCategory: 'B+E', from: '2019-09-01', to: null });
+    expect(examiner1PermissionPeriods[0]).toEqual({
+      testCategory: 'B',
+      from: '2019-07-05',
+      to: '2019-07-12',
+    });
+    expect(examiner1PermissionPeriods[1]).toEqual({
+      testCategory: 'B',
+      from: '2019-08-01',
+      to: null,
+    });
+    expect(examiner1PermissionPeriods[2]).toEqual({
+      testCategory: 'B+E',
+      from: '2019-09-01',
+      to: null,
+    });
 
     const examiner2PermissionPeriods = result[1].testPermissionPeriods;
-    expect(examiner2PermissionPeriods[0]).toEqual({ testCategory: 'B', from: '2019-10-01', to: null });
+    expect(examiner2PermissionPeriods[0]).toEqual({
+      testCategory: 'B',
+      from: '2019-10-01',
+      to: null,
+    });
   });
 
   it('should handle an examiner record without any permissions', () => {
@@ -117,14 +133,12 @@ describe('ExmainerRecordRowMapper', () => {
   it('should include universal permissions in each examiners StaffDetails', () => {
     const result = buildStaffDetailsFromQueryResult(examinerRecords, universalPermissions);
 
-    expect(
-      result[0].testPermissionPeriods
-        .some(permPeriod => isEqual(permPeriod, universalPermissions[0])),
-    ).toBe(true);
-    expect(
-      result[1].testPermissionPeriods
-        .some(permPeriod => isEqual(permPeriod, universalPermissions[0])),
-    ).toBe(true);
+    expect(result[0].testPermissionPeriods.some((permPeriod) => isEqual(permPeriod, universalPermissions[0]))).toBe(
+      true
+    );
+    expect(result[1].testPermissionPeriods.some((permPeriod) => isEqual(permPeriod, universalPermissions[0]))).toBe(
+      true
+    );
   });
 
   it('should not generate a StaffDetail object for any examiner records with a non-numeric staff number', () => {

@@ -1,7 +1,6 @@
 import { mapRow } from '../non-test-activity-row-mapper';
 
 describe('NonTestActivity Row Mapper', () => {
-
   it('should map a NonTestActivityRow to an ExaminerNonTestActivity', () => {
     const result = mapRow({
       individual_id: 1,
@@ -14,24 +13,22 @@ describe('NonTestActivity Row Mapper', () => {
       tc_name: 'testcentre',
       tc_cost_centre_code: 'costcode',
     });
-    expect(result).toEqual(
-      {
-        examinerId: 1,
-        nonTestActivity: {
-          activityCode: 'activitycode',
-          activityDescription: 'reason',
-          slotDetail: {
-            duration: 57,
-            slotId: 2,
-            start: '2019-02-15T08:20:00',
-          },
-          testCentre: {
-            centreId: 3,
-            centreName: 'testcentre',
-            costCode: 'costcode',
-          },
+    expect(result).toEqual({
+      examinerId: 1,
+      nonTestActivity: {
+        activityCode: 'activitycode',
+        activityDescription: 'reason',
+        slotDetail: {
+          duration: 57,
+          slotId: 2,
+          start: '2019-02-15T08:20:00',
+        },
+        testCentre: {
+          centreId: 3,
+          centreName: 'testcentre',
+          costCode: 'costcode',
         },
       },
-    );
+    });
   });
 });

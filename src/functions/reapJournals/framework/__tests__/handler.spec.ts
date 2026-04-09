@@ -1,11 +1,11 @@
-import { handler } from '../handler';
-import { APIGatewayEvent, Context } from 'aws-lambda';
-import * as createResponse from '../../../../common/application/utils/createResponse';
+import type { APIGatewayEvent, Context } from 'aws-lambda';
 import { It, Mock, Times } from 'typemoq';
-import * as GetInactiveExaminers from '../../framework/repositories/get-inactive-examiners';
-import Response from '../../../../common/application/api/Response';
-import * as config from '../../../../common/framework/config/config';
+import type Response from '../../../../common/application/api/Response';
+import * as createResponse from '../../../../common/application/utils/createResponse';
 import { DdbTableTypes } from '../../../../common/application/utils/ddbTable';
+import * as config from '../../../../common/framework/config/config';
+import * as GetInactiveExaminers from '../../framework/repositories/get-inactive-examiners';
+import { handler } from '../handler';
 
 const lambdaTestUtils = require('aws-lambda-test-utils');
 
@@ -29,8 +29,8 @@ describe('reapJournals handler', () => {
     dummyApigwEvent = lambdaTestUtils.mockEventCreator.createAPIGatewayEvent();
     dummyContext = lambdaTestUtils.mockContextCreator(() => null);
 
-    moqCreateResponse.setup(x => x(It.isAny())).returns(() => moqResponse.object);
-    moqCreateResponse.setup(x => x(It.isAny(), It.isAny())).returns(() => moqResponse.object);
+    moqCreateResponse.setup((x) => x(It.isAny())).returns(() => moqResponse.object);
+    moqCreateResponse.setup((x) => x(It.isAny(), It.isAny())).returns(() => moqResponse.object);
 
     spyOn(config, 'bootstrapReapJournalsConfig').and.callFake(moqConfigBootstrap.object);
     spyOn(GetInactiveExaminers, 'getInactiveExaminers').and.callFake(moqGetInactiveExaminers.object);
@@ -40,10 +40,8 @@ describe('reapJournals handler', () => {
   it('should bootstrap configuration, call getInactiveExaminers and return a blank response', async () => {
     await handler(dummyApigwEvent, dummyContext);
 
-    moqConfigBootstrap.verify(x => x(DdbTableTypes.JOURNALS), Times.once());
-    moqGetInactiveExaminers.verify(x => x(), Times.once());
-    moqCreateResponse.verify(x => x(It.isValue({})), Times.once());
+    moqConfigBootstrap.verify((x) => x(DdbTableTypes.JOURNALS), Times.once());
+    moqGetInactiveExaminers.verify((x) => x(), Times.once());
+    moqCreateResponse.verify((x) => x(It.isValue({})), Times.once());
   });
-
 });
-

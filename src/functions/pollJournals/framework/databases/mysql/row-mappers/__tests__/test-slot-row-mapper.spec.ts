@@ -1,7 +1,6 @@
-import { mapRow, GenderCode, TestSlotRow } from '../test-slot-row-mapper';
+import { GenderCode, mapRow, type TestSlotRow } from '../test-slot-row-mapper';
 
 describe('TestSlot Row Mapper', () => {
-
   const sampleRow: TestSlotRow = {
     slot_id: 1,
     start_time: new Date('2019-02-12 08:20:00'),
@@ -75,95 +74,90 @@ describe('TestSlot Row Mapper', () => {
 
   it('should map a fully populated TestSlotRow to an ExaminerTestSlot', () => {
     const result = mapRow(sampleRow);
-    expect(result).toEqual(
-      {
-        examinerId: 4,
-        testSlot: {
-          booking: {
-            application: {
-              applicationId: 6,
-              bookingSequence: 7,
-              checkDigit: 8,
-              welshTest: true,
-              extendedTest: false,
-              meetingPlace: 'meeting',
-              progressiveAccess: false,
-              specialNeeds: 'special',
-              specialNeedsExtendedTest: false,
-              specialNeedsCode: 'NONE',
-              entitlementCheck: true,
-              vehicleSeats: 19,
-              vehicleHeight: 11,
-              vehicleWidth: 13,
-              vehicleLength: 12,
-              testCategory: 'B',
-              vehicleGearbox: 'Manual',
-              categoryEntitlementCheck: false,
-              fitMarker: true,
-              fitCaseNumber: 'CASE NUM',
-            },
-            business: {
-              businessAddress: {
-                addressLine1: 'ba1',
-                addressLine2: 'ba2',
-                addressLine3: 'ba3',
-                addressLine4: 'ba4',
-                addressLine5: 'ba5',
-                postcode: 'bpc',
-              },
-              businessId: 18,
-              businessName: 'business',
-              telephone: '6677',
-            },
-            candidate: {
-              candidateAddress: {
-                addressLine1: 'addr1',
-                addressLine2: 'addr2',
-                addressLine3: 'addr3',
-                addressLine4: 'addr4',
-                addressLine5: 'addr5',
-                postcode: 'abc123',
-              },
-              candidateId: 14,
-              candidateName: {
-                firstName: 'Joe',
-                secondName: 'Adam',
-                thirdName: 'Kyle',
-                lastName: 'Bloggs',
-                title: 'Mr',
-              },
-              driverNumber: '16',
-              dateOfBirth: '1990-05-12',
-              gender: 'M',
-              ethnicityCode: 'A',
-              emailAddress: 'joe.bloggs@example.com',
-              mobileTelephone: '4455',
-              primaryTelephone: '0011',
-              secondaryTelephone: '2233',
-              previousADITests: 18,
-              prn: 17,
-            },
-            previousCancellation: [
-              'DSA',
-              'Act of nature',
-            ],
+    expect(result).toEqual({
+      examinerId: 4,
+      testSlot: {
+        booking: {
+          application: {
+            applicationId: 6,
+            bookingSequence: 7,
+            checkDigit: 8,
+            welshTest: true,
+            extendedTest: false,
+            meetingPlace: 'meeting',
+            progressiveAccess: false,
+            specialNeeds: 'special',
+            specialNeedsExtendedTest: false,
+            specialNeedsCode: 'NONE',
+            entitlementCheck: true,
+            vehicleSeats: 19,
+            vehicleHeight: 11,
+            vehicleWidth: 13,
+            vehicleLength: 12,
+            testCategory: 'B',
+            vehicleGearbox: 'Manual',
+            categoryEntitlementCheck: false,
+            fitMarker: true,
+            fitCaseNumber: 'CASE NUM',
           },
-          slotDetail: {
-            duration: 57,
-            slotId: 1,
-            start: '2019-02-12T08:20:00',
+          business: {
+            businessAddress: {
+              addressLine1: 'ba1',
+              addressLine2: 'ba2',
+              addressLine3: 'ba3',
+              addressLine4: 'ba4',
+              addressLine5: 'ba5',
+              postcode: 'bpc',
+            },
+            businessId: 18,
+            businessName: 'business',
+            telephone: '6677',
           },
-          testCentre: {
-            centreId: 3,
-            centreName: 'testcentre',
-            costCode: 'costcentre',
+          candidate: {
+            candidateAddress: {
+              addressLine1: 'addr1',
+              addressLine2: 'addr2',
+              addressLine3: 'addr3',
+              addressLine4: 'addr4',
+              addressLine5: 'addr5',
+              postcode: 'abc123',
+            },
+            candidateId: 14,
+            candidateName: {
+              firstName: 'Joe',
+              secondName: 'Adam',
+              thirdName: 'Kyle',
+              lastName: 'Bloggs',
+              title: 'Mr',
+            },
+            driverNumber: '16',
+            dateOfBirth: '1990-05-12',
+            gender: 'M',
+            ethnicityCode: 'A',
+            emailAddress: 'joe.bloggs@example.com',
+            mobileTelephone: '4455',
+            primaryTelephone: '0011',
+            secondaryTelephone: '2233',
+            previousADITests: 18,
+            prn: 17,
           },
-          vehicleTypeCode: 'A3',
-          vehicleSlotTypeCode: 1,
-          examinerVisiting: false,
+          previousCancellation: ['DSA', 'Act of nature'],
         },
+        slotDetail: {
+          duration: 57,
+          slotId: 1,
+          start: '2019-02-12T08:20:00',
+        },
+        testCentre: {
+          centreId: 3,
+          centreName: 'testcentre',
+          costCode: 'costcentre',
+        },
+        vehicleTypeCode: 'A3',
+        vehicleSlotTypeCode: 1,
+        examinerVisiting: false,
       },
-    );
+    });
   });
 
   it('should map a slot for a female candidate to the correct gender indicator', () => {
@@ -253,24 +247,22 @@ describe('TestSlot Row Mapper', () => {
       integrity_ind: null,
       integrity_case_number: null,
     });
-    expect(result).toEqual(
-      {
-        examinerId: 4,
-        testSlot: {
-          slotDetail: {
-            duration: 57,
-            slotId: 1,
-            start: '2019-02-12T08:20:00',
-          },
-          testCentre: {
-            centreId: 3,
-            centreName: 'testcentre',
-            costCode: 'costcentre',
-          },
-          examinerVisiting: false,
+    expect(result).toEqual({
+      examinerId: 4,
+      testSlot: {
+        slotDetail: {
+          duration: 57,
+          slotId: 1,
+          start: '2019-02-12T08:20:00',
         },
+        testCentre: {
+          centreId: 3,
+          centreName: 'testcentre',
+          costCode: 'costcentre',
+        },
+        examinerVisiting: false,
       },
-    );
+    });
   });
 
   it('should map a booking with empty or whitespace strings to an ExaminerTestSlot', () => {
@@ -344,50 +336,45 @@ describe('TestSlot Row Mapper', () => {
       integrity_ind: 0,
       integrity_case_number: ' ',
     });
-    expect(result).toEqual(
-      {
-        examinerId: 4,
-        testSlot: {
-          slotDetail: {
-            duration: 57,
-            slotId: 1,
-            start: '2019-02-12T08:20:00',
-          },
-          testCentre: {
-            centreId: 3,
-            centreName: 'testcentre',
-            costCode: 'costcentre',
-          },
-          booking: {
-            application: {
-              applicationId: 2222,
-              bookingSequence: 333,
-              checkDigit: 4,
-              welshTest: false,
-              extendedTest: false,
-              specialNeedsExtendedTest: true,
-              progressiveAccess: false,
-              entitlementCheck: false,
-              categoryEntitlementCheck: false,
-              fitMarker: false,
-            },
-            candidate: {
-              candidateId: 5555,
-              candidateName: {
-              },
-              candidateAddress: {
-              },
-            },
-            business: {
-              businessId: 6666,
-              businessAddress: {
-              },
-            },
-          },
-          examinerVisiting: false,
+    expect(result).toEqual({
+      examinerId: 4,
+      testSlot: {
+        slotDetail: {
+          duration: 57,
+          slotId: 1,
+          start: '2019-02-12T08:20:00',
         },
+        testCentre: {
+          centreId: 3,
+          centreName: 'testcentre',
+          costCode: 'costcentre',
+        },
+        booking: {
+          application: {
+            applicationId: 2222,
+            bookingSequence: 333,
+            checkDigit: 4,
+            welshTest: false,
+            extendedTest: false,
+            specialNeedsExtendedTest: true,
+            progressiveAccess: false,
+            entitlementCheck: false,
+            categoryEntitlementCheck: false,
+            fitMarker: false,
+          },
+          candidate: {
+            candidateId: 5555,
+            candidateName: {},
+            candidateAddress: {},
+          },
+          business: {
+            businessId: 6666,
+            businessAddress: {},
+          },
+        },
+        examinerVisiting: false,
       },
-    );
+    });
   });
 
   it('should map a booking with lower-case candidate details to a capitalised ExaminerTestSlot', () => {
@@ -461,49 +448,46 @@ describe('TestSlot Row Mapper', () => {
       integrity_ind: 0,
       integrity_case_number: null,
     });
-    expect(result).toEqual(
-      {
-        examinerId: 4,
-        testSlot: {
-          slotDetail: {
-            duration: 57,
-            slotId: 1,
-            start: '2019-02-12T08:20:00',
-          },
-          testCentre: {
-            centreId: 3,
-            centreName: 'testcentre',
-            costCode: 'costcentre',
-          },
-          booking: {
-            application: {
-              applicationId: 2222,
-              bookingSequence: 333,
-              checkDigit: 0,
-              welshTest: false,
-              specialNeedsExtendedTest: false,
-              extendedTest: false,
-              progressiveAccess: false,
-              entitlementCheck: false,
-              categoryEntitlementCheck: true,
-              fitMarker: false,
-            },
-            candidate: {
-              candidateId: 5555,
-              candidateName: {
-                title: 'Mr',
-                firstName: 'Aaa',
-                secondName: 'Bbb',
-                thirdName: 'Ccc',
-                lastName: 'Ddd',
-              },
-              candidateAddress: {
-              },
-            },
-          },
-          examinerVisiting: false,
+    expect(result).toEqual({
+      examinerId: 4,
+      testSlot: {
+        slotDetail: {
+          duration: 57,
+          slotId: 1,
+          start: '2019-02-12T08:20:00',
         },
+        testCentre: {
+          centreId: 3,
+          centreName: 'testcentre',
+          costCode: 'costcentre',
+        },
+        booking: {
+          application: {
+            applicationId: 2222,
+            bookingSequence: 333,
+            checkDigit: 0,
+            welshTest: false,
+            specialNeedsExtendedTest: false,
+            extendedTest: false,
+            progressiveAccess: false,
+            entitlementCheck: false,
+            categoryEntitlementCheck: true,
+            fitMarker: false,
+          },
+          candidate: {
+            candidateId: 5555,
+            candidateName: {
+              title: 'Mr',
+              firstName: 'Aaa',
+              secondName: 'Bbb',
+              thirdName: 'Ccc',
+              lastName: 'Ddd',
+            },
+            candidateAddress: {},
+          },
+        },
+        examinerVisiting: false,
       },
-    );
+    });
   });
 });

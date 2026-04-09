@@ -1,9 +1,11 @@
-import { JournalRecord } from '../domain/journal-record';
-import { getStaffNumbersWithHashes } from '../framework/databases/dynamodb/journal-repository';
 import { get } from 'lodash';
+import type { JournalRecord } from '../domain/journal-record';
+import { getStaffNumbersWithHashes } from '../framework/databases/dynamodb/journal-repository';
 
-export const filterChangedJournals = async (allJournals: JournalRecord[], startTime: Date):
-Promise<JournalRecord[]> => {
+export const filterChangedJournals = async (
+  allJournals: JournalRecord[],
+  startTime: Date
+): Promise<JournalRecord[]> => {
   const staffNumbersAndHashes = await getStaffNumbersWithHashes(startTime);
   const staffNumberHashMappings = createStaffNumberHashLookup(staffNumbersAndHashes);
 
@@ -17,13 +19,10 @@ Promise<JournalRecord[]> => {
 };
 
 const createStaffNumberHashLookup = (staffNumbersAndHashes: Partial<JournalRecord>[]) => {
-  return staffNumbersAndHashes.reduce(
-    (mappings, journalMeta) => {
-      if (journalMeta.staffNumber && journalMeta.hash) {
-        return { ...mappings, [journalMeta.staffNumber]: journalMeta.hash };
-      }
-      return mappings;
-    },
-    {},
-  );
+  return staffNumbersAndHashes.reduce((mappings, journalMeta) => {
+    if (journalMeta.staffNumber && journalMeta.hash) {
+      return { ...mappings, [journalMeta.staffNumber]: journalMeta.hash };
+    }
+    return mappings;
+  }, {});
 };

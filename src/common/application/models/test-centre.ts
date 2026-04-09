@@ -8,11 +8,7 @@ export class TestCentreDetail {
   examiners: Examiner[];
   testCentreIDs: number[];
 
-  constructor(
-    staffNumber: string,
-    examiners: Examiner[],
-    testCentreIDs: number[],
-  ) {
+  constructor(staffNumber: string, examiners: Examiner[], testCentreIDs: number[]) {
     this.staffNumber = staffNumber;
     this.examiners = examiners;
     this.testCentreIDs = testCentreIDs;

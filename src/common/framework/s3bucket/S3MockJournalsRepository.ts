@@ -1,16 +1,18 @@
+import {
+  GetObjectCommand,
+  type GetObjectCommandInput,
+  NoSuchKey,
+  S3Client,
+  S3ServiceException,
+} from '@aws-sdk/client-s3';
 import { debug, error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
-import { GetObjectCommand, GetObjectCommandInput, NoSuchKey, S3Client, S3ServiceException } from '@aws-sdk/client-s3';
-import { addDays, subDays, format } from 'date-fns';
+import { addDays, format, subDays } from 'date-fns';
+import type { DelegatedTestSlotRow } from '../../../functions/pollDelegatedBookings/framework/repo/mysql/delegated-examiner-bookings-repository';
+import type { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
+import type { UniversalPermissionRecord } from '../../../functions/pollUsers/framework/repositories/get-universal-permissions';
+import type { ExaminerQueryRecord } from '../../application/models/examiner-details';
+import type { TestCentreRow } from '../../application/models/test-centre-journal';
 import { config } from '../config/config';
-import {
-  UniversalPermissionRecord,
-} from '../../../functions/pollUsers/framework/repositories/get-universal-permissions';
-import { ExaminerQueryRecord } from '../../application/models/examiner-details';
-import { ExaminerRecord } from '../../../functions/pollJournals/domain/examiner-record';
-import { TestCentreRow } from '../../application/models/test-centre-journal';
-import {
-  DelegatedTestSlotRow,
-} from '../../../functions/pollDelegatedBookings/framework/repo/mysql/delegated-examiner-bookings-repository';
 
 /**
  * Creates a client to interact with an S3 bucket
@@ -33,12 +35,10 @@ export function replaceTodayPlaceholders(obj: any): any {
   if (Array.isArray(obj)) {
     return obj.map(replaceTodayPlaceholders);
   } else if (obj && typeof obj === 'object') {
-    return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)]),
-    );
+    return Object.fromEntries(Object.entries(obj).map(([key, value]) => [key, replaceTodayPlaceholders(value)]));
   } else if (typeof obj === 'string') {
     // Match <TODAY>, <TODAY+n>, <TODAY-n>
-    const match = obj.match(/^<TODAY(?:(\+|-)(\d+))?>T(\d{2}:\d{2}:\d{2})$/);
+    const match = obj.match(/^<TODAY(?:([+-])(\d+))?>T(\d{2}:\d{2}:\d{2})$/);
     if (match) {
       const [, sign, offsetStr, time] = match;
       const offset = offsetStr ? parseInt(offsetStr, 10) : 0;
@@ -49,7 +49,7 @@ export function replaceTodayPlaceholders(obj: any): any {
       // Set time
       const [hours, minutes, seconds] = time.split(':').map(Number);
       date.setHours(hours, minutes, seconds, 0);
-      return format(date, 'yyyy-MM-dd\'T\'HH:mm:ss');
+      return format(date, "yyyy-MM-dd'T'HH:mm:ss");
     }
     return obj;
   }
@@ -143,7 +143,7 @@ export const getMockUserData = async (): Promise<ExaminerRecord[] | null> => {
  */
 export const getDataFromBucket = async (params: GetObjectCommandInput): Promise<any | null> => {
   try {
-    debug('Getting mock journal from s3', params);
+    debug('Getting mock data from s3', params);
     const client = createS3Client();
     const response = await client.send(new GetObjectCommand(params));
     if (response?.Body) {
@@ -157,17 +157,11 @@ export const getDataFromBucket = async (params: GetObjectCommandInput): Promise<
     return null;
   } catch (caught) {
     if (caught instanceof NoSuchKey) {
-      error(
-        `Error from S3 while getting object "${params.Key}" from "${params.Bucket}". No such key exists.`,
-      );
+      error(`Error from S3 while getting object "${params.Key}" from "${params.Bucket}". No such key exists.`);
     } else if (caught instanceof S3ServiceException) {
-      error(
-        `Error from S3 while getting object from ${params.Bucket}.  ${caught.name}: ${caught.message}`,
-      );
+      error(`Error from S3 while getting object from ${params.Bucket}.  ${caught.name}: ${caught.message}`);
     } else {
-      error(
-        `Error from S3 ${params.Bucket}.  ${caught.name}: ${caught.message}`,
-      );
+      error(`Error from S3 ${params.Bucket}.  ${caught.name}: ${caught.message}`);
     }
     return null;
   }

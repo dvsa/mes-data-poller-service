@@ -1,4 +1,4 @@
-import { AdvanceTestSlot } from '@dvsa/mes-journal-schema';
+import type { AdvanceTestSlot } from '@dvsa/mes-journal-schema';
 
 export interface ExaminerAdvanceTestSlot {
   examinerId: number;

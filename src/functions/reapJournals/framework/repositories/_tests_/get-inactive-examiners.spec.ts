@@ -1,4 +1,4 @@
-import { Mock, It, Times } from 'typemoq';
+import { It, Mock, Times } from 'typemoq';
 import * as journalRepository from '../../databases/dynamodb/journal-repository';
 import { getInactiveExaminers } from '../get-inactive-examiners';
 
@@ -19,16 +19,13 @@ describe('getInactiveExaminers module', () => {
       const mockInactiveStaffNumbers = ['123', '456'];
 
       // Set up the mock to return the expected value
-      moqInactiveJournals.setup(x => x()).returns(async () => mockInactiveStaffNumbers);
+      moqInactiveJournals.setup((x) => x()).returns(async () => mockInactiveStaffNumbers);
 
       await getInactiveExaminers();
 
       // Verify the methods were called with the correct arguments
-      moqInactiveJournals.verify(x => x(), Times.once());
-      moqRemoveInactiveJournals.verify(x => x(
-        It.isValue(mockInactiveStaffNumbers)),
-                                       Times.once()
-      );
+      moqInactiveJournals.verify((x) => x(), Times.once());
+      moqRemoveInactiveJournals.verify((x) => x(It.isValue(mockInactiveStaffNumbers)), Times.once());
     });
   });
 });

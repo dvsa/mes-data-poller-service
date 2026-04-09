@@ -1,7 +1,7 @@
-import {config} from '../config/config';
-import {AttributeValue, DynamoDBClient, DynamoDBClientConfig} from '@aws-sdk/client-dynamodb';
-import {ScanCommand, ScanCommandInput} from '@aws-sdk/lib-dynamodb';
-import {error, info} from '@dvsa/mes-microservice-common/application/utils/logger';
+import { type AttributeValue, DynamoDBClient, type DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
+import { ScanCommand, type ScanCommandInput } from '@aws-sdk/lib-dynamodb';
+import { error, info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { config } from '../config/config';
 
 /**
  * Creates the DynamoDB API client. If offline then points to the local endpoint. If online then enables HTTP keep
@@ -10,10 +10,14 @@ import {error, info} from '@dvsa/mes-microservice-common/application/utils/logge
  *
  */
 export const getDynamoClient = () => {
-  const opts = {region: 'eu-west-1'} as DynamoDBClientConfig;
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
 
   if (config().isOffline) {
-    opts.credentials = {accessKeyId: 'akid', secretAccessKey: 'secret', sessionToken: 'session'};
+    opts.credentials = {
+      accessKeyId: 'akid',
+      secretAccessKey: 'secret',
+      sessionToken: 'session',
+    };
     opts.endpoint = 'http://localhost:8000';
     opts.region = 'localhost';
   }
@@ -25,12 +29,9 @@ export const getDynamoClient = () => {
  * @param ddb - The DynamoDB client used to perform the scan.
  * @param tableName - The name of the DynamoDB table to scan.
  */
-export const fullScan = async <T>(
-  ddb: DynamoDBClient,
-  tableName: string,
-): Promise<T[]> => {
+export const fullScan = async <T>(ddb: DynamoDBClient, tableName: string): Promise<T[]> => {
   const rows: T[] = [];
-  let lastEvaluatedKey: Record<string, AttributeValue> | undefined = undefined;
+  let lastEvaluatedKey: Record<string, AttributeValue> | undefined;
 
   const params = {
     TableName: tableName,
@@ -39,13 +40,11 @@ export const fullScan = async <T>(
 
   do {
     try {
-      const data = await ddb.send(
-        new ScanCommand(params)
-      );
+      const data = await ddb.send(new ScanCommand(params));
 
       if (data.Items) {
         info(`Found ${data.Items.length} items in DynamoDB`);
-        rows.push(...data.Items as T[]);
+        rows.push(...(data.Items as T[]));
       }
 
       lastEvaluatedKey = data.LastEvaluatedKey;
@@ -54,7 +53,7 @@ export const fullScan = async <T>(
       error('`ScanCommand` has thrown an error.', err);
       throw err;
     }
-  } while (!!lastEvaluatedKey);
+  } while (lastEvaluatedKey);
 
   return rows;
 };

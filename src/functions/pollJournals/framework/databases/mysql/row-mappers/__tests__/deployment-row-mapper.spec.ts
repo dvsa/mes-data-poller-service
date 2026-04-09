@@ -10,19 +10,17 @@ describe('Deployment Row Mapper', () => {
       tc_cost_centre_code: 'costcode',
       programme_date: '2019-02-15 00:00:00',
     });
-    expect(result).toEqual(
-      {
-        examinerId: 2,
-        deployment: {
-          deploymentId: 1,
-          testCentre: {
-            centreId: 3,
-            centreName: 'centre',
-            costCode: 'costcode',
-          },
-          date: '2019-02-15 00:00:00',
+    expect(result).toEqual({
+      examinerId: 2,
+      deployment: {
+        deploymentId: 1,
+        testCentre: {
+          centreId: 3,
+          centreName: 'centre',
+          costCode: 'costcode',
         },
+        date: '2019-02-15 00:00:00',
       },
-    );
+    });
   });
 });

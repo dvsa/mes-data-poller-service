@@ -1,6 +1,6 @@
-import { getJournalDetails } from '../get-journal-details';
-import * as journalRepository from '../../databases/dynamodb/journal-repository';
 import { info } from '@dvsa/mes-microservice-common/application/utils/logger';
+import * as journalRepository from '../../databases/dynamodb/journal-repository';
+import { getJournalDetails } from '../get-journal-details';
 
 describe('getJournalDetails', () => {
   let mockGetJournalDetails: jasmine.Spy;

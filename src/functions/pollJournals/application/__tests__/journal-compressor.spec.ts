@@ -1,6 +1,6 @@
-import { compressJournal } from '../journal-compressor';
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
+import type { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import testJournalCompression from '../__mocks__/test-journal-compression';
+import { compressJournal } from '../journal-compressor';
 
 describe('JournalCompressor', () => {
   describe('compressJournal', () => {

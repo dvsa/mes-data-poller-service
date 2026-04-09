@@ -1,14 +1,13 @@
 import * as moment from 'moment';
 
 export enum Duration {
-  DAY    = 'day',
-  HOUR   = 'hour',
+  DAY = 'day',
+  HOUR = 'hour',
   MINUTE = 'minute',
   SECOND = 'second',
 }
 
 export class DateTime {
-
   moment: moment.Moment;
 
   constructor(sourceDateTime?: DateTime | string | Date) {
@@ -33,11 +32,9 @@ export class DateTime {
     return this.moment.format(formatString);
   }
 
-
   daysDiff(targetDate: DateTime | string | Date): number {
     const date = new DateTime(targetDate);
     const today = this.moment.startOf(Duration.DAY);
     return date.moment.startOf(Duration.DAY).diff(today, Duration.DAY);
   }
-
 }

@@ -1,34 +1,42 @@
-import { Application, Candidate } from '@dvsa/mes-journal-schema';
+import type { Application, Candidate } from '@dvsa/mes-journal-schema';
 import { formatApplicationReference } from '@dvsa/mes-microservice-common/domain/tars';
-
-import { DelegatedTestSlotRow } from './delegated-examiner-bookings-repository';
-import { DelegatedExaminerTestSlot } from '../../../../pollJournals/domain/examiner-test-slot';
-import {
-  setCapitalisedStringIfPopulated, setGenderIfPopulated,
-  setNumberIfNotNull,
-  setNumberIfTruthy,
-  setStringIfPopulated,
-} from '../../../../pollJournals/framework/databases/mysql/row-mappers/test-slot-row-mapper';
+import type { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
+import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
 import {
   formatDateToIso8601,
   formatDateToStartTime,
 } from '../../../../pollJournals/application/formatters/date-formatter';
-import { DelegatedBookingDetail } from '../../../../../common/application/models/delegated-booking-details';
+import type { DelegatedExaminerTestSlot } from '../../../../pollJournals/domain/examiner-test-slot';
+import {
+  setCapitalisedStringIfPopulated,
+  setGenderIfPopulated,
+  setNumberIfNotNull,
+  setNumberIfTruthy,
+  setStringIfPopulated,
+} from '../../../../pollJournals/framework/databases/mysql/row-mappers/test-slot-row-mapper';
 import { compressDelegatedBooking } from '../../../application/booking-compressor';
-import { ApplicationReference } from '@dvsa/mes-test-schema/categories/common';
+import type { DelegatedTestSlotRow } from './delegated-examiner-bookings-repository';
 
 export const buildDelegatedBookingsFromQueryResult = (
-  queryResult: DelegatedTestSlotRow[],
+  queryResult: DelegatedTestSlotRow[]
 ): DelegatedBookingDetail[] => {
-  return queryResult.map((result: DelegatedTestSlotRow) => new DelegatedBookingDetail(
-    mapDelegatedExaminerAppRefs(result),
-    mapDelegatedExaminerStaffNumbers(result),
-    compressDelegatedBooking(mapDelegatedExaminerBooking(result)),
-  )) as DelegatedBookingDetail[];
+  return queryResult.map(
+    (result: DelegatedTestSlotRow) =>
+      new DelegatedBookingDetail(
+        mapDelegatedExaminerAppRefs(result),
+        mapDelegatedExaminerStaffNumbers(result),
+        compressDelegatedBooking(mapDelegatedExaminerBooking(result))
+      )
+  ) as DelegatedBookingDetail[];
 };
 
 const mapDelegatedExaminerBooking = (row: DelegatedTestSlotRow): DelegatedExaminerTestSlot => {
-  const app: Application = { applicationId: 0, bookingSequence: 0, checkDigit: 0, testCategory: null };
+  const app: Application = {
+    applicationId: 0,
+    bookingSequence: 0,
+    checkDigit: 0,
+    testCategory: null,
+  };
   setNumberIfTruthy(app, 'applicationId', row.app_id);
   setNumberIfTruthy(app, 'bookingSequence', row.booking_seq);
   setNumberIfNotNull(app, 'checkDigit', row.check_digit);
@@ -66,7 +74,11 @@ const mapDelegatedExaminerBooking = (row: DelegatedTestSlotRow): DelegatedExamin
 };
 
 const mapDelegatedExaminerAppRefs = (row: DelegatedTestSlotRow): number => {
-  const app: ApplicationReference = { applicationId: 0, bookingSequence: 0, checkDigit: 0 };
+  const app: ApplicationReference = {
+    applicationId: 0,
+    bookingSequence: 0,
+    checkDigit: 0,
+  };
   setNumberIfTruthy(app, 'applicationId', row.app_id);
   setNumberIfTruthy(app, 'bookingSequence', row.booking_seq);
   setNumberIfNotNull(app, 'checkDigit', row.check_digit);

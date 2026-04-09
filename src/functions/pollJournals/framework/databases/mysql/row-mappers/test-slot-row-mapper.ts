@@ -1,15 +1,15 @@
-import { ExaminerTestSlot } from '../../../../domain/examiner-test-slot';
-import {
+import type {
+  Address,
   Application,
   Booking,
   Business,
   Candidate,
   PreviousCancellation,
-  Address,
   VehicleTypeCode,
 } from '@dvsa/mes-journal-schema';
-import { formatDateToStartTime, formatDateToIso8601 } from '../../../../application/formatters/date-formatter';
 import { error } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { formatDateToIso8601, formatDateToStartTime } from '../../../../application/formatters/date-formatter';
+import type { ExaminerTestSlot } from '../../../../domain/examiner-test-slot';
 
 /**
  * Defines the possible rows that the test slot query can return.
@@ -128,7 +128,11 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
     const booking: Booking = {};
     slot.testSlot.booking = booking;
 
-    const app: Application = { applicationId: 0, bookingSequence: 0, checkDigit: 0 };
+    const app: Application = {
+      applicationId: 0,
+      bookingSequence: 0,
+      checkDigit: 0,
+    };
     booking.application = app;
     setNumberIfTruthy(app, 'applicationId', row.app_id);
     setNumberIfTruthy(app, 'bookingSequence', row.booking_seq);
@@ -152,20 +156,20 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
 
     if (row.gearbox_type) {
       switch (row.gearbox_type) {
-      case 1:
-        app.vehicleGearbox = 'Manual';
-        break;
+        case 1:
+          app.vehicleGearbox = 'Manual';
+          break;
 
-      case 2:
-        app.vehicleGearbox = 'Automatic';
-        break;
+        case 2:
+          app.vehicleGearbox = 'Automatic';
+          break;
 
-      case 3:
-        app.vehicleGearbox = 'Semi-Automatic';
-        break;
+        case 3:
+          app.vehicleGearbox = 'Semi-Automatic';
+          break;
 
-      default:
-        error(`Invalid Gearbox Code ${row.gearbox_type} for app id ${row.app_id}`);
+        default:
+          error(`Invalid Gearbox Code ${row.gearbox_type} for app id ${row.app_id}`);
       }
     }
 
@@ -201,8 +205,15 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
       setCapitalisedStringIfPopulated(candidate.candidateName, 'lastName', row.candidate_surname);
 
       setAddressIfPopulated(
-        candidate, 'candidateAddress', row.candidate_addr_line1, row.candidate_addr_line2, row.candidate_addr_line3,
-        row.candidate_addr_line4, row.candidate_addr_line5, row.candidate_post_code);
+        candidate,
+        'candidateAddress',
+        row.candidate_addr_line1,
+        row.candidate_addr_line2,
+        row.candidate_addr_line3,
+        row.candidate_addr_line4,
+        row.candidate_addr_line5,
+        row.candidate_post_code
+      );
     }
 
     if (row.cancel_initiator && row.cancel_initiator.length > 0) {
@@ -217,8 +228,15 @@ export const mapRow = (row: TestSlotRow): ExaminerTestSlot => {
       setStringIfPopulated(business, 'businessName', row.business_name);
       setStringIfPopulated(business, 'telephone', row.business_telephone);
       setAddressIfPopulated(
-        business, 'businessAddress', row.business_addr_line1, row.business_addr_line2, row.business_addr_line3,
-        row.business_addr_line4, row.business_addr_line5, row.business_post_code);
+        business,
+        'businessAddress',
+        row.business_addr_line1,
+        row.business_addr_line2,
+        row.business_addr_line3,
+        row.business_addr_line4,
+        row.business_addr_line5,
+        row.business_post_code
+      );
     }
   }
 
@@ -244,7 +262,8 @@ function setAddressIfPopulated<T>(
   line3: string | null,
   line4: string | null,
   line5: string | null,
-  postcode: string | null) {
+  postcode: string | null
+) {
   const address: Address = {};
   object[field as string] = address;
   setStringIfPopulated(address, 'addressLine1', line1);
@@ -287,7 +306,7 @@ export function setNumberIfNotNull<T>(object: T, field: keyof T, value: number |
  */
 function setBooleanIfPopulated<T>(object: T, field: keyof T, value: number | null) {
   if (value) {
-    object[field as string] = (value === 1);
+    object[field as string] = value === 1;
   } else {
     object[field as string] = false;
   }

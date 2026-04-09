@@ -1,5 +1,5 @@
+import type Response from '../../../../common/application/api/Response';
 import createResponse from '../createResponse';
-import Response from '../../../../common/application/api/Response';
 
 describe('createResponse', () => {
   it('should create a response with 200 status code when no status code is specified', () => {
