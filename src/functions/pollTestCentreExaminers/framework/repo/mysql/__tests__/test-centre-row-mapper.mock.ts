@@ -7,7 +7,7 @@ export const mockTestCentreRows: TestCentreRow[] = [
     // eslint-disable-next-line max-len
     STAFF_NUMBERS:
       '{"staffNumber": "000008", "name": "Test Examiner Seven"}, {"staffNumber": "000007", "name": "Test Examiner Six"}, {"staffNumber": "000006", "name": "Test Examiner Five"}',
-    TEST_CENTRES: '1234, 9087',
+    TEST_CENTRES: 'AAAAAA, 9087',
   },
   {
     INDIVIDUAL_ID: '3242339',

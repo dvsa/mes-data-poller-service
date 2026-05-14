@@ -6,6 +6,13 @@ import { fullScan, getDynamoClient } from '../../../../../common/framework/dynan
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   const ddb = getDynamoClient();
+
+  customMetric(
+    'getCachedTestCentreExaminers',
+    'cached data',
+    await fullScan<TestCentreDetail>(ddb, config().dynamodbTableName)
+  );
+
   return await fullScan<TestCentreDetail>(ddb, config().dynamodbTableName);
 };
 
@@ -27,7 +34,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
       Item: {
         staffNumber: testCentre.staffNumber,
         examiners: testCentre.examiners,
-        testCentreIDs: testCentre.testCentreIDs,
+        testCentreCostCodes: testCentre.testCentreCostCodes,
       },
     };
     return ddb.send(new PutCommand(putParams));
@@ -40,6 +47,8 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
 export const unCacheTestCentreExaminers = async (staffNumbers: string[]): Promise<void> => {
   const ddb = getDynamoClient();
   const tableName: string = config().dynamodbTableName;
+
+  customMetric('TestCentreRowRemoved', 'trying to delete', staffNumbers);
 
   if (process.env.SKIP_DYNAMO_WRITE === 'true') {
     debug('unCacheTestCentreExaminers - Skipping DynamoDB delete', {

@@ -4,16 +4,15 @@ import { trimLeadingZeroes } from '../../../../../common/application/utils/trimL
 
 export const buildTestCentreRowsFromQueryResult = (queryResult: TestCentreRow[]): TestCentreDetail[] => {
   return queryResult.map(
-    (row: TestCentreRow) => new TestCentreDetail(mapStaffNumber(row), mapExaminers(row), mapTestCentreIDs(row))
+    (row: TestCentreRow) => new TestCentreDetail(mapStaffNumber(row), mapExaminers(row), mapTestCentreCostCodes(row))
   );
 };
 
 const mapStaffNumber = (row: TestCentreRow): string => trimLeadingZeroes(row.STAFF_NUMBER);
 
-export const mapTestCentreIDs = (row: TestCentreRow): number[] =>
+export const mapTestCentreCostCodes = (row: TestCentreRow): string[] =>
   row.TEST_CENTRES.replace(/\s/g, '') // remove whitespace in string if there is any
     .split(',') // split at each comma delimiter
-    .filter((tcID: string) => tcID) // filter any non defined values
-    .map(Number); // convert all values to numbers
+    .filter((tcCC: string) => tcCC); // filter any non defined values
 
 export const mapExaminers = (row: TestCentreRow): Examiner[] => JSON.parse(`[${row.STAFF_NUMBERS}]`);
