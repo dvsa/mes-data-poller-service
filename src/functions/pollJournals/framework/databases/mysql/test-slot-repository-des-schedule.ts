@@ -156,12 +156,12 @@ export interface ScheduleBookingsRow {
 }
 
 /** Convert UTC datetime value from scheduling DB into local datetime for the journal. This is required for consistency with how TARS data is written to the journal */
-const toUK = (uTCString: string) => {
+export const toUK = (uTCString: string) => {
   const isoNoTZ = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
 
   if (!isoNoTZ.test(uTCString)) return uTCString;
 
-  return new Date(uTCString + 'Z')
+  return new Date(`${uTCString}Z`)
     .toLocaleString('sv-SE', {
       timeZone: 'Europe/London',
       hour12: false,
