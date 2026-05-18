@@ -6,6 +6,7 @@ import { fullScan, getDynamoClient } from '../../../../../common/framework/dynan
 
 export const getCachedTestCentreExaminers = async (): Promise<TestCentreDetail[]> => {
   const ddb = getDynamoClient();
+
   return await fullScan<TestCentreDetail>(ddb, config().dynamodbTableName);
 };
 
@@ -27,7 +28,7 @@ export const updateTestCentreExaminers = async (testCentres: TestCentreDetail[])
       Item: {
         staffNumber: testCentre.staffNumber,
         examiners: testCentre.examiners,
-        testCentreIDs: testCentre.testCentreIDs,
+        testCentreCostCodes: testCentre.testCentreCostCodes,
       },
     };
     return ddb.send(new PutCommand(putParams));

@@ -1,6 +1,6 @@
 import { TestCentreDetail } from '../../../../../../common/application/models/test-centre';
 import type { TestCentreRow } from '../../../../../../common/application/models/test-centre-journal';
-import { buildTestCentreRowsFromQueryResult, mapExaminers, mapTestCentreIDs } from '../test-centre-row-mapper';
+import { buildTestCentreRowsFromQueryResult, mapExaminers, mapTestCentreCostCodes } from '../test-centre-row-mapper';
 import { mockTestCentreRows } from './test-centre-row-mapper.mock';
 
 describe('TestCentreMapper', () => {
@@ -12,7 +12,7 @@ describe('TestCentreMapper', () => {
         { name: 'Test Examiner Five', staffNumber: '000006' },
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[0]).toEqual(
-        new TestCentreDetail('1234567', ex, [1234, 9087])
+        new TestCentreDetail('1234567', ex, ['AAAAAA', '9087'])
       );
     });
     it('should map the second row from the query', () => {
@@ -22,7 +22,7 @@ describe('TestCentreMapper', () => {
         { name: 'Test Examiner Two', staffNumber: '000003' },
       ];
       expect(buildTestCentreRowsFromQueryResult(mockTestCentreRows)[1]).toEqual(
-        new TestCentreDetail('3242339', ex, [3452, 6578])
+        new TestCentreDetail('3242339', ex, ['3452', '6578'])
       );
     });
   });
@@ -31,7 +31,7 @@ describe('TestCentreMapper', () => {
       const row = {
         TEST_CENTRES: '127,7169,543',
       } as TestCentreRow;
-      expect(mapTestCentreIDs(row)).toEqual([127, 7169, 543]);
+      expect(mapTestCentreCostCodes(row)).toEqual(['127', '7169', '543']);
     });
   });
   describe('mapExaminers', () => {

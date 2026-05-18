@@ -6,11 +6,11 @@ export type Examiner = {
 export class TestCentreDetail {
   staffNumber: string;
   examiners: Examiner[];
-  testCentreIDs: number[];
+  testCentreCostCodes: string[];
 
-  constructor(staffNumber: string, examiners: Examiner[], testCentreIDs: number[]) {
+  constructor(staffNumber: string, examiners: Examiner[], testCentreCostCodes: string[]) {
     this.staffNumber = staffNumber;
     this.examiners = examiners;
-    this.testCentreIDs = testCentreIDs;
+    this.testCentreCostCodes = testCentreCostCodes;
   }
 }

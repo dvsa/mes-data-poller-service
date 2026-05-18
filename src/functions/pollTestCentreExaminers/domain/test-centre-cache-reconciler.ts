@@ -9,7 +9,7 @@ export const reconcileActiveAndCachedTestCentreRows = async (
   activeTestCentreRows: TestCentreDetail[],
   cachedTestCentreRows: TestCentreDetail[]
 ): Promise<void> => {
-  // determine staffNumbers that are no longer active
+  // determine staffNumbers that are no longer active or are using the old tcID system
   const cachedTestCentresEligibleForDeletion: string[] = extractCachedTestCentresForDeletion(
     cachedTestCentreRows,
     activeTestCentreRows
@@ -31,7 +31,9 @@ const extractCachedTestCentresForDeletion = (
 ): TestCentreDetail[] => {
   const activeStaffNumbers: string[] = activeTestCentreRows.map((row: TestCentreDetail) => row.staffNumber);
 
-  return cachedTestCentreRows.filter((row: TestCentreDetail) => !activeStaffNumbers.includes(row.staffNumber));
+  return cachedTestCentreRows.filter(
+    (row: TestCentreDetail) => !activeStaffNumbers.includes(row.staffNumber) || 'testCentreIDs' in row
+  );
 };
 
 export const getUnChangedRows = (
