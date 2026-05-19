@@ -19,7 +19,7 @@ export const buildStaffDetailsFromQueryResult = (
 
       if (staffNumber === null) {
         warn('Omitting user record for non-numeric staff number', recordStaffNumber);
-        return [...staffDetailsAcc];
+        return staffDetailsAcc;
       }
 
       const role = recordsForExaminer[0]?.test_centre_manager_ind === 1 ? ExaminerRole.LDTM : ExaminerRole.DE;
@@ -41,7 +41,8 @@ export const buildStaffDetailsFromQueryResult = (
           ]
         : universalTestPermissions;
 
-      return [...staffDetailsAcc, new StaffDetail(staffNumber, role, testPermissionPeriods)];
+      staffDetailsAcc.push(new StaffDetail(staffNumber, role, testPermissionPeriods));
+      return staffDetailsAcc;
     }, [] as StaffDetail[]);
   } catch (err) {
     error('Error building staff details', err);
